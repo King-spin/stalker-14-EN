@@ -127,7 +127,7 @@
     time: 1h
     inverted: true
   - !type:DepartmentTimeRequirement
-    department: department-StalkerReligius
+    department: StalkerReligius
     time: 1h
     inverted: true
   - !type:SpeciesRequirement
