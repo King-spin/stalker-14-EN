@@ -7,7 +7,7 @@
   footstepSounds:
     collection: STFootstepWood
   heatCapacity: 10000
-  weather: truee
+  weather: true
   indestructible: true
 
 - type: tile
