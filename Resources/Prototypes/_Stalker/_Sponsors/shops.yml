@@ -214,3 +214,19 @@
   - name: Персональная категория
     items:
       STWeaponSniperSVUTop: 12000
+
+- type: personalShop
+  id: PersonalClown_228Shop
+  username: Clown_228
+  categories:
+  - name: Персональная категория
+    items:
+      ClothingOuterArmorSevaVano: 8500
+
+- type: personalShop
+  id: PersonalMuhakaShop
+  username: Muhaka
+  categories:
+  - name: Персональная категория
+    items:
+      claymoreBattle: 3500

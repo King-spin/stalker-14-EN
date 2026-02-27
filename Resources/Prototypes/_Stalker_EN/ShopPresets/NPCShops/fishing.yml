@@ -9,25 +9,29 @@
     STFishCarp: 230
     STFishEel: 310
     STFishPerch: 150
-    STFishPike: 450
-    STFishSturgeon: 450
+    STFishPike: 300
+    STFishSturgeon: 300
     STFishSunbleak: 150
     STFishTench: 350
-    STFishTrout: 450
-    STFishSneakyTench: 450
-    STFishFlish: 400
-    STFishDoubleEel: 700
-    STFishJellyfish: 950
+    STFishTrout: 300
+    STFishSneakyTench: 300
+    STFishFlish: 300
+    STFishDoubleEel: 300
+    STFishJellyfish: 400
     STFishPallidSturgeon: 1500
     # anom fish
-    STFishGoldfish: 1000
-    STFishLuminantGudgeon: 450
-    STFishSwiftLurker: 450
-    STFishDenseTench: 450
-    STFishCatfish: 2200
+    STFishGoldfish: 1500
+    STFishLuminantGudgeon: 300
+    STFishSwiftLurker: 300
+    STFishDenseTench: 300
+    STFishCatfish: 4200
     # misc
     Blunt: 35
-
+    #МАТЕРИАЛЫ###
+    STCraftBasicThreadKitT1: 50
+    STCraftCottonFabricT1: 50
+    STCraftPinePlankT1: 50
+    STCraftSheetCopperT1: 50
   categories:
     - name: shop-category-utilities
       priority: 0

@@ -24,6 +24,8 @@
           - CN
       - type: Bands
         band: Stalker
+        altBand: stalker
+        canChange: true
         bandIcon: cn
         bandProto: STClearSkyBand
         bandRankId: 2
@@ -49,7 +51,7 @@
       species:
       - Human
       - Dwarf
-  startingGear: StalkerClearSkyGear
+  startingGear: StalkerClearSkyGearHead
   supervisors: job-clearsky-supervisor
   canBeAntag: false
   special:
@@ -60,6 +62,8 @@
           - CN
       - type: Bands
         band: Stalker
+        altBand: stalker
+        canChange: true
         bandIcon: cn
         bandProto: STClearSkyBand
         bandRankId: 2
@@ -75,6 +79,14 @@
   id: StalkerClearSkyGear
   equipment:
     id: ClearSkyPDA
+    dogtag: ClothingNeckDogtagClearSky
+
+- type: startingGear
+  id: StalkerClearSkyGearHead
+  equipment:
+    id: ClearSkyPDA
+    dogtag: ClothingNeckDogtagClearSkyLeader
+
 - type: stBand
   id: STClearSkyBand
   name: Clear Sky

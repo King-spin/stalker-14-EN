@@ -46,7 +46,7 @@
     # Mutant parts
 
     #Boars -------- Health * T * 0.45
-    MutantPartBoarHoof: 36 # T1
+    MutantPartBoarHoof: 360 # T1
     MutantPartSeasonedBoarHoof: 792 # T2
     MutantPartOldBoarHoof: 1170 # T3
 
@@ -67,7 +67,7 @@
     MutantPartZombieHand: 990
 
     # New
-    
+
     ZoneArtifactAccumulator: 816
     ZoneArtifactDiamond: 2448
     ZoneArtifactCharger: 2448

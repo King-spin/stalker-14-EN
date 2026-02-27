@@ -18,6 +18,24 @@
   - STGlasses
 
 - type: roleLoadout
+  id: JobStalkerAtom
+  groups:
+  - STTrinketsGroupOne
+  - STTrinketsGroupTwo
+  - STBackpackGroup
+  - STStorageTrinkets
+  - STShoesGroup
+  - STOuterClothingStalkerGroup
+  - STMaskStalkerGroup
+  - STBeltStalkerGroup
+  - STlegsGroup
+  - STTorsoGroup
+  - STSuitstorageGroup
+  - STStorage
+  - STStorageAmmunition
+  - STGlasses
+
+- type: roleLoadout
   id: JobStalkerRookie
   groups:
   - STTrinketsGroupOne

@@ -273,9 +273,9 @@
     castShadows: false
   - type: Explosive
     explosionType: Default
-    maxIntensity: 50
-    intensitySlope: 5
-    totalIntensity: 150
+    maxIntensity: 20
+    intensitySlope: 3
+    totalIntensity: 50
     canCreateVacuum: false
   - type: TriggerOnUse
   - type: TimerTrigger
@@ -362,7 +362,7 @@
       flatReductions:
         Piercing: 2
       coefficients:
-       Piercing: 0.75
+       Piercing: 0.8
        Slash: 0.4
   - type: ExplosionResistance
     damageCoefficient: 0.95

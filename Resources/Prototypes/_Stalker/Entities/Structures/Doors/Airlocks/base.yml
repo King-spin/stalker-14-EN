@@ -178,6 +178,17 @@
     - type: AccessReader
       access: [["Freedom"] , ["FreedomNovice"]]
 
+- type: entity
+  id: MetalAltDoorFalloutFreedomOnlyClosed
+  name: стальная дверь
+  parent: MetalAltDoorFallout
+  description: Крепкая стальная дверь с надёжным замком.
+  suffix: ST, mapping, Свобода
+  components:
+    - type: AccessReader
+      access: [["Freedom"]]
+
+
 # Чистому небу
 
 - type: entity

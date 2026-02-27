@@ -2,48 +2,64 @@
   id: FreedomShopPreset
   itemsForSale:
     # Thermal group - 1
-    ZoneArtifactFireball: 1080
-    ZoneArtifactEye: 1440
-    ZoneArtifactFlame: 2160
+    ZoneArtifactFireball: 1188
+    ZoneArtifactEye: 1584
+    ZoneArtifactFlame: 2376
     # Thermal group - 2
-    ZoneArtifactCristall: 4320
-    ZoneArtifactLithosphere: 8640
+    ZoneArtifactCristall: 4752
+    ZoneArtifactLithosphere: 9504
     # Electrical group - 1
-    ZoneArtifactSparkler: 900
-    ZoneArtifactBattery: 1260
-    ZoneArtifactFlash: 2160
-    ArtMoon: 4320
-    ZoneArtifactTesla: 6480
-    ZoneArtifactIce: 8640
+    ZoneArtifactSparkler: 990
+    ZoneArtifactBattery: 1386
+    ZoneArtifactFlash: 2376
+    ArtMoon: 4752
+    ZoneArtifactTesla: 7128
+    ZoneArtifactIce: 9504
     # Gravity group - 1
-    ArtMedusa: 990
-    ZoneArtifactFlower: 1350
-    ZoneArtifactNightStar: 4320
+    ArtMedusa: 1089
+    ZoneArtifactFlower: 1485
+    ZoneArtifactNightStar: 4752
     # Gravity group - 2
-    ZoneArtifactVyvert: 1170
-    ZoneArtifactAmoeba: 1530
-    ZoneArtifactFloodlight: 972
-    ZoneArtifactGravi: 2160
-    ZoneArtifactGoldfish: 8640
-    ZoneArtifactSpring: 6480
-    ZoneArtifactFocus: 6480
-    ZoneArtifactStuntman: 8640
-    ZoneArtifactDistorter: 8640
-    ZoneArtifactSoul: 6480
+    ZoneArtifactVyvert: 1287
+    ZoneArtifactAmoeba: 1683
+    ZoneArtifactFloodlight: 1070
+    ZoneArtifactGravi: 2376
+    ZoneArtifactGoldfish: 9504
+    ZoneArtifactSpring: 7128
+    ZoneArtifactFocus: 7128
+    ZoneArtifactStuntman: 9504
+    ZoneArtifactDistorter: 9504
+    ZoneArtifactSoul: 7128
+    # Acidic group - 1
+    ZoneArtifactBlood: 2376
+    ZoneArtifactMeat: 4752
+    ZoneArtifactKolobok: 7128
+    # Acidic group - 2
+    ZoneArtifactPellicle: 1089
+    ZoneArtifactBaloon: 7128
+    # New
+    ZoneArtifactAccumulator: 1386
+    ZoneArtifactDiamond: 4752
+    ZoneArtifactCharger: 4752
+    ZoneArtifactToxic: 1386
+    ZoneArtifactCytoplasm: 1188
+    ZoneArtifactCompass: 4752
+    ZoneArtifactCrucifix: 9504
+    ZoneArtifactThorn: 1881
+    ZoneArtifactArf: 1386
+    ZoneArtifactDarkCube: 9504
+    ZoneArtifactBunch: 1881
+    ZoneArtifactRock: 1881
+    ZoneArtifactSun: 4752
+    ZoneArtifactRoot: 4752
+    ZoneArtifactConflagration: 1881
+
+    # Mutant parts
+
     # Food
     FoodMeatDogCooked: 84
     STFoodMeatSpiderCooked: 42
     FoodMeatBoarCooked: 132
-
-    # Acidic group - 1
-    ZoneArtifactBlood: 2160
-    ZoneArtifactMeat: 4320
-    ZoneArtifactKolobok: 6480
-    # Acidic group - 2
-    ZoneArtifactPellicle: 990
-    ZoneArtifactBaloon: 6480
-
-    # Mutant parts
 
     #Boars -------- Health * T * 0.45
     MutantPartBoarHoof: 304 # T1
@@ -65,27 +81,7 @@
     MutantPartOraculeEye: 1794
     MutantPartPseudogiantHeart: 9360
     MutantPartZombieHand: 760
-
-    # New
-    
-    ZoneArtifactAccumulator: 1260
-    ZoneArtifactDiamond: 4320
-    ZoneArtifactCharger: 4320
-    ZoneArtifactToxic: 1260
-    ZoneArtifactCytoplasm: 1080
-    ZoneArtifactCompass: 4320
-    ZoneArtifactCrucifix: 8640
-    ZoneArtifactThorn: 1710
-    ZoneArtifactArf: 1260
-    ZoneArtifactDarkCube: 8640
-    ZoneArtifactBunch: 1710
-    ZoneArtifactRock: 1710
-    ZoneArtifactSun: 4320
-    ZoneArtifactRoot: 4320
-    ZoneArtifactConflagration: 1710
-
         # Mutant parts EN
-
     MutantPartCatGland: 115
     MutantPartBearClaw: 345
     MutantPartBearPaw: 663

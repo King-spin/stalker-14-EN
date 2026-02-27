@@ -283,6 +283,8 @@
   id: ZoneArtifactDarkCube
   suffix: Stalker, Тёмный куб
   components:
+  - type: Item
+    size: Ginormous
   - type: Sprite
     state: dark_cube
     scale: 0.8, 0.8
@@ -301,8 +303,6 @@
     blacklist:
       tags:
       - STArtifact
-    quickInsert: true
-    areaInsert: true
   - type: ClothingSpeedModifier
     walkModifier: 0.85
     sprintModifier: 0.85

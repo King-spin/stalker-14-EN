@@ -42,9 +42,9 @@
     # Acidic group - 2
     ZoneArtifactPellicle: 660
     ZoneArtifactBaloon: 4320
-    
+
     # New
-    
+
     ZoneArtifactAccumulator: 840
     ZoneArtifactDiamond: 2880
     ZoneArtifactCharger: 2880
@@ -105,16 +105,41 @@
       StalkerBallBat: 70
       # Guns
       # 7mm
+      STWeaponShotgunTOZ34: 200 # T1
+      STWeaponShotgunMP133: 340 # T2
+      STWeaponShotgunMossbergM88: 560
+      STWeaponShotgunMP153: 650 # T2
       STWeaponShotgunBenelliM4Super90: 800
       STWeaponShotgunSPAS: 1500
+      # 9x18
+      WeaponPistolStalkerPM: 100 #T1
+      # 7,62x25
+      WeaponPistolStalkerTT: 250 #T1
       # Smg
       STWeaponSMGMP5: 2500
       STWeaponSMGPP91: 2000
+      # 5,45x39
+      STWeaponRifleSaiga545: 900 # T3
+      STWeaponRifleAKS74U: 1400
+      STWeaponRifleAKS74UBlack: 1400
+      STWeaponRifleAKS74: 4000
+      STWeaponRifleAKS74Green: 4000
       # Other
       STMetroWeaponRifleVSV: 2500
       STWeaponRifleGalatz: 3500
       STWeaponRevolverSWPC325TR: 140
       STWeaponRevolverChiappaRhino60DS: 1100
+      STWeaponRevolverRugerRedhawk: 400
+      WeaponStalkerPistolTec9: 250
+      STWeaponSMGMP40: 1000
+      WeaponPistolStalkerAPS: 500 #T2
+      STWeaponSniperSKS: 1850 # T2
+      STWeaponSniperMosin: 1500
+      STWeaponRifleL85: 1700
+      STWeaponSMGPPSh41: 2500
+      STWeaponSMGPP19: 2000
+      STWeaponRifleFAL: 1600
+      STWeaponRifleM16: 2500
   - name: shop-category-magazines
     priority: 2
     items:
@@ -124,10 +149,24 @@
       PPSHDrum: 2000
       BasePPSHMag: 350
       VityazMag: 400
+      # 7,62x39
+      Base739Mag10: 350 #T1
+      # 5,45x39
+      Base545Mag10: 150 #T1
+      545Mag20: 250
+      545Mag30: 500
       # Other
-      TTMag: 100
-      STSpeedLoader45ACPEmpty: 200
-      BaseAPSMag: 100
+      BaseTEC9Mag: 90
+      BasePMMag: 12
+      TTMag: 15
+      BaseAPSMag: 300
+      MP40Mag: 150
+      BizonMag: 375
+      BizonMag919: 400
+      STSpeedLoader45ACPEmpty: 100
+      556Mag20: 250
+      Base751Mag10: 350
+      556Mag30: 500
   - name: shop-category-ammunition
     priority: 3
     items:
@@ -144,6 +183,10 @@
       919PSTBox: 400
       919RIPBox: 200
       919PBMBox: 1000
+      # 9.18
+      918PGJBox: 80
+      918SP7Box: 200
+      918PSTBox: 400
       # 5.56
       556FMJBox: 700
       556M855Box: 1500
@@ -207,7 +250,7 @@
     items:
       STElasticRubberRed: 15
       STElasticRubberGreen: 15
-      STElasticRubberBlue: 15      
+      STElasticRubberBlue: 15
       STRadioHeadset: 150
       ToolkitTearOne: 35000
       CraftSaw: 20000

@@ -1,0 +1,27 @@
+- type: entity
+  id: STDarkLight
+  name: абстрактный источник света
+  description: An invisible, non-physical source of illumination for use in completely dark areas.
+  # This prototype has no sprite or item components. It's purely a
+  # light emitter and can be spawned anywhere without a physical
+  # representation.
+  components:
+    - type: PointLight
+      radius: 2
+      color: "#a5b3cc"
+      energy: 0.3
+      enabled: true
+      netsync: false
+    - type: Tag
+      tags:
+        - LightSource
+
+# spawner for the abstract light source
+- type: RandomSpawner
+  name: спавнер абстрактного источника света
+  id: STDarkLightSpawner
+  probability: 1.0
+  minCount: 1
+  maxCount: 1
+  prototypes:
+    - STDarkLight
