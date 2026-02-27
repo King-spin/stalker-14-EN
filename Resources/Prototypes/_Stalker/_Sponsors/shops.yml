@@ -180,7 +180,7 @@
   - name: Персональная категория
     items:
       CasseteFiftyEightRadio: 250
-      STWeaponRifleZastavaM92: 8000
+      STWeaponSniperHK417: 15000
       STWeaponRifleStalkerAK15: 15000
 
 - type: personalShop
