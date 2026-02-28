@@ -1,7 +1,7 @@
 - type: entity
   id: FloorRitualChasmEntity
   name: chasm
-  description: The darkness inside is blinding.
+  description: The darkness is blinding.
   suffix: Ritual Chasm, Renegade
   placement:
     mode: SnapgridCenter
@@ -11,10 +11,11 @@
   # Chasm
   - type: RitualChasm
     throwSound: /Audio/_Stalker/Effects/springboard_blowout.ogg
-    relocateSound:
-      params:
-        volume: -4
-      collection: StalkerHorrorSound
+    # UNFORTUNATELY We Cant Have Nice Things, this is the sfx that plays globally when something gets relocated
+    # relocateSound:
+    #   params:
+    #     volume: -4
+    #   collection: StalkerHorrorSound
     relocatedLocalSound:
       params:
         volume: 8
