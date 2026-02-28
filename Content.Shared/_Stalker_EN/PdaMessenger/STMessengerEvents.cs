@@ -103,3 +103,18 @@ public sealed class STMessengerViewChatEvent : CartridgeMessageEvent
         ChatId = chatId;
     }
 }
+
+/// <summary>
+/// Client requests navigation to a merc board offer from a clickable offer link in chat.
+/// Handled by the messenger system, which raises a local event for the merc board to pick up.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class STMessengerNavigateToOfferEvent : CartridgeMessageEvent
+{
+    public readonly uint OfferId;
+
+    public STMessengerNavigateToOfferEvent(uint offerId)
+    {
+        OfferId = offerId;
+    }
+}

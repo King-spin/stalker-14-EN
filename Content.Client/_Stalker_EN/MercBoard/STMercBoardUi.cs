@@ -55,10 +55,10 @@ public sealed partial class STMercBoardUi : UIFragment
                 new STMercBoardWithdrawOfferEvent(offerId)));
         };
 
-        _mainPage.OnContactPressed += posterMessengerId =>
+        _mainPage.OnContactPressed += (posterMessengerId, offerId) =>
         {
             userInterface.SendMessage(new CartridgeUiMessage(
-                new STMercBoardContactPosterEvent(posterMessengerId)));
+                new STMercBoardContactPosterEvent(posterMessengerId, offerId)));
         };
 
         _postPage.OnBack += () =>
@@ -81,6 +81,9 @@ public sealed partial class STMercBoardUi : UIFragment
     {
         if (state is not STMercBoardUiState boardState)
             return;
+
+        if (boardState.SearchQuery is not null)
+            _mainPage?.SetSearchQuery(boardState.SearchQuery);
 
         _mainPage?.UpdateState(boardState);
     }

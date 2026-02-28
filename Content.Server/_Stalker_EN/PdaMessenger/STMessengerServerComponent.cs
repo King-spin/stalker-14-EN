@@ -80,6 +80,13 @@ public sealed partial class STMessengerServerComponent : Component
     /// </summary>
     [ViewVariables]
     public string? PendingNavigateToChatId;
+
+    /// <summary>
+    /// One-shot draft message to pre-fill in the compose page (e.g. merc board offer reference).
+    /// Consumed and cleared alongside <see cref="PendingNavigateToChatId"/>.
+    /// </summary>
+    [ViewVariables]
+    public string? PendingDraftMessage;
 }
 
 /// <summary>

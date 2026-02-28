@@ -39,17 +39,26 @@ public sealed class STMessengerUiState : BoundUserInterfaceState
     /// </summary>
     public readonly string? NavigateToChatId;
 
+    /// <summary>
+    /// When set alongside <see cref="NavigateToChatId"/>, the compose page opens with this text pre-filled.
+    /// Used by external systems (e.g. merc board contact with offer reference).
+    /// Null means no draft pre-fill.
+    /// </summary>
+    public readonly string? DraftMessage;
+
     public STMessengerUiState(
         string messengerId,
         List<STMessengerChat> channels,
         List<STMessengerChat> directMessages,
         List<STMessengerContactInfo> contacts,
-        string? navigateToChatId = null)
+        string? navigateToChatId = null,
+        string? draftMessage = null)
     {
         MessengerId = messengerId;
         Channels = channels;
         DirectMessages = directMessages;
         Contacts = contacts;
         NavigateToChatId = navigateToChatId;
+        DraftMessage = draftMessage;
     }
 }

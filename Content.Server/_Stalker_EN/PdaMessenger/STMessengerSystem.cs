@@ -1,3 +1,4 @@
+using Content.Server._Stalker_EN.MercBoard;
 using Content.Server.Administration.Logs;
 using Content.Server.CartridgeLoader;
 using Content.Server.Database;
@@ -7,6 +8,7 @@ using Content.Server.PDA.Ringer;
 using Content.Shared._Stalker.Bands;
 using Content.Shared._Stalker_EN.CCVar;
 using Content.Shared._Stalker_EN.FactionRelations;
+using Content.Shared._Stalker_EN.MercBoard;
 using Content.Shared._Stalker_EN.PdaMessenger;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
@@ -231,6 +233,9 @@ public sealed partial class STMessengerSystem : EntitySystem
                 break;
             case STMessengerViewChatEvent viewChat:
                 OnViewChat(args.LoaderUid, viewChat);
+                break;
+            case STMessengerNavigateToOfferEvent navigateToOffer:
+                OnNavigateToOffer(args.LoaderUid, navigateToOffer);
                 break;
         }
     }
@@ -552,6 +557,19 @@ public sealed partial class STMessengerSystem : EntitySystem
         }
     }
 
+    private void OnNavigateToOffer(NetEntity loaderNetUid, STMessengerNavigateToOfferEvent navigateToOffer)
+    {
+        var loaderUid = GetEntity(loaderNetUid);
+
+        // Find the merc board cartridge on the same PDA
+        if (!_cartridgeLoader.TryGetProgram<STMercBoardComponent>(loaderUid, out var mercBoardUid, out _))
+            return;
+
+        // Raise local event on the merc board entity — no dependency on STMercBoardSystem
+        var ev = new STOpenMercBoardOfferEvent(loaderUid, navigateToOffer.OfferId);
+        RaiseLocalEvent(mercBoardUid.Value, ref ev);
+    }
+
     private void MarkChatAsRead(string chatId, STMessengerServerComponent server)
     {
         var isDm = chatId.StartsWith(STMessengerChat.DmChatPrefix, StringComparison.Ordinal);
@@ -582,11 +600,14 @@ public sealed partial class STMessengerSystem : EntitySystem
         string? navigateTo = server.PendingNavigateToChatId;
         server.PendingNavigateToChatId = null;
 
-        var state = BuildUiState(loaderUid, server, navigateToChatId: navigateTo);
+        string? draftMessage = server.PendingDraftMessage;
+        server.PendingDraftMessage = null;
+
+        var state = BuildUiState(loaderUid, server, navigateToChatId: navigateTo, draftMessage: draftMessage);
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private STMessengerUiState BuildUiState(EntityUid loaderUid, STMessengerServerComponent server, string? navigateToChatId = null)
+    private STMessengerUiState BuildUiState(EntityUid loaderUid, STMessengerServerComponent server, string? navigateToChatId = null, string? draftMessage = null)
     {
         _viewedChat.TryGetValue(loaderUid, out var viewedChatId);
 
@@ -645,7 +666,8 @@ public sealed partial class STMessengerSystem : EntitySystem
             channels,
             directMessages,
             contactInfos,
-            navigateToChatId);
+            navigateToChatId,
+            draftMessage);
     }
 
     private int CountUnread(string chatId, List<STMessengerMessage>? channelMessages, STMessengerServerComponent server)
@@ -939,7 +961,12 @@ public sealed partial class STMessengerSystem : EntitySystem
     /// and navigates to their DM conversation.
     /// Called by external cartridge systems (e.g. merc board Contact button).
     /// </summary>
-    public void OpenDm(EntityUid loaderUid, EntityUid messengerCartridgeUid, string contactMessengerId)
+    /// <summary>
+    /// Activates the messenger cartridge on a PDA, adds a contact by messenger ID,
+    /// and navigates to their DM conversation. Optionally pre-fills a draft message.
+    /// Called by external cartridge systems (e.g. merc board Contact button).
+    /// </summary>
+    public void OpenDm(EntityUid loaderUid, EntityUid messengerCartridgeUid, string contactMessengerId, string? draftMessage = null)
     {
         TryAddContact(messengerCartridgeUid, contactMessengerId);
 
@@ -949,6 +976,7 @@ public sealed partial class STMessengerSystem : EntitySystem
             _viewedChat[loaderUid] = dmChatId;
             MarkChatAsRead(dmChatId, server);
             server.PendingNavigateToChatId = dmChatId;
+            server.PendingDraftMessage = draftMessage;
         }
 
         // Only one SetUiState per tick — client swaps to messenger UI,

@@ -1,4 +1,5 @@
 using Content.Shared.CartridgeLoader;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Stalker_EN.MercBoard;
@@ -48,9 +49,18 @@ public sealed class STMercBoardWithdrawOfferEvent : CartridgeMessageEvent
 public sealed class STMercBoardContactPosterEvent : CartridgeMessageEvent
 {
     public readonly string PosterMessengerId;
+    public readonly uint OfferId;
 
-    public STMercBoardContactPosterEvent(string posterMessengerId)
+    public STMercBoardContactPosterEvent(string posterMessengerId, uint offerId)
     {
         PosterMessengerId = posterMessengerId;
+        OfferId = offerId;
     }
 }
+
+/// <summary>
+/// Local by-ref entity event raised on a merc board cartridge entity to request
+/// opening a specific offer. Decouples messenger → merc board dependency.
+/// </summary>
+[ByRefEvent]
+public readonly record struct STOpenMercBoardOfferEvent(EntityUid LoaderUid, uint OfferId);

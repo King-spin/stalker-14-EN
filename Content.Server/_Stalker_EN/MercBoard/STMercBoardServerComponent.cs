@@ -43,4 +43,11 @@ public sealed partial class STMercBoardServerComponent : Component
     [AutoPausedField]
     [ViewVariables]
     public TimeSpan NextContactTime;
+
+    /// <summary>
+    /// One-shot search pre-fill. Consumed and cleared by the next UI state update.
+    /// Set by external systems (e.g. messenger offer link navigation).
+    /// </summary>
+    [ViewVariables]
+    public string? PendingSearchQuery;
 }

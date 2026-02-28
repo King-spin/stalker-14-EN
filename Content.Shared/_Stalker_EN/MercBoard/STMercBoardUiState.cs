@@ -40,13 +40,20 @@ public sealed class STMercBoardUiState : BoundUserInterfaceState
     /// </summary>
     public readonly int MyJobCount;
 
+    /// <summary>
+    /// One-shot search pre-fill from the server (e.g. when navigating from an offer link).
+    /// Null means no search pre-fill requested.
+    /// </summary>
+    public readonly string? SearchQuery;
+
     public STMercBoardUiState(
         List<STMercBoardOffer> services,
         List<STMercBoardOffer> jobs,
         bool isMercenary,
         string ownerCharacterName,
         int myServiceCount,
-        int myJobCount)
+        int myJobCount,
+        string? searchQuery = null)
     {
         Services = services;
         Jobs = jobs;
@@ -54,5 +61,6 @@ public sealed class STMercBoardUiState : BoundUserInterfaceState
         OwnerCharacterName = ownerCharacterName;
         MyServiceCount = myServiceCount;
         MyJobCount = myJobCount;
+        SearchQuery = searchQuery;
     }
 }

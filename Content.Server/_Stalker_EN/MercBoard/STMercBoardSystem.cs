@@ -72,6 +72,7 @@ public sealed class STMercBoardSystem : EntitySystem
         SubscribeLocalEvent<STMercBoardComponent, CartridgeActivatedEvent>(OnCartridgeActivated);
         SubscribeLocalEvent<STMercBoardComponent, CartridgeDeactivatedEvent>(OnCartridgeDeactivated);
         SubscribeLocalEvent<STMercBoardComponent, CartridgeMessageEvent>(OnMessage);
+        SubscribeLocalEvent<STMercBoardComponent, STOpenMercBoardOfferEvent>(OnOpenOffer);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
     }
@@ -99,6 +100,15 @@ public sealed class STMercBoardSystem : EntitySystem
     private void OnCartridgeDeactivated(Entity<STMercBoardComponent> ent, ref CartridgeDeactivatedEvent args)
     {
         _activeLoaders.Remove(args.Loader);
+    }
+
+    private void OnOpenOffer(Entity<STMercBoardComponent> ent, ref STOpenMercBoardOfferEvent args)
+    {
+        if (!TryComp<STMercBoardServerComponent>(ent, out var server))
+            return;
+
+        server.PendingSearchQuery = $"#{args.OfferId}";
+        _cartridgeLoader.ActivateProgram(args.LoaderUid, ent);
     }
 
     private void OnMessage(Entity<STMercBoardComponent> ent, ref CartridgeMessageEvent args)
@@ -240,10 +250,12 @@ public sealed class STMercBoardSystem : EntitySystem
         if (!_cartridgeLoader.TryGetProgram<STMessengerComponent>(loaderUid, out var messengerUid, out _))
             return;
 
-        _messenger.OpenDm(loaderUid, messengerUid.Value, contact.PosterMessengerId);
+        // Format draft message with offer reference
+        var draftMessage = STMercBoardOffer.FormatRef(contact.OfferId);
+        _messenger.OpenDm(loaderUid, messengerUid.Value, contact.PosterMessengerId, draftMessage);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(args.Actor):player} opened DM from merc board with: {contact.PosterMessengerId}");
+            $"{ToPrettyString(args.Actor):player} opened DM from merc board with: {contact.PosterMessengerId} (offer #{contact.OfferId})");
     }
 
     #endregion
@@ -255,11 +267,15 @@ public sealed class STMercBoardSystem : EntitySystem
         EntityUid loaderUid,
         STMercBoardServerComponent server)
     {
-        var state = BuildUiState(server);
+        // Consume one-shot search pre-fill from external systems (e.g. offer link navigation)
+        var searchQuery = server.PendingSearchQuery;
+        server.PendingSearchQuery = null;
+
+        var state = BuildUiState(server, searchQuery);
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private STMercBoardUiState BuildUiState(STMercBoardServerComponent server)
+    private STMercBoardUiState BuildUiState(STMercBoardServerComponent server, string? searchQuery = null)
     {
         var services = new List<STMercBoardOffer>(_services.Values);
 
@@ -288,7 +304,8 @@ public sealed class STMercBoardSystem : EntitySystem
             server.IsMercenary,
             server.OwnerCharacterName,
             myServiceCount,
-            myJobCount);
+            myJobCount,
+            searchQuery);
     }
 
     private void BroadcastUiUpdate()
