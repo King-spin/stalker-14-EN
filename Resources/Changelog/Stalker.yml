@@ -916,5 +916,24 @@
   id: 104
   time: '2026-03-01T14:48:45.807141+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/553
+- author: crocodilecarousel
+  changes:
+  - message: Monolith altar kit
+    type: Add
+  - message: Monolith supply crate updated with new kits
+    type: Tweak
+  - message: Monolith now have a defib in their medical kit
+    type: Tweak
+  - message: Monolith PDA now removeable
+    type: Tweak
+  - message: Redline jacket inventory updated to two 2x2 pockets
+    type: Tweak
+  - message: SAW inhands
+    type: Fix
+  - message: Pointman standard kit now works as expected
+    type: Fix
+  id: 105
+  time: '2026-03-01T14:52:13.401188+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/548
 Name: Stalker
 Order: -1
