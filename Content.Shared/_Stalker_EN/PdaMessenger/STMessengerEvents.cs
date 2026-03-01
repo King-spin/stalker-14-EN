@@ -105,8 +105,8 @@ public sealed class STMessengerViewChatEvent : CartridgeMessageEvent
 }
 
 /// <summary>
-/// Client requests navigation to a merc board offer from a clickable offer link in chat.
-/// Handled by the messenger system, which raises a local event for the merc board to pick up.
+/// Client requests navigation to a bulletin board offer from a clickable offer link in chat.
+/// Handled by the messenger system, which raises a local event for the bulletin board to pick up.
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class STMessengerNavigateToOfferEvent : CartridgeMessageEvent

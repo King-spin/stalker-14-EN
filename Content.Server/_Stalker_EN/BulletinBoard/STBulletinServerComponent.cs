@@ -1,16 +1,17 @@
-using Content.Shared._Stalker_EN.MercBoard;
+using Content.Shared._Stalker_EN.BulletinBoard;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server._Stalker_EN.MercBoard;
+namespace Content.Server._Stalker_EN.BulletinBoard;
 
 /// <summary>
-/// Server-side state for a mercenary board PDA cartridge instance.
-/// Not networked — client receives data via <see cref="STMercBoardUiState"/> through the BUI system.
+/// Server-side state for a bulletin board PDA cartridge instance.
+/// Not networked — client receives data via <see cref="Content.Shared._Stalker_EN.BulletinBoard.STBulletinUiState"/>
+/// through the BUI system.
 /// </summary>
 [RegisterComponent, AutoGenerateComponentPause]
-[Access(typeof(STMercBoardSystem))]
-public sealed partial class STMercBoardServerComponent : Component
+[Access(typeof(STBulletinBoardSystem))]
+public sealed partial class STBulletinServerComponent : Component
 {
     /// <summary>
     /// The player's account user ID (from NetUserId). Used with character name as composite identity.
@@ -25,17 +26,10 @@ public sealed partial class STMercBoardServerComponent : Component
     public string OwnerCharacterName = string.Empty;
 
     /// <summary>
-    /// Whether the PDA owner is a mercenary (cached at spawn time).
+    /// The mob entity owning this PDA. Used for dynamic band membership checks.
     /// </summary>
     [ViewVariables]
-    public bool IsMercenary;
-
-    /// <summary>
-    /// Next allowed post time (absolute simulation time). Rate-limits offer creation.
-    /// </summary>
-    [AutoPausedField]
-    [ViewVariables]
-    public TimeSpan NextPostTime;
+    public EntityUid? OwnerMob;
 
     /// <summary>
     /// Next allowed contact time (absolute simulation time). Rate-limits contact button usage.
@@ -50,4 +44,11 @@ public sealed partial class STMercBoardServerComponent : Component
     /// </summary>
     [ViewVariables]
     public string? PendingSearchQuery;
+
+    /// <summary>
+    /// One-shot category tab switch. Consumed and cleared by the next UI state update.
+    /// Set alongside <see cref="PendingSearchQuery"/> when navigating from an offer link.
+    /// </summary>
+    [ViewVariables]
+    public STBulletinCategory? PendingCategory;
 }

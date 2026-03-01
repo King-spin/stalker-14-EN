@@ -1,4 +1,3 @@
-using Content.Server._Stalker_EN.MercBoard;
 using Content.Server.Administration.Logs;
 using Content.Server.CartridgeLoader;
 using Content.Server.Database;
@@ -8,7 +7,7 @@ using Content.Server.PDA.Ringer;
 using Content.Shared._Stalker.Bands;
 using Content.Shared._Stalker_EN.CCVar;
 using Content.Shared._Stalker_EN.FactionRelations;
-using Content.Shared._Stalker_EN.MercBoard;
+using Content.Shared._Stalker_EN.BulletinBoard;
 using Content.Shared._Stalker_EN.PdaMessenger;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
@@ -561,13 +560,20 @@ public sealed partial class STMessengerSystem : EntitySystem
     {
         var loaderUid = GetEntity(loaderNetUid);
 
-        // Find the merc board cartridge on the same PDA
-        if (!_cartridgeLoader.TryGetProgram<STMercBoardComponent>(loaderUid, out var mercBoardUid, out _))
-            return;
+        // Raise the event on all bulletin board cartridges on this PDA.
+        // Each board checks if it owns the offer via the global index and only the correct one activates.
+        // If the offer was withdrawn (not in index), the first board activates with search pre-fill as fallback.
+        var ev = new STOpenBulletinOfferEvent(loaderUid, navigateToOffer.OfferId);
+        var installed = _cartridgeLoader.GetInstalled(loaderUid);
+        foreach (var progUid in installed)
+        {
+            if (!HasComp<STBulletinBoardComponent>(progUid))
+                continue;
 
-        // Raise local event on the merc board entity — no dependency on STMercBoardSystem
-        var ev = new STOpenMercBoardOfferEvent(loaderUid, navigateToOffer.OfferId);
-        RaiseLocalEvent(mercBoardUid.Value, ref ev);
+            RaiseLocalEvent(progUid, ref ev);
+            if (ev.Handled)
+                return;
+        }
     }
 
     private void MarkChatAsRead(string chatId, STMessengerServerComponent server)
@@ -607,7 +613,11 @@ public sealed partial class STMessengerSystem : EntitySystem
         _cartridgeLoader.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private STMessengerUiState BuildUiState(EntityUid loaderUid, STMessengerServerComponent server, string? navigateToChatId = null, string? draftMessage = null)
+    private STMessengerUiState BuildUiState(
+        EntityUid loaderUid,
+        STMessengerServerComponent server,
+        string? navigateToChatId = null,
+        string? draftMessage = null)
     {
         _viewedChat.TryGetValue(loaderUid, out var viewedChatId);
 
@@ -837,7 +847,7 @@ public sealed partial class STMessengerSystem : EntitySystem
         var payload = new WebhookPayload
         {
             Username = senderName,
-            Content = $"**[{channelName}] {senderName}**\n> {content}",
+            Content = $"**[{channelName}] {senderName}**\n`{content}`",
         };
 
         _discord.CreateMessage(identifier, payload);
@@ -958,15 +968,14 @@ public sealed partial class STMessengerSystem : EntitySystem
 
     /// <summary>
     /// Activates the messenger cartridge on a PDA, adds a contact by messenger ID,
-    /// and navigates to their DM conversation.
-    /// Called by external cartridge systems (e.g. merc board Contact button).
-    /// </summary>
-    /// <summary>
-    /// Activates the messenger cartridge on a PDA, adds a contact by messenger ID,
     /// and navigates to their DM conversation. Optionally pre-fills a draft message.
-    /// Called by external cartridge systems (e.g. merc board Contact button).
+    /// Called by external cartridge systems (e.g. bulletin board Contact button).
     /// </summary>
-    public void OpenDm(EntityUid loaderUid, EntityUid messengerCartridgeUid, string contactMessengerId, string? draftMessage = null)
+    public void OpenDm(
+        EntityUid loaderUid,
+        EntityUid messengerCartridgeUid,
+        string contactMessengerId,
+        string? draftMessage = null)
     {
         TryAddContact(messengerCartridgeUid, contactMessengerId);
 

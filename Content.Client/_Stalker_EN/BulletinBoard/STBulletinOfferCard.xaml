@@ -1,5 +1,4 @@
 <PanelContainer xmlns="https://spacestation14.io"
-                xmlns:merc="clr-namespace:Content.Client._Stalker_EN.MercBoard"
                 HorizontalExpand="True"
                 Margin="0">
 
@@ -14,12 +13,6 @@
 
         <!-- Elapsed time -->
         <Label Name="TimeLabel" StyleClasses="LabelSubText" Margin="0 0 0 2"/>
-
-        <!-- Price -->
-        <Label Name="PriceLabel" Margin="0 0 0 1"/>
-
-        <!-- Duration -->
-        <Label Name="DurationLabel" Margin="0 0 0 2"/>
 
         <!-- Description -->
         <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True" Margin="0 2 0 4"/>

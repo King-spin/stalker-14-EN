@@ -1,30 +1,22 @@
 <BoxContainer xmlns="https://spacestation14.io"
-              xmlns:merc="clr-namespace:Content.Client._Stalker_EN.MercBoard"
               xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
               xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
               Orientation="Vertical"
               HorizontalExpand="True"
               VerticalExpand="True"
+              RectClipContent="True"
               Margin="4">
 
     <!-- Header -->
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 0 0 4">
-        <Button Name="BackButton" Text="{Loc 'st-merc-board-back'}" MinWidth="60"/>
+        <Button Name="BackButton" MinWidth="60"/>
         <Label Name="TitleLabel" StyleClasses="LabelHeading" HorizontalExpand="True" Align="Center"/>
     </BoxContainer>
 
     <customControls:HSeparator Margin="0 2 0 2"/>
 
-    <!-- Price field -->
-    <Label Text="{Loc 'st-merc-board-price-label'}" StyleClasses="LabelKeyText" Margin="0 4 0 2"/>
-    <LineEdit Name="PriceInput" PlaceHolder="{Loc 'st-merc-board-price-placeholder'}" HorizontalExpand="True"/>
-
-    <!-- Duration field -->
-    <Label Text="{Loc 'st-merc-board-duration-label'}" StyleClasses="LabelKeyText" Margin="0 4 0 2"/>
-    <LineEdit Name="DurationInput" PlaceHolder="{Loc 'st-merc-board-duration-placeholder'}" HorizontalExpand="True"/>
-
     <!-- Description field -->
-    <Label Text="{Loc 'st-merc-board-description-label'}" StyleClasses="LabelKeyText" Margin="0 4 0 2"/>
+    <Label Name="DescriptionFieldLabel" StyleClasses="LabelKeyText" Margin="0 4 0 2"/>
     <PanelContainer VerticalExpand="True" HorizontalExpand="True" MinSize="0 80">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#333237"/>
@@ -36,6 +28,6 @@
     <Label Name="CharCounter" HorizontalAlignment="Right" Margin="0 2 0 0" StyleClasses="LabelSubText"/>
 
     <!-- Submit button -->
-    <Button Name="SubmitButton" Text="{Loc 'st-merc-board-post-submit'}" HorizontalExpand="True" Margin="0 4 0 0"/>
+    <Button Name="SubmitButton" HorizontalExpand="True" Margin="0 4 0 0"/>
 
 </BoxContainer>

@@ -1,22 +1,21 @@
 using Content.Client.UserInterface.Fragments;
-using Content.Shared._Stalker_EN.MercBoard;
+using Content.Shared._Stalker_EN.BulletinBoard;
 using Content.Shared.CartridgeLoader;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client._Stalker_EN.MercBoard;
+namespace Content.Client._Stalker_EN.BulletinBoard;
 
 /// <summary>
-/// UIFragment implementation for the mercenary offers board cartridge.
-/// Manages two pages: main (with Services/Jobs tabs) and post form.
+/// UIFragment implementation for a generic bulletin board cartridge.
+/// Manages two pages: main (with Primary/Secondary tabs) and post form.
 /// </summary>
-public sealed partial class STMercBoardUi : UIFragment
+public sealed partial class STBulletinBoardUi : UIFragment
 {
     private BoxContainer? _root;
-    private STMercBoardMainPage? _mainPage;
-    private STMercBoardPostPage? _postPage;
-    private BoundUserInterface? _userInterface;
+    private STBulletinMainPage? _mainPage;
+    private STBulletinPostPage? _postPage;
 
     public override Control GetUIFragmentRoot()
     {
@@ -25,8 +24,6 @@ public sealed partial class STMercBoardUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _userInterface = userInterface;
-
         _root = new BoxContainer
         {
             Orientation = BoxContainer.LayoutOrientation.Vertical,
@@ -34,31 +31,44 @@ public sealed partial class STMercBoardUi : UIFragment
             VerticalExpand = true,
         };
 
-        _mainPage = new STMercBoardMainPage();
-        _postPage = new STMercBoardPostPage();
+        _mainPage = new STBulletinMainPage();
+        _postPage = new STBulletinPostPage();
+
+        if (fragmentOwner.HasValue)
+        {
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (entMan.TryGetComponent<CartridgeComponent>(fragmentOwner.Value, out var cartridge)
+                && cartridge.Icon is not null)
+            {
+                _mainPage.HeaderIcon.SetFromSpriteSpecifier(cartridge.Icon);
+            }
+        }
 
         _root.AddChild(_mainPage);
         _root.AddChild(_postPage);
 
         _postPage.Visible = false;
 
-        _mainPage.OnPostPressed += offerType =>
+        _mainPage.OnPostPressed += category =>
         {
+            if (_mainPage.IsAtPostLimit(category))
+                return;
+
             _mainPage.Visible = false;
             _postPage.Visible = true;
-            _postPage.SetOfferType(offerType);
+            _postPage.SetCategory(category, _mainPage.LastConfig);
         };
 
         _mainPage.OnWithdrawPressed += offerId =>
         {
             userInterface.SendMessage(new CartridgeUiMessage(
-                new STMercBoardWithdrawOfferEvent(offerId)));
+                new STBulletinWithdrawOfferEvent(offerId)));
         };
 
         _mainPage.OnContactPressed += (posterMessengerId, offerId) =>
         {
             userInterface.SendMessage(new CartridgeUiMessage(
-                new STMercBoardContactPosterEvent(posterMessengerId, offerId)));
+                new STBulletinContactPosterEvent(posterMessengerId, offerId)));
         };
 
         _postPage.OnBack += () =>
@@ -67,10 +77,10 @@ public sealed partial class STMercBoardUi : UIFragment
             _mainPage.Visible = true;
         };
 
-        _postPage.OnSubmit += (offerType, description, price, duration) =>
+        _postPage.OnSubmit += (category, description) =>
         {
             userInterface.SendMessage(new CartridgeUiMessage(
-                new STMercBoardPostOfferEvent(offerType, description, price, duration)));
+                new STBulletinPostOfferEvent(category, description)));
 
             _postPage.Visible = false;
             _mainPage.Visible = true;
@@ -79,7 +89,7 @@ public sealed partial class STMercBoardUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not STMercBoardUiState boardState)
+        if (state is not STBulletinUiState boardState)
             return;
 
         if (boardState.SearchQuery is not null)
