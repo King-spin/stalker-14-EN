@@ -12,6 +12,7 @@ using Content.Shared._Stalker_EN.PdaMessenger;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.PDA;
@@ -138,6 +139,7 @@ public sealed partial class STMessengerSystem : EntitySystem
         SubscribeLocalEvent<STMessengerServerComponent, EntityTerminatingEvent>(OnMessengerTerminating);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PdaComponent, GotEquippedEvent>(OnPdaEquipped);
+        SubscribeLocalEvent<PdaComponent, GotEquippedHandEvent>(OnPdaPickedUp);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
 
@@ -324,8 +326,8 @@ public sealed partial class STMessengerSystem : EntitySystem
         _nextMessageId.TryAdd(storageKey, 0);
         var msgId = ++_nextMessageId[storageKey];
 
-        // Resolve faction for non-anonymous channel messages; null hides faction on anonymous/DM messages
-        string? senderFaction = (!send.IsAnonymous && !isDm)
+        // Resolve faction for non-anonymous messages; null hides faction on anonymous messages
+        string? senderFaction = !send.IsAnonymous
             ? ResolveContactFaction(senderKey)
             : null;
 
@@ -665,6 +667,16 @@ public sealed partial class STMessengerSystem : EntitySystem
         var contactInfos = new List<STMessengerContactInfo>();
         foreach (var (contactMessengerId, contactEntry) in server.Contacts)
         {
+            // Fresh-resolve faction for online contacts; fall back to cached for offline
+            var contactKey = (contactEntry.UserId, contactEntry.CharacterName);
+            var currentFaction = ResolveContactFaction(contactKey);
+            if (currentFaction is not null && currentFaction != contactEntry.FactionName)
+            {
+                contactEntry.FactionName = currentFaction;
+                UpdateContactFactionAsync(server.OwnerUserId, server.OwnerCharacterName,
+                    contactEntry.UserId, contactEntry.CharacterName, currentFaction);
+            }
+
             contactInfos.Add(new STMessengerContactInfo(
                 contactEntry.CharacterName,
                 contactMessengerId,
@@ -736,14 +748,31 @@ public sealed partial class STMessengerSystem : EntitySystem
     /// <summary>
     /// Handles PDA being equipped in the ID slot — reloads messenger data from DB
     /// when a fresh PDA is equipped (e.g. after personal stash store/retrieve).
-    /// Only initializes for player-controlled entities (non-NPC).
     /// </summary>
     private void OnPdaEquipped(Entity<PdaComponent> ent, ref GotEquippedEvent args)
     {
         if (!args.SlotFlags.HasFlag(SlotFlags.IDCARD))
             return;
 
-        if (!_cartridgeLoader.TryGetProgram<STMessengerComponent>(ent.Owner, out var progUid, out _))
+        TryInitializeMessenger(ent.Owner, args.Equipee);
+    }
+
+    /// <summary>
+    /// Handles PDA being picked up into a hand — initializes the messenger for
+    /// admin-spawned PDAs that bypass the normal equip/spawn flow.
+    /// </summary>
+    private void OnPdaPickedUp(Entity<PdaComponent> ent, ref GotEquippedHandEvent args)
+    {
+        TryInitializeMessenger(ent.Owner, args.User);
+    }
+
+    /// <summary>
+    /// Attempts to initialize the messenger on a PDA for the given holder entity.
+    /// No-ops if the messenger is already claimed or the holder is not player-controlled.
+    /// </summary>
+    private void TryInitializeMessenger(EntityUid pdaUid, EntityUid holder)
+    {
+        if (!_cartridgeLoader.TryGetProgram<STMessengerComponent>(pdaUid, out var progUid, out _))
             return;
 
         if (!TryComp<STMessengerServerComponent>(progUid.Value, out var server))
@@ -754,12 +783,16 @@ public sealed partial class STMessengerSystem : EntitySystem
             return;
 
         // Only initialize for player-controlled entities
-        if (!TryComp<ActorComponent>(args.Equipee, out var actor))
+        if (!TryComp<ActorComponent>(holder, out var actor))
             return;
 
         var userId = actor.PlayerSession.UserId.UserId;
-        var charName = MetaData(args.Equipee).EntityName;
-        InitializeMessengerForPda(ent.Owner, progUid.Value, server, userId, charName);
+        var charName = MetaData(holder).EntityName;
+        InitializeMessengerForPda(pdaUid, progUid.Value, server, userId, charName);
+
+        // Claim PDA ownership so the password settings UI works for wild PDAs
+        if (TryComp<PdaComponent>(pdaUid, out var pda) && pda.PdaOwner is null)
+            _pda.SetOwner(pdaUid, pda, holder, charName);
     }
 
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent args)
@@ -806,6 +839,8 @@ public sealed partial class STMessengerSystem : EntitySystem
 
         LoadOrGenerateMessengerIdAsync(cartridgeUid, userId, charName);
         LoadContactsAsync(cartridgeUid, userId, charName);
+
+        // BroadcastUiUpdate is called from LoadContactsAsync after DB loads complete
     }
 
     #endregion
@@ -874,6 +909,10 @@ public sealed partial class STMessengerSystem : EntitySystem
         var holder = xform.ParentUid;
         if (!TryComp<BandsComponent>(holder, out var bands))
             return null;
+
+        // Covert factions (CanChange = true, e.g. Monolith, Clear Sky) always appear as Loners on PDA
+        if (bands.CanChange)
+            return _factionResolution.GetBandFactionName(bands.BandName);
 
         if (bands.BandProto is not { } bandProtoId)
             return null;

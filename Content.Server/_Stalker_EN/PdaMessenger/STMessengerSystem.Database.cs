@@ -137,6 +137,11 @@ public sealed partial class STMessengerSystem
             }
 
             Log.Debug($"Loaded {contacts.Count} contacts for {characterName}.");
+
+            // Refresh all active messenger UIs so contacts see this player's current faction.
+            // Done here (after DB loads complete) rather than in InitializeMessengerForPda
+            // to avoid a wasted broadcast before contacts are populated.
+            BroadcastUiUpdate();
         }
         catch (Exception ex)
         {
