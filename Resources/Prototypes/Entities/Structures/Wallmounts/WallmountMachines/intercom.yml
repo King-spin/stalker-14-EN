@@ -38,7 +38,7 @@
       key_slots: !type:Container
   - type: Sprite
     noRot: false
-    drawdepth: SmallObjects
+    drawdepth: OverMobs #Stalker EN
     sprite: Structures/Wallmounts/intercom.rsi
     layers:
     - state: base

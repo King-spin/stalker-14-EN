@@ -1,4 +1,4 @@
-﻿# Bulk Medical Items
+# Bulk Medical Items
 
 - type: entity
   parent: UNstandartCrate
@@ -438,6 +438,132 @@
     - id: PowerCellHyper
     - id: ClothingHeadHelmetSH68
     - id: STWeaponShotgunMP153
+    - id: ClothingBeltGreenWebbingStalker
+    - id: ClothingBeltBandolierStalker
+    - id: ClothingBackpackTacticOliveStalker
+    - id: DrinkMREFlask
+    - id: DrinkMREFlask
+    - id: FoodTinMRE
+    - id: FoodTinMRE
+    - id: RGD5Grenade
+    - id: RGD5Grenade
+    - id: STFoodBreadPlain
+    - id: STCombatKnife
+    - id: MedkitAI2
+    - id: MedkitAI2
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitScience
+    - id: STOintment
+    - id: STGauze
+    - id: STGauze
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: 6mmBuckshotBox
+    - id: STFlashlightSeclite
+    - id: STBoltBagFilled
+    - id: BaseRadio
+    - id: Binocularus1
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  parent: BaseItem
+  id: OKSOPCombatMedCrate
+  name: OKSOP Senior Enlisted Combat Medic Kit
+  description: Basic army kit intended for OKSOP Combat Medics, for those to provide care for wounded OKSOP soldiers. Converted for the Chernobyl Exclusion Zone.
+  suffix: OKSOP, T2
+  components:
+  - type: STWeight
+    self: 87.2
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: Sprite
+    sprite: _Stalker/Structures/Furniture/olive_bag.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: STClothingOuterArmorLightPlateVestBaseMilitary
+    - id: Zipties
+    - id: Zipties
+    - id: PowerCellHyper
+    - id: ClothingHeadHatMilitary
+    - id: STWeaponRifleAKS74U
+    - id: ClothingBeltGreenWebbingStalker
+    - id: ClothingBackpackTacticOliveStalker
+    - id: DrinkMREFlask
+    - id: DrinkMREFlask
+    - id: FoodTinMRE
+    - id: FoodTinMRE
+    - id: ClothingBandageStalkerKrest
+    - id: ClothingHeadHatBeretBrigmedic
+    - id: STFoodBreadPlain
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitMilitary
+    - id: MedkitScience
+    - id: MedkitScience
+    - id: MedkitScience
+    - id: STOintmentGood
+    - id: STOintmentGood
+    - id: STTourniquet
+    - id: STTourniquet
+    - id: STTourniquet
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545Mag30
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: 545FMJBox
+    - id: STFlashlightSeclite
+    - id: STBoltBagFilled
+    - id: BaseRadio
+    - id: Binocularus1
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  parent: BaseItem
+  id: OKSOPMP153Crate
+  name: OKSOP Enlisted Pointman Standard Kit
+  description: Basic army kit intended for OKSOP Pointmen, For soldiers designated to breach into tight spaces, and with a helmet for once! Converted for the Chernobyl Exclusion Zone.
+  suffix: OKSOP, T2
+  components:
+  - type: STWeight
+    self: 87.2
+  - type: Item
+    size: Ginormous
+  - type: MultiHandedItem
+  - type: Sprite
+    sprite: _Stalker/Structures/Furniture/olive_bag.rsi
+    state: icon
+  - type: SpawnItemsOnUse
+    items:
+    - id: STClothingOuterArmorLightPlateVestBaseMilitary
+    - id: Zipties
+    - id: Zipties
+    - id: PowerCellHyper
+    - id: ClothingHeadHelmetSH68
+    - id: STBaseWeaponShotgunMP153
     - id: ClothingBeltGreenWebbingStalker
     - id: ClothingBeltBandolierStalker
     - id: ClothingBackpackTacticOliveStalker

@@ -113,7 +113,7 @@
   id: STMonolithBand
   name: Monolith
   factionId: Monolith
-  maxMembers: 15
+  maxMembers: 11
   managingRankId: 2
   hierarchy:
     1: StalkerMonolith

@@ -866,5 +866,48 @@
   id: 98
   time: '2026-02-25T20:50:54.745082+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/533
+- author: RebelledCombine
+  changes:
+  - message: The Duty helmets from most tiers, I still have to do the Vityaz and penhelm
+    type: Tweak
+  id: 99
+  time: '2026-02-26T22:05:40.766041+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/539
+- author: Roland410
+  changes:
+  - message: Adds cells, lathe and workbench to Neutral base
+    type: Add
+  id: 100
+  time: '2026-02-27T22:41:47.672517+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/544
+- author: teecoding
+  changes:
+  - message: PDA messenger system with direct messages and public channels
+    type: Add
+  - message: PDA password lock to protect your device from others
+    type: Add
+  - message: PDAs no longer appear duplicated in personal stash
+    type: Fix
+  id: 101
+  time: '2026-02-27T22:44:20.110260+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/546
+- author: Noguchi47
+  changes:
+  - message: Added various of imported instruments to Yerzhan Alimov trader in Rookie
+      Village
+    type: Add
+  id: 102
+  time: '2026-03-01T02:25:51.357750+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/551
+- author: LaCumbiaDelCoronavirus
+  changes:
+  - message: Ruplidets trader is now locked behind renegade-access doors.
+    type: Tweak
+  - message: Sacrifices into ritualpit now only play a sound for everyone on the same
+      map.
+    type: Tweak
+  id: 103
+  time: '2026-03-01T02:26:52.253627+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/549
 Name: Stalker
 Order: -1
