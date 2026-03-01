@@ -10,6 +10,8 @@ using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.PDA.Ringer;
+using Content.Server.PDA.Ringer;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -28,6 +30,7 @@ public sealed class STBulletinBoardSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly SharedSTFactionResolutionSystem _factionResolution = default!;
     [Dependency] private readonly STMessengerSystem _messenger = default!;
 
@@ -71,6 +74,13 @@ public sealed class STBulletinBoardSystem : EntitySystem
     {
         if (!TryComp<STBulletinServerComponent>(ent, out var server))
             return;
+
+        // Clear notification badge when the board is viewed
+        if (TryComp<CartridgeComponent>(ent, out var cartComp) && cartComp.HasNotification)
+        {
+            cartComp.HasNotification = false;
+            Dirty(ent, cartComp);
+        }
 
         // Lazy init: if the board wasn't initialized at spawn (e.g. PDA re-equipped from stash),
         // resolve owner from the PDA holder now.
@@ -208,6 +218,7 @@ public sealed class STBulletinBoardSystem : EntitySystem
             $"desc=\"{description}\"");
 
         BroadcastUiUpdate(board.BoardTypeId);
+        NotifyBoardRecipients(board.BoardTypeId, args.Actor);
     }
 
     private void OnWithdrawOffer(
@@ -496,6 +507,39 @@ public sealed class STBulletinBoardSystem : EntitySystem
         _globalOfferIndex.Clear();
         _nextOfferId = 0;
         _activeLoaders.Clear();
+    }
+
+    #endregion
+
+    #region Notifications
+
+    /// <summary>
+    /// Rings all PDAs with a bulletin board cartridge of the given type, except the poster's own PDA.
+    /// Also sets the notification badge on the cartridge for the program list.
+    /// </summary>
+    private void NotifyBoardRecipients(string boardTypeId, EntityUid posterMob)
+    {
+        var query = EntityQueryEnumerator<STBulletinBoardComponent, STBulletinServerComponent, CartridgeComponent>();
+        while (query.MoveNext(out var uid, out var board, out var server, out var cartridge))
+        {
+            if (board.BoardTypeId != boardTypeId)
+                continue;
+
+            if (cartridge.LoaderUid is not { } loaderUid)
+                continue;
+
+            // Don't notify the poster's own PDA
+            if (server.OwnerMob == posterMob)
+                continue;
+
+            // Ring the PDA
+            if (TryComp<RingerComponent>(loaderUid, out var ringer))
+                _ringer.RingerPlayRingtone((loaderUid, ringer));
+
+            // Set notification badge
+            cartridge.HasNotification = true;
+            Dirty(uid, cartridge);
+        }
     }
 
     #endregion

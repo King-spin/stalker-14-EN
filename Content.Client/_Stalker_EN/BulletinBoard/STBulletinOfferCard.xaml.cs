@@ -19,8 +19,9 @@ namespace Content.Client._Stalker_EN.BulletinBoard;
 [GenerateTypedNameReferences]
 public sealed partial class STBulletinOfferCard : PanelContainer
 {
+    [Dependency] private readonly IClipboardManager _clipboard = default!;
+    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SpriteSystem _spriteSystem = default!;
 
     /// <summary>Raised when the owner presses Withdraw on their own card.</summary>
     public event Action<uint>? OnWithdraw;
@@ -56,8 +57,9 @@ public sealed partial class STBulletinOfferCard : PanelContainer
         if (offer.PosterFaction is not null
             && STFactionPatchIcons.PatchStates.TryGetValue(offer.PosterFaction, out var patch))
         {
+            var spriteSystem = _entitySystemManager.GetEntitySystem<SpriteSystem>();
             var specifier = new SpriteSpecifier.Rsi(patch.Rsi, patch.State);
-            FactionIcon.Texture = _spriteSystem.Frame0(specifier);
+            FactionIcon.Texture = spriteSystem.Frame0(specifier);
             FactionIcon.Visible = true;
         }
 
@@ -88,6 +90,12 @@ public sealed partial class STBulletinOfferCard : PanelContainer
                     OnContact?.Invoke(offer.PosterMessengerId, offer.Id);
             };
         }
+
+        CopyButton.Text = Loc.GetString("st-bulletin-copy-ref");
+        CopyButton.OnPressed += _ =>
+        {
+            _clipboard.SetText(STBulletinOffer.FormatRef(offer.OfferRefPrefix, offer.Id));
+        };
 
         UpdateTimeLabel();
     }

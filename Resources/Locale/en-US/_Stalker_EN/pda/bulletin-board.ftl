@@ -6,6 +6,7 @@ st-bulletin-poster-you = {$name} (You)
 # Card buttons
 st-bulletin-contact = Contact
 st-bulletin-withdraw = Withdraw
+st-bulletin-copy-ref = Copy
 
 # Post form
 st-bulletin-back = < Back

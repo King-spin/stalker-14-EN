@@ -17,8 +17,11 @@
         <!-- Description -->
         <RichTextLabel Name="DescriptionLabel" HorizontalExpand="True" Margin="0 2 0 4"/>
 
-        <!-- Action button (Contact or Withdraw) -->
-        <Button Name="ActionButton" HorizontalExpand="True"/>
+        <!-- Action + Copy buttons -->
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Button Name="ActionButton" HorizontalExpand="True" Margin="0 0 2 0"/>
+            <Button Name="CopyButton" HorizontalExpand="True" Margin="2 0 0 0"/>
+        </BoxContainer>
 
     </BoxContainer>
 
