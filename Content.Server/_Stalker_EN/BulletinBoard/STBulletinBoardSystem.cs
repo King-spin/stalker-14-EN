@@ -609,6 +609,10 @@ public sealed class STBulletinBoardSystem : EntitySystem
         if (!TryComp<BandsComponent>(uid, out var bands))
             return null;
 
+        // Covert factions (CanChange = true, e.g. Monolith, Clear Sky) appear as Loners
+        if (bands.CanChange)
+            return _factionResolution.GetBandFactionName(bands.BandName);
+
         if (bands.BandProto is not { } bandProtoId)
             return null;
 
