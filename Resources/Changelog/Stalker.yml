@@ -1109,5 +1109,13 @@
   id: 120
   time: '2026-03-04T21:46:49.437356+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/577
+- author: teecoding
+  changes:
+  - message: Voice chat is now muffled when heard through walls, similar to whispering.
+      At longer range, walls block speech entirely.
+    type: Add
+  id: 121
+  time: '2026-03-04T21:48:33.221038+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/578
 Name: Stalker
 Order: -1
