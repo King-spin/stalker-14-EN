@@ -43,6 +43,7 @@
   id: UNGear
   equipment:
     id: MilitaryPDA
+    dogtag: ClothingNeckDogtagUN # EN
     legs: ClothingLegsJeansGreenCargo
     shoes: STClothingShoesBootsCombatFilled
     torso: ClothingTorsoTurtlenecksUN
