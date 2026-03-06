@@ -1213,5 +1213,12 @@
   id: 130
   time: '2026-03-06T20:17:57.733614+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/592
+- author: RebelledCombine
+  changes:
+  - message: Edited batteries yml and made a new folder in _stalkerEN
+    type: Tweak
+  id: 131
+  time: '2026-03-06T20:32:09.628919+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/589
 Name: Stalker
 Order: -1
