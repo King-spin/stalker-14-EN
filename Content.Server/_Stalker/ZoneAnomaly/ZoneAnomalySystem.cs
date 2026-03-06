@@ -17,8 +17,6 @@ public sealed class ZoneAnomalySystem : SharedZoneAnomalySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ZoneAnomalyComponent, StartCollideEvent>(OnStartCollide);
-        SubscribeLocalEvent<ZoneAnomalyComponent, EndCollideEvent>(OnEndCollide);
     }
 
     public override void Update(float frameTime)
