@@ -1240,5 +1240,12 @@
   id: 133
   time: '2026-03-08T10:23:12.931612+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/597
+- author: crocodilecarousel
+  changes:
+  - message: Fresh Yantar map
+    type: Add
+  id: 134
+  time: '2026-03-08T10:27:03.502573+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/598
 Name: Stalker
 Order: -1
