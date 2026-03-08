@@ -236,6 +236,7 @@
       ClothingBackpackTacticBeigeStalker: 450 # T2
       ClothingBackpackMercStalker: 850 # T3
       # Belts
+      ClothingBeltWebbingHolsterLoner: 500
       ClothingBeltBandolierStalker: 20 # T1 - PVE
       ClothingBeltTarzanOrange: 200 # T1 - PVP
       # Containers
