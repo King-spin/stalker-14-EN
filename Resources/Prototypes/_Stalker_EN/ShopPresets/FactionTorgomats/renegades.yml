@@ -236,9 +236,9 @@
       ClothingBackpackTacticBeigeStalker: 450 # T2
       ClothingBackpackMercStalker: 850 # T3
       # Belts
-      ClothingBeltWebbingHolsterLoner: 500
       ClothingBeltBandolierStalker: 20 # T1 - PVE
       ClothingBeltTarzanOrange: 200 # T1 - PVP
+      ClothingBeltWebbingHolsterLoner: 500 #2 - PVP
       # Containers
       MedkitCMSStalker: 400 # T1
       MedkitGrizzlyStalker: 1000 # T2
