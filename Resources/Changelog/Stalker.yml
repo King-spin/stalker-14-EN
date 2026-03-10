@@ -1261,5 +1261,12 @@
   id: 136
   time: '2026-03-10T01:37:31.080895+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/608
+- author: CVSthePharmacy  & @dallaszzz
+  changes:
+  - message: Resprites the berill5m, assault helmet and sh68.
+    type: Tweak
+  id: 137
+  time: '2026-03-10T01:40:53.203839+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/571
 Name: Stalker
 Order: -1
