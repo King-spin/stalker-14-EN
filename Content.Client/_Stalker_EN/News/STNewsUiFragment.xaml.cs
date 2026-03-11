@@ -529,13 +529,14 @@ public sealed partial class STNewsUiFragment : BoxContainer, INewsLinkClickHandl
 
         vbox.AddChild(header);
 
-        var contentLabel = new Label
+        var contentLabel = new RichTextLabel
         {
-            Text = comment.Content,
             HorizontalExpand = true,
-            ClipText = false,
             Margin = new Thickness(4, 2, 0, 0),
         };
+        var contentMsg = new FormattedMessage();
+        contentMsg.AddText(comment.Content);
+        contentLabel.SetMessage(contentMsg);
         vbox.AddChild(contentLabel);
 
         var separator = new HSeparator
