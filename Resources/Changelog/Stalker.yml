@@ -1328,5 +1328,26 @@
   id: 144
   time: '2026-03-10T20:18:20.252102+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/615
+- author: crocodilecarousel
+  changes:
+  - message: Burnt Fuzz can harm you
+    type: Add
+  - message: Adjust NanoTask locales to better reflect STALKER setting, adjust the
+      printing sound to be less annoying
+    type: Tweak
+  - message: Admin PDA uses the same cartridges as ST PDAs
+    type: Tweak
+  - message: Grenades now make a noise when activated. Stop blowing yourselves up
+      on accident.
+    type: Tweak
+  - message: Cost of scientific doodads lowered
+    type: Tweak
+  - message: Pills are correctly pills all of the time
+    type: Fix
+  - message: Admin InstantEffect audio plays for correct length of time again
+    type: Fix
+  id: 145
+  time: '2026-03-11T02:18:16.600713+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/614
 Name: Stalker
 Order: -1
