@@ -1365,5 +1365,27 @@
   id: 147
   time: '2026-03-11T18:12:39.856760+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/618
+- author: Roland410
+  changes:
+  - message: Adds Freedom's double belt that was missed, and the officer belt to military
+      vendor.
+    type: Add
+  - message: Salami sandwiches (buterbrod) can now be made in cooking stations en-masse,
+      just like how you would normally assemble it.
+    type: Add
+  - message: Adds localization files for upstream items.
+    type: Add
+  - message: Makes the hazmat suit enclosed, and a bit more resistant to damage.
+    type: Tweak
+  - message: Gave throwing knives mutant damage, and the hatchet structural.
+    type: Tweak
+  - message: Fixes multiple .rsi issues, including the 7.62x54 magazine for the Vepr,
+      VANO Seva, Seraphim Seva, VSV rifle.
+    type: Fix
+  - message: Comments out unfinished RU upstream code, that was throwing errors.
+    type: Remove
+  id: 148
+  time: '2026-03-11T18:43:23.518405+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/617
 Name: Stalker
 Order: -1
