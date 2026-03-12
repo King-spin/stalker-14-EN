@@ -1387,5 +1387,12 @@
   id: 148
   time: '2026-03-11T18:43:23.518405+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/617
+- author: Roland410
+  changes:
+  - message: Optimized dev map lighting.
+    type: Tweak
+  id: 149
+  time: '2026-03-12T18:42:29.812208+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/620
 Name: Stalker
 Order: -1
