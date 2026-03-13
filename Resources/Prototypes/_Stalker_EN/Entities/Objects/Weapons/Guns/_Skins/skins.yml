@@ -84,11 +84,11 @@
   description: An AK-12 rifle clad in a red camouflage pattern. Chambered in 5.45x39. It seems to be commonly used by the Duty clan of stalkers.
   components:
   - type: Clothing
-    sprite: _Stalker_EN/Objects/Weapons/Guns/rifles/_Skins/ak12_dolg.rsi
+    sprite: _Stalker_EN/Objects/Weapons/Guns/Rifles/_Skins/ak12_dolg.rsi
   - type: Item
-    sprite: _Stalker_EN/Objects/Weapons/Guns/rifles/_Skins/ak12_dolg.rsi
+    sprite: _Stalker_EN/Objects/Weapons/Guns/Rifles/_Skins/ak12_dolg.rsi
   - type: Sprite
-    sprite: _Stalker_EN/Objects/Weapons/Guns/rifles/_Skins/ak12_dolg.rsi
+    sprite: _Stalker_EN/Objects/Weapons/Guns/Rifles/_Skins/ak12_dolg.rsi
 
 # SMGS
 # ppsh

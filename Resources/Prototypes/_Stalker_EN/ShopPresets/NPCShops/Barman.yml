@@ -154,6 +154,7 @@
         WeaponPistolStalkerGlock: 300
         STWeaponRevolverSWModel325: 1000
         STWeaponRevolverSWModel625: 1450
+        STWeaponRevolverSWPC325TR: 350
         # Shotguns
         STWeaponShotgunMossbergM88: 600
         STWeaponShotgunSPAS: 2100

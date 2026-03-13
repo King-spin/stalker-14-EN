@@ -139,6 +139,7 @@
       WeaponPistolStalkerTT: 300
       WeaponPistolStalkerGlock: 250
       WeaponPistolStalkerAPS: 800
+      STWeaponRevolverChiappaRhino60DS: 2200
       # Shotguns
       STWeaponShotgunMP155T: 45 #T0.5
       STWeaponShotgunTOZ34: 225 # T2
@@ -190,6 +191,7 @@
       TTMag: 75
       BaseAPSMag: 100
       STSpeedLoader45ACPEmpty: 120
+      STSpeedLoader357MagnumEmpty: 180
 
   - name: shop-category-ammunition
     priority: 3
@@ -234,6 +236,10 @@
       # 7.54
       754HPBox: 850 # Mutant
       754FMJBox: 2500 # T3
+      # .357
+      MagazineBox357Magnum: 600 # T2
+      MagazineBox357MagnumAP: 1500 # T3
+      MagazineBox357MagnumHP: 800 # Mutant
 
   - name: shop-category-medicine
     priority: 4

@@ -99,6 +99,7 @@
         STWeaponRifleM16: 4000 # T2
         STWeaponRifleFAL: 1750 # T3
         STWeaponRifleFALo: 8000 # T3
+        STWeaponRifleGalil: 7000 # T3
         # Snipers
         STWeaponSniperMosin: 1200
         #STWeaponSniperSVDSGrass: 8400 Removed for early wipe
