@@ -213,10 +213,10 @@
       919PSTBox: 500 # T2
       919PBMBox: 1450 # T3
       # .45
-      45ACPLFMJBox: 100 # T1
-      45ACPMFMJBox: 350 # T2
-      45ACPRIPBox: 800 # Mutant
-      45ACPAPBox: 1950 # T3
+      45ACPLFMJBox: 110 # T1
+      45ACPMFMJBox: 550 # T2
+      45ACPRIPBox: 700 # Mutant
+      45ACPAPBox: 1500 # T3
       # 5.45
       545HPBox: 725 # Mutant
       545PCBox: 1650 # T3

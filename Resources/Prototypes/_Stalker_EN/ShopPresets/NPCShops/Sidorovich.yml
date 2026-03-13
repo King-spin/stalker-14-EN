@@ -214,8 +214,9 @@
         725LRNPCBox: 625 # Mutant
         725PTBox: 465 # T2
         # .45
-        45ACPRIPBox: 725 # Mutant
-        45ACPLFMJBox: 250 # T2
+        45ACPLFMJBox: 100 # T1
+        45ACPRIPBox: 675 # Mutant
+        45ACPMFMJBox: 275 # T2
 
     - name: shop-category-medicine
       priority: 4

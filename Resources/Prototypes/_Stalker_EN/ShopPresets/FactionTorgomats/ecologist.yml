@@ -47,9 +47,9 @@
         919PSTBox: 180
         919RIPBox: 400
         # .45
-        45ACPRIPBox: 600
-        45ACPLFMJBox: 100
-        45ACPMFMJBox: 250
+        45ACPRIPBox: 450
+        45ACPLFMJBox: 90
+        45ACPMFMJBox: 200
         # 5.45
         545HPBox: 400
         545FMJBox: 270

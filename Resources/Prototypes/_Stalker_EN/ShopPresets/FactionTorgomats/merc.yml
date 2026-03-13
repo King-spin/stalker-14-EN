@@ -136,6 +136,7 @@
         751Mag30: 500
         # .45
         STSpeedLoader45ACPEmpty: 90
+        STSpeedLoader357MagnumEmpty: 120
 
     - name: shop-category-ammunition
       priority: 3
@@ -149,9 +150,9 @@
         919PSTBox: 200 # T2
         919PBMBox: 1425 # T3
         # .45
-        45ACPLFMJBox: 100 # T1
-        45ACPMFMJBox: 250 # T2
-        45ACPAPBox: 1950 # T3
+        45ACPLFMJBox: 110 # T1
+        45ACPMFMJBox: 220 # T2
+        45ACPAPBox: 1500 # T3
         # 5.56
         556FMJBox: 300
         556M855Box: 1650 # T3
@@ -159,6 +160,10 @@
         # 7.51
         751M80Box: 1950 # T3
         751UNBox: 850 # Mutant
+        # .357
+        MagazineBox357Magnum: 300 # T2
+        MagazineBox357MagnumAP: 1400 # T3
+        MagazineBox357MagnumHP: 600 # Mutant
 
     - name: shop-category-medicine
       priority: 4

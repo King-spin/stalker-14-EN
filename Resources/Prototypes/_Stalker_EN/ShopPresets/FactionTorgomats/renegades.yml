@@ -143,6 +143,7 @@
       SpeedLoaderRemingtonMagnumEmpty: 150
       BaseTEC9Mag: 60
       STSpeedLoader45ACPEmpty: 150
+      STSpeedLoader357MagnumEmpty: 170
       BaseAPSMag: 100
       Vz61Mag: 150
 
@@ -174,9 +175,13 @@
       754FMJBox: 2500 # T3
       754HPBox: 1350 # Mutant
       # .45
-      45ACPLFMJBox: 100 # T1
-      45ACPMFMJBox: 550 # T2
-      45ACPAPBox: 1950 # T3
+      45ACPLFMJBox: 110 # T1
+      45ACPMFMJBox: 350 # T2
+      45ACPAPBox: 1500 # T3
+      # .357
+      MagazineBox357Magnum: 500 # T2
+      MagazineBox357MagnumAP: 1600 # T3
+      MagazineBox357MagnumHP: 600 # Mutant
 
   - name: shop-category-medicine
     priority: 4

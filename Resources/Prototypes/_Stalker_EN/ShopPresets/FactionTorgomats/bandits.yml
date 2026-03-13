@@ -172,6 +172,7 @@
         556Mag30: 400
         TTMag: 100
         STSpeedLoader45ACPEmpty: 150
+        STSpeedLoader357MagnumEmpty: 160
         BaseAPSMag: 100
         Base751Mag10: 200
 
@@ -212,10 +213,14 @@
         754FMJBox: 2500 # T3
         754HPBox: 1350 # Mutant
         # .45
-        45ACPLFMJBox: 100 # T1
+        45ACPLFMJBox: 110 # T1
         45ACPMFMJBox: 550 # T2
-        45ACPAPBox: 1950 # T3
-        45ACPRIPBox: 800 # Mutant
+        45ACPAPBox: 1550 # T3
+        45ACPRIPBox: 750 # Mutant
+        # .357
+        MagazineBox357Magnum: 600 # T2
+        MagazineBox357MagnumAP: 1500 # T3
+        MagazineBox357MagnumHP: 800 # Mutant
 
     - name: shop-category-medicine # 50% discount from stalkers
       priority: 4

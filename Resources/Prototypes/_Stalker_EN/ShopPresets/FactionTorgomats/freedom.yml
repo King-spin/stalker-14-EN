@@ -92,6 +92,7 @@
         STWeaponShotgunSPAS: 2000 # T3
         # SMGs
         STWeaponSMGMP5: 1800 # T3
+        STWeaponSMGThompson: 3800
         # Nato Rifles
         STWeaponRifleL85: 2100 # T2
         STWeaponRifleSCARH: 6000 # T3
@@ -120,6 +121,8 @@
         739Mag30: 500
         545Mag30: 400
         545Mag20: 200
+        BaseTommyGunMag: 350
+        TommyGunDrum2: 1600
 
     - name: shop-category-ammunition
       priority: 3
@@ -148,10 +151,10 @@
         # 7.54
         754FMJBox: 2500 # T3
         # .45
-        45ACPLFMJBox: 100 # T1
-        45ACPMFMJBox: 400 # T2
-        45ACPAPBox: 1950 # T3
-        45ACPRIPBox: 800 # Mutant
+        45ACPLFMJBox: 110 # T1
+        45ACPMFMJBox: 550 # T2
+        45ACPAPBox: 1500 # T3
+        45ACPRIPBox: 500 # Mutant
 
     - name: shop-category-medicine
       priority: 4
