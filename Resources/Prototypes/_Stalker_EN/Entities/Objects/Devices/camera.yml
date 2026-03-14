@@ -16,6 +16,26 @@
     self: 0.5
 
 - type: entity
+  parent: STCamera
+  id: STCameraVintage
+  name: vintage camera
+  suffix: ST
+  description: An old FED rangefinder. Produces warm, faded photos with a Polaroid look.
+  components:
+  - type: STCamera
+    effect: Polaroid
+
+- type: entity
+  parent: STCamera
+  id: STCameraDamaged
+  name: damaged camera
+  suffix: ST
+  description: A camera with fried internals. Photos come out glitchy and distorted.
+  components:
+  - type: STCamera
+    effect: Glitch
+
+- type: entity
   parent: BaseItem
   id: STPhoto
   name: photograph
@@ -27,9 +47,6 @@
     state: photo
   - type: Item
     size: Tiny
-  - type: STPhoto
-  - type: STWeight
-    self: 0.1
   - type: ActivatableUI
     key: enum.STPhotoUiKey.Key
     inHandsOnly: false
@@ -37,3 +54,6 @@
     interfaces:
       enum.STPhotoUiKey.Key:
         type: STPhotoBoundUserInterface
+  - type: STPhoto
+  - type: STWeight
+    self: 0.1
