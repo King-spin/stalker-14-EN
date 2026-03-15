@@ -434,9 +434,26 @@ namespace Content.Server.Database
         Task<int> AddStalkerNewsCommentAsync(StalkerNewsComment comment);
 
         // stalker-en-changes: News article photos
+
+        /// <summary>
+        /// Stores a news article photo blob in the database.
+        /// </summary>
         Task AddStalkerNewsArticlePhotoAsync(StalkerNewsArticlePhoto photo);
+
+        /// <summary>
+        /// Retrieves a news article photo by its unique identifier.
+        /// </summary>
         Task<StalkerNewsArticlePhoto?> GetStalkerNewsArticlePhotoAsync(Guid photoId);
+
+        /// <summary>
+        /// Deletes a news article photo by its unique identifier.
+        /// </summary>
         Task DeleteStalkerNewsArticlePhotoAsync(Guid photoId);
+
+        /// <summary>
+        /// Saves a news article and its optional photo in a single database transaction.
+        /// </summary>
+        Task<int> AddStalkerNewsArticleWithPhotoAsync(StalkerNewsArticle article, StalkerNewsArticlePhoto? photo);
 
         // stalker-en-changes: News reactions
         Task<List<StalkerNewsReaction>> GetStalkerNewsReactionsAsync(int targetType, List<int> targetIds);
@@ -1332,22 +1349,41 @@ namespace Content.Server.Database
         }
 
         // stalker-en-changes: News article photos
+
+        /// <summary>
+        /// Stores a news article photo blob in the database.
+        /// </summary>
         public Task AddStalkerNewsArticlePhotoAsync(StalkerNewsArticlePhoto photo)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.AddStalkerNewsArticlePhotoAsync(photo));
         }
 
+        /// <summary>
+        /// Retrieves a news article photo by its unique identifier.
+        /// </summary>
         public Task<StalkerNewsArticlePhoto?> GetStalkerNewsArticlePhotoAsync(Guid photoId)
         {
             DbReadOpsMetric.Inc();
             return RunDbCommand(() => _db.GetStalkerNewsArticlePhotoAsync(photoId));
         }
 
+        /// <summary>
+        /// Deletes a news article photo by its unique identifier.
+        /// </summary>
         public Task DeleteStalkerNewsArticlePhotoAsync(Guid photoId)
         {
             DbWriteOpsMetric.Inc();
             return RunDbCommand(() => _db.DeleteStalkerNewsArticlePhotoAsync(photoId));
+        }
+
+        /// <summary>
+        /// Saves a news article and its optional photo in a single database transaction.
+        /// </summary>
+        public Task<int> AddStalkerNewsArticleWithPhotoAsync(StalkerNewsArticle article, StalkerNewsArticlePhoto? photo)
+        {
+            DbWriteOpsMetric.Inc();
+            return RunDbCommand(() => _db.AddStalkerNewsArticleWithPhotoAsync(article, photo));
         }
 
         // stalker-en-changes: News reactions

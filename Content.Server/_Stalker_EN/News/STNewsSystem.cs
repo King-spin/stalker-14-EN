@@ -611,17 +611,18 @@ public sealed partial class STNewsSystem : EntitySystem
                 CreatedAt = DateTime.UtcNow,
             };
 
-            var dbId = await _dbManager.AddStalkerNewsArticleAsync(dbArticle);
-
+            StalkerNewsArticlePhoto? dbPhoto = null;
             if (photoId is { } pid && photoData != null)
             {
-                await _dbManager.AddStalkerNewsArticlePhotoAsync(new StalkerNewsArticlePhoto
+                dbPhoto = new StalkerNewsArticlePhoto
                 {
                     PhotoId = pid,
                     PhotoData = photoData,
                     CreatedAt = DateTime.UtcNow,
-                });
+                };
             }
+
+            var dbId = await _dbManager.AddStalkerNewsArticleWithPhotoAsync(dbArticle, dbPhoto);
 
             var article = new STNewsArticle(
                 dbId,

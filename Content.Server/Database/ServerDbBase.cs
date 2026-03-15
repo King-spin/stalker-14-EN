@@ -2381,6 +2381,10 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
         }
 
         // stalker-en-changes: News article photos
+
+        /// <summary>
+        /// Stores a news article photo blob in the database.
+        /// </summary>
         public async Task AddStalkerNewsArticlePhotoAsync(StalkerNewsArticlePhoto photo)
         {
             await using var db = await GetDb();
@@ -2388,6 +2392,9 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
             await db.DbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Retrieves a news article photo by its unique identifier.
+        /// </summary>
         public async Task<StalkerNewsArticlePhoto?> GetStalkerNewsArticlePhotoAsync(Guid photoId)
         {
             await using var db = await GetDb();
@@ -2395,6 +2402,9 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 .FirstOrDefaultAsync(p => p.PhotoId == photoId);
         }
 
+        /// <summary>
+        /// Deletes a news article photo by its unique identifier.
+        /// </summary>
         public async Task DeleteStalkerNewsArticlePhotoAsync(Guid photoId)
         {
             await using var db = await GetDb();
@@ -2405,6 +2415,19 @@ INSERT INTO player_round (players_id, rounds_id) VALUES ({players[player]}, {id}
                 db.DbContext.StalkerNewsArticlePhotos.Remove(photo);
                 await db.DbContext.SaveChangesAsync();
             }
+        }
+
+        /// <summary>
+        /// Saves a news article and its optional photo in a single database transaction.
+        /// </summary>
+        public async Task<int> AddStalkerNewsArticleWithPhotoAsync(StalkerNewsArticle article, StalkerNewsArticlePhoto? photo)
+        {
+            await using var db = await GetDb();
+            db.DbContext.StalkerNewsArticles.Add(article);
+            if (photo != null)
+                db.DbContext.StalkerNewsArticlePhotos.Add(photo);
+            await db.DbContext.SaveChangesAsync();
+            return article.Id;
         }
 
         // stalker-en-changes: News reactions
