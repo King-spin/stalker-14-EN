@@ -4,9 +4,7 @@ using Content.Server.Database;
 using Content.Server.Discord;
 using Content.Server.PDA;
 using Content.Server.PDA.Ringer;
-using Content.Server._Stalker_EN.Camera;
 using Content.Shared._Stalker.Bands;
-using Content.Shared._Stalker_EN.Camera;
 using Content.Shared._Stalker_EN.CCVar;
 using Content.Shared._Stalker_EN.CharacterRank;
 using Content.Shared._Stalker_EN.FactionRelations;
@@ -17,7 +15,6 @@ using Content.Shared.CartridgeLoader;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Hands;
-using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.PDA;
@@ -50,8 +47,6 @@ public sealed partial class STMessengerSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly RingerSystem _ringer = default!;
     [Dependency] private readonly SharedSTFactionResolutionSystem _factionResolution = default!;
-    [Dependency] private readonly STPhotoSystem _photoSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
 
     private const int MaxChannelMessages = 200;
     private const int MaxDmMessages = 100;
@@ -268,7 +263,7 @@ public sealed partial class STMessengerSystem : EntitySystem
         server.NextSendTime = _timing.CurTime + server.SendCooldown;
 
         var content = send.Content.Trim();
-        if (string.IsNullOrEmpty(content) && send.PhotoEntity is null)
+        if (string.IsNullOrEmpty(content))
             return;
 
         var maxLen = _config.GetCVar(STCCVars.MessengerMaxMessageLength);
@@ -279,35 +274,8 @@ public sealed partial class STMessengerSystem : EntitySystem
         if (string.IsNullOrEmpty(server.OwnerCharacterName))
             return;
 
-        // Photos are only allowed in DMs — strip for channel messages
-        var isDm = send.TargetChatId.StartsWith(STMessengerChat.DmChatPrefix, StringComparison.Ordinal);
-
-        // Channel with no text content (photo-only) — reject
-        if (!isDm && string.IsNullOrEmpty(content))
-            return;
-
-        // If a photo is attached to a DM, process it immediately
-        Guid? photoId = null;
-        if (isDm && send.PhotoEntity is { } photoNetEntity)
-        {
-            var photoUid = GetEntity(photoNetEntity);
-            if (!TryComp<STPhotoComponent>(photoUid, out var photoComp)
-                || photoComp.ImageData.Length == 0
-                || !_handsSystem.TryGetActiveItem(args.Actor, out var activeItem)
-                || activeItem != photoUid)
-            {
-                return;
-            }
-
-            photoId = Guid.NewGuid();
-            _photoSystem.StoreMessengerPhoto(photoId.Value, photoComp.ImageData);
-
-            var maxPhotos = _config.GetCVar(STCCVars.MessengerMaxPhotos);
-            _photoSystem.EvictMessengerPhotos(maxPhotos);
-        }
-
         ProcessSendMessage(ent, server, send.TargetChatId, content, send.IsAnonymous,
-            send.ReplyToId, args.Actor, GetEntity(args.LoaderUid), photoId);
+            send.ReplyToId, args.Actor, GetEntity(args.LoaderUid));
     }
 
     /// <summary>
@@ -321,8 +289,7 @@ public sealed partial class STMessengerSystem : EntitySystem
         bool isAnonymous,
         uint? replyToId,
         EntityUid actor,
-        EntityUid loaderUid,
-        Guid? photoId = null)
+        EntityUid loaderUid)
     {
         var senderName = server.OwnerCharacterName;
         var senderKey = (server.OwnerUserId, senderName);
@@ -427,12 +394,6 @@ public sealed partial class STMessengerSystem : EntitySystem
         if (chatMessages.Count > maxMessages)
         {
             var evictCount = chatMessages.Count - maxMessages;
-            for (var i = 0; i < evictCount; i++)
-            {
-                if (chatMessages[i].PhotoId is { } evictedPhotoId)
-                    _photoSystem.RemoveMessengerPhoto(evictedPhotoId);
-            }
-
             chatMessages.RemoveRange(0, evictCount);
         }
 
@@ -998,7 +959,6 @@ public sealed partial class STMessengerSystem : EntitySystem
         _messengerPdas.Clear();
         _anonymousPseudonyms.Clear();
         _usedPseudonyms.Clear();
-        _photoSystem.ClearMessengerPhotos();
         // Do NOT clear _messengerIdCache or _characterToMessengerId — IDs persist across rounds
 
         foreach (var proto in _sortedChannels)
