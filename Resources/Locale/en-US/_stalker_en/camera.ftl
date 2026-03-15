@@ -12,3 +12,11 @@ st-camera-examine-film = Film: {$charges} exposures remaining.
 st-photo-loading = Loading...
 st-photo-unavailable = Photo unavailable.
 
+## Admin Commands
+cmd-st-photo-preview-desc = Opens a photo preview window by PhotoId.
+cmd-st-photo-preview-help = Usage: st_photo_preview <guid>
+cmd-st-photo-preview-error-args = Expected exactly one argument: a photo GUID.
+cmd-st-photo-preview-error-guid = Invalid GUID format.
+cmd-st-photo-preview-not-found = Photo {$photoId} not found in world or database.
+cmd-st-photo-preview-error-db = Database lookup failed: {$error}
+
