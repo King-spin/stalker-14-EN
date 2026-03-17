@@ -1586,5 +1586,14 @@
   id: 166
   time: '2026-03-17T19:06:41.005168+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/655
+- author: stickycheZ101
+  changes:
+  - message: added new portable instrument packs, special kits sold by the instrument
+      vendor that can be unpacked/repacked into/from the structure instruments, so
+      you can play the piano while out and about
+    type: Add
+  id: 167
+  time: '2026-03-17T19:14:03.255749+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/637
 Name: Stalker
 Order: -1
