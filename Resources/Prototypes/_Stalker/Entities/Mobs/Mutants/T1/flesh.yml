@@ -47,6 +47,7 @@
     - type: NpcFactionMember
       factions:
         - Passive
+        - Bandit
     - type: MeleeWeapon
       attackRate: 0.4
       angle: 30
@@ -184,6 +185,7 @@
     - type: NpcFactionMember
       factions:
       - Mutated
+      - Bandit
       - Passive
     - type: MeleeWeapon
       attackRate: 0.4
