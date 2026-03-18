@@ -1604,5 +1604,12 @@
   id: 168
   time: '2026-03-17T19:16:35.006839+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/659
+- author: Noguchi47
+  changes:
+  - message: New Sawed-off TOZ-34 sprites made by Wassuy
+    type: Add
+  id: 169
+  time: '2026-03-18T07:48:12.520992+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/662
 Name: Stalker
 Order: -1
