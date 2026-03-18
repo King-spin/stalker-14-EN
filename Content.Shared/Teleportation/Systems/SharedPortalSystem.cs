@@ -120,7 +120,7 @@ public abstract class SharedPortalSystem : EntitySystem
             }
             else
             {
-                _popup.PopupClient(Loc.GetString("teleport-cooldown-denied", ("time", timeout.Cooldown.Seconds)),
+                _popup.PopupClient(Loc.GetString("teleport-cooldown-denied", ("time", (timeout.Cooldown - _timing.CurTime).Seconds)),
                     Transform(subject).Coordinates,
                     subject,
                     PopupType.Medium);
