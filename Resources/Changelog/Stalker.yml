@@ -1632,5 +1632,20 @@
   id: 171
   time: '2026-03-18T08:03:45.951438+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/663
+- author: crocodilecarousel
+  changes:
+  - message: Jarred food recipes
+    type: Add
+  - message: Jars
+    type: Add
+  - message: The ability to jerk meat by adding spice mix to raw meat
+    type: Add
+  - message: Moonshine stills can be used to make moonshine
+    type: Add
+  - message: Cooking guide and homemade cookbook to store recipes
+    type: Add
+  id: 172
+  time: '2026-03-18T08:09:31.120793+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/664
 Name: Stalker
 Order: -1
