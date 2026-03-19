@@ -1674,5 +1674,14 @@
   id: 175
   time: '2026-03-19T10:45:19.004836+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/668
+- author: Noguchi47
+  changes:
+  - message: brand new HK USP, Walther P99 and Colt M1911 pistols
+    type: Add
+  - message: the new pistols are added to some vendors and find out IC :)
+    type: Add
+  id: 176
+  time: '2026-03-19T10:47:04.261583+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/669
 Name: Stalker
 Order: -1
