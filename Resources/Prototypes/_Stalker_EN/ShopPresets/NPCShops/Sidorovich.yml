@@ -112,6 +112,18 @@
     FoodMeatSTBoarJerkedSingle: 125
     FoodMeatSTBearJerkedSingle: 245
     FoodMeatSTSuckerJerkedSingle: 600
+    FoodSaloSlice: 35
+    STFoodMeatSalo: 35
+
+    #Lumber
+    STTradePlankT1: 20
+    STTradePlankT2: 30
+    STTradePlankT3: 40
+    STTradePlankT4: 50
+    STLogStalkerT1: 10
+    STLogStalkerT2: 15
+    STLogStalkerT3: 20
+    STLogStalkerT4: 25
 
 # Cooking
     FoodSTFreshCheese: 100
@@ -316,6 +328,8 @@
         STClothingBeltThrowingKnifes: 350
         ClothingBeltPocketPouch: 500
         ClothingBeltHerbalistPouch: 500
+          # Other
+        ClothingBackpackForestryRig: 500
 
     - name: shop-category-raincoats-and-gasmasks
       priority: 8

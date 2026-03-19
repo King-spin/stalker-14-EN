@@ -20,24 +20,40 @@
   parent: LogStalker
   id: STLogStalkerT1
   name: бревно сосны
+  components: #EN start
+  - type: Tag
+    tags:
+    - Lumber #EN end
 
 - type: entity
   suffix: Stalker, крафт
   parent: LogStalker
   id: STLogStalkerT2
   name: бревно берёзы
+  components: #EN start
+  - type: Tag
+    tags:
+    - Lumber #EN end
 
 - type: entity
   suffix: Stalker, крафт
   parent: LogStalker
   id: STLogStalkerT3
   name: бревно рыжего леса
+  components: #EN start
+  - type: Tag
+    tags:
+    - Lumber #EN end
 
 - type: entity
   suffix: Stalker, крафт
   parent: LogStalker
   id: STLogStalkerT4
   name: бревно ивы
+  components: #EN start
+  - type: Tag
+    tags:
+    - Lumber #EN end
 
 - type: Tag
   id: LogStalker

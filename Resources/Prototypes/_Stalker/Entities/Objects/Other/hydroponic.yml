@@ -156,12 +156,14 @@
   components:
   - type: Tag
     tags:
+    - Lumber
     - BotanyHatchet
   - type: Sharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
     state: icon
   - type: MeleeWeapon
+    autoAttack: true #EN
     wideAnimationRotation: 135
     swingLeft: true
     damage:
@@ -174,6 +176,9 @@
   - type: Craftable
   - type: RepositoryItem
     categoryName: repository-tools-category
+  - type: Utensil #EN start
+    types:
+    - Knife #EN end
 
 - type: entity
   name: маленькая тяпка
