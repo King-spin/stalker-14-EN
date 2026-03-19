@@ -1683,5 +1683,12 @@
   id: 176
   time: '2026-03-19T10:47:04.261583+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/669
+- author: DuckManZach
+  changes:
+  - message: Portals now teleport reliably
+    type: Fix
+  id: 177
+  time: '2026-03-19T10:54:01.150239+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/667
 Name: Stalker
 Order: -1
