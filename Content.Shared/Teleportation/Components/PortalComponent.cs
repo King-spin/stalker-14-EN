@@ -36,7 +36,7 @@ public sealed partial class PortalComponent : Component
     ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
     /// </remarks>
     [DataField("canTeleportToOtherMaps"), ViewVariables(VVAccess.ReadWrite)]
-    public bool CanTeleportToOtherMaps = false;
+    public bool CanTeleportToOtherMaps = true; // stalker-en-changes - change to true
 
     /// <summary>
     ///     Maximum distance that portals can teleport to, in all cases. Mostly this matters for linked portals.
@@ -52,5 +52,16 @@ public sealed partial class PortalComponent : Component
     /// Should we teleport randomly if nothing is linked.
     /// </summary>
     [DataField, AutoNetworkedField, ViewVariables(VVAccess.ReadWrite)]
-    public bool RandomTeleport = true;
+    public bool RandomTeleport = false; // stalker-en-changes
+
+    // Stalker-en-changes
+    [DataField]
+    public bool AccessLocked = true;
+
+    [DataField]
+    public TimeSpan Cooldown = TimeSpan.FromSeconds(0.5);
+
+    [DataField]
+    public bool AllowDragged = false;
+    // stalker-en-changes-end
 }
