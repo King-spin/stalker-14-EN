@@ -5,9 +5,9 @@
   description: What madman made this?
   components:
   - type: Sprite
-    sprite: _Stalker_EN/Objects/Clothing/neck/Toothnecklace.rsi
+    sprite: _Stalker_EN/Objects/Clothing/Neck/Toothnecklace.rsi
   - type: Clothing
-    sprite: _Stalker_EN/Objects/Clothing/neck/Toothnecklace.rsi
+    sprite: _Stalker_EN/Objects/Clothing/Neck/Toothnecklace.rsi
   - type: BallisticAmmoProvider
     mayTransfer: true
     whitelist:
