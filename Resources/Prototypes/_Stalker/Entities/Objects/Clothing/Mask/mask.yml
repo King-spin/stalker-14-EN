@@ -138,10 +138,12 @@
     armorClass: 3
     modifiers:
       coefficients:
-        Piercing: 0.80
+        Piercing: 0.85
         Blunt: 0.80
         Slash: 0.80
-          
+  - type: Tag
+    tags:
+      - BlockMask # Stalker EN Change - no more powergaming
 
 - type: entity
   parent: ClothingMaskPullableBase
