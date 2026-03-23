@@ -31,6 +31,7 @@
   - type: HelmetVisor
     toggleAction: ActionToggleHelmetVisor
     equippedPrefixUp: visor-up
+    iconStateUp: icon-visor-up
     visorUpReflectProb: 0.09
     visorUpModifiers:
       coefficients:

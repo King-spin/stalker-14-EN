@@ -13,6 +13,9 @@ public sealed partial class HelmetVisorComponent : Component
     [DataField, AutoNetworkedField]
     public EntProtoId ToggleAction = "ToggleHelmetVisorEvent";
 
+    [DataField]
+    public string? IconStateUp;
+
     [DataField, AutoNetworkedField]
     public EntityUid? ToggleActionEntity;
 
@@ -24,6 +27,12 @@ public sealed partial class HelmetVisorComponent : Component
 
     [DataField, AutoNetworkedField]
     public bool IsToggleable = true;
+
+    [DataField, AutoNetworkedField]
+    public float ToggleDelay = 1.5f;
+
+    [DataField, AutoNetworkedField]
+    public float LastToggleTime;
 
     [DataField]
     public DamageModifierSet? VisorUpModifiers;

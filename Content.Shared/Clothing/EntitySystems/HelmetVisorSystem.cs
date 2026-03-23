@@ -9,11 +9,14 @@ using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Reflect;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using System.Security.Principal;
+using Robust.Shared.Prototypes;
+
 
 namespace Content.Shared.Clothing.EntitySystems;
 
@@ -26,6 +29,9 @@ public sealed class HelmetVisorSystem : EntitySystem
     [Dependency] private readonly IdentitySystem _identity = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ExamineSystemShared _examine = default!;
+    [Dependency] private readonly SharedVerbSystem _verbs = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
 
     public override void Initialize()
     {
@@ -34,6 +40,7 @@ public sealed class HelmetVisorSystem : EntitySystem
         SubscribeLocalEvent<HelmetVisorComponent, ToggleHelmetVisorEvent>(OnToggle);
         SubscribeLocalEvent<HelmetVisorComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<HelmetVisorComponent, ExaminedEvent>(OnExamine);
+        SubscribeLocalEvent<HelmetVisorComponent, GetVerbsEvent<InteractionVerb>>(OnGetVerbs);
     }
 
     private void OnInit(EntityUid uid, HelmetVisorComponent comp, ComponentInit args)
@@ -64,13 +71,15 @@ public sealed class HelmetVisorSystem : EntitySystem
         if (args.Handled || !comp.IsToggleable)
             return;
 
-        if (comp.IsUp)
-        {
-            var wearer = Transform(uid).ParentUid;
-            if (_inventorySystem.TryGetSlotEntity(wearer, "mask", out _))
-                return;
-        }
+        if (comp.IsUp && _inventorySystem.TryGetSlotEntity(Transform(uid).ParentUid, "mask", out _))
+            return;
 
+        if (_timing.CurTime.TotalSeconds - comp.LastToggleTime < comp.ToggleDelay)
+            return;
+
+        comp.LastToggleTime = (float)_timing.CurTime.TotalSeconds;
+
+        _audio.PlayPredicted(comp.IsUp ? comp.SoundVisorDown : comp.SoundVisorUp, uid, args.Performer);
         SetUp(uid, comp, !comp.IsUp);
         args.Handled = true;
     }
@@ -88,9 +97,6 @@ public sealed class HelmetVisorSystem : EntitySystem
 
         comp.IsUp = up;
 
-        var sound = comp.IsUp ? comp.SoundVisorUp : comp.SoundVisorDown;
-        _audio.PlayPredicted(sound, uid, Transform(uid).ParentUid);
-
         if (TryComp<SlotBlockOverrideComponent>(uid, out var over))
         {
             over.Overridden = comp.IsUp;
@@ -106,11 +112,14 @@ public sealed class HelmetVisorSystem : EntitySystem
 
     private void UpdateVisuals(EntityUid uid, HelmetVisorComponent comp)
     {
-        if (comp.EquippedPrefixUp == null)
-            return;
+        if (comp.EquippedPrefixUp != null)
+        {
+            var prefix = comp.IsUp ? comp.EquippedPrefixUp : null;
+            _clothing.SetEquippedPrefix(uid, prefix);
+        }
 
-        var prefix = comp.IsUp ? comp.EquippedPrefixUp : null;
-        _clothing.SetEquippedPrefix(uid, prefix);
+        _appearance.SetData(uid, HelmetVisorVisuals.IsUp, comp.IsUp);
+        RaiseLocalEvent(uid, new HelmetVisorVisualsChangedEvent());
     }
 
     private void UpdateBlockers(EntityUid uid, HelmetVisorComponent comp)
@@ -129,9 +138,33 @@ public sealed class HelmetVisorSystem : EntitySystem
             args.PushMarkup(Loc.GetString(key));
         }
     }
+    private void OnGetVerbs(EntityUid uid, HelmetVisorComponent comp, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess || !comp.IsToggleable)
+            return;
+
+        args.Verbs.Add(new InteractionVerb
+        {
+            Text = Loc.GetString(comp.IsUp ? "helmet-visor-lower" : "helmet-visor-raise"),
+            Act = () =>
+            {
+                if (_timing.CurTime.TotalSeconds - comp.LastToggleTime < comp.ToggleDelay)
+                    return;
+
+                comp.LastToggleTime = (float)_timing.CurTime.TotalSeconds;
+
+                _audio.PlayPredicted(comp.IsUp ? comp.SoundVisorDown : comp.SoundVisorUp, uid, args.User);
+                SetUp(uid, comp, !comp.IsUp);
+            }
+        });
+    }
+}
+public enum HelmetVisorVisuals : byte
+{
+    IsUp
 }
 
 public readonly record struct VisorToggledEvent(EntityUid Visor, bool IsUp);
 public readonly record struct VisorBlockersChangedEvent(bool BlockIngestion, bool BlockIdentity);
-public readonly record struct HelmetVisorVisualsChangedEvent(string? EquippedPrefix);
+public readonly record struct HelmetVisorVisualsChangedEvent;
 

@@ -5,3 +5,5 @@ action-helmet-visor-down-popup-message = You lower the visor.
 action-helmet-visor-cooldown = Wait { $time } seconds before toggling again.
 helmet-visor-up = Visor is up.
 helmet-visor-down = Visor is down.
+helmet-visor-raise = Raise visor
+helmet-visor-lower = Lower visor
