@@ -152,6 +152,8 @@ public sealed partial class StalkerRepositoryMenu : DefaultWindow
         Clear();
         PopulateCurrentCategory(_curItems, SearchLine.Text);
     }
+
+    // stalker-en-changes - Function has been mostly rewritten
     private void PopulateCurrentCategory(List<RepositoryItemInfo> items, string? filter = null)
     {
         var spriteSys = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
@@ -160,60 +162,64 @@ public sealed partial class StalkerRepositoryMenu : DefaultWindow
         ItemCategory.Visible = false;
         PutInsideButton.Visible = false;
         RepositoryWeight.Text = Loc.GetString("repository-weight-inside", ("weight", Math.Round(_curWeight, 2)), ("maxWeight", _maxWeight));
-        foreach (var item in items)
+        var categorizedItems = items
+            .Where(i =>
+                //filter logic
+                (string.IsNullOrEmpty(filter) ||
+                 i.Name.Contains(filter.Trim(), StringComparison.InvariantCultureIgnoreCase)) &&
+                //category logic
+                (
+                    (_currentCategory == _allCategory && !i.UserItem) ||
+                    (_currentCategory == _userCategory && i.UserItem) ||
+                    (i.Category == _currentCategory.Item1 && !i.UserItem)
+                )
+                        )
+            .OrderBy(i => i.Category)
+            .GroupBy(i => i.Category);
+
+        foreach (var category in categorizedItems)
         {
-            if (!string.IsNullOrEmpty(filter) &&
-                !item.Name.ToLowerInvariant().Contains(filter.Trim().ToLowerInvariant()))
+            if (!category.Any())
+                return;
+
+            ItemContainer.AddChild(new ItemCategory(category.Key));
+            var containedItems = new GridContainer
             {
-                continue;
-            }
-            var texture = item.Icon == null ? spriteSys.GetPrototypeIcon(item.ProductEntity).Default : null;
-            var control = new StalkerRepositoryItemControl(item, texture);
-            // stalker-en-changes
-            control.InteractButton.Text = item.UserItem
-                ? Loc.GetString("repository-insert-item")
-                : Loc.GetString("repository-eject-item");
-            control.InteractButton.OnPressed += _ =>
-            {
-                PutInsideHandler(item);
+                Columns = 2,
+                SizeFlagsStretchRatio = 3,
             };
-            // stalker-en-changes-end
-            control.SelectButton.OnPressed += _ =>
+            ItemContainer.AddChild(containedItems);
+            foreach (var item in category)
             {
-                _selectedControl = control;
-                SetupLabels(control, item, texture);
-                PutInsideButton.Text = item.UserItem
+                var texture = item.Icon == null ? spriteSys.GetPrototypeIcon(item.ProductEntity).Default : null;
+                var control = new StalkerRepositoryItemControl(item, texture);
+                control.InteractButton.Text = item.UserItem
                     ? Loc.GetString("repository-insert-item")
                     : Loc.GetString("repository-eject-item");
-                PutInsideButton.OnPressed -= PutInsideHandler;
-                PutInsideButton.OnPressed += PutInsideHandler;
-            };
-
-            if (_currentCategory == _userCategory)
-            {
-                if (item.UserItem)
+                control.InteractButton.OnPressed += _ =>
                 {
-                    ContainedItems.AddChild(control);
-                    continue;
-                }
+                    PutInsideHandler(item);
+                };
+                control.SelectButton.OnPressed += _ =>
+                {
+                    _selectedControl = control;
+                    SetupLabels(control, item, texture);
+                    PutInsideButton.Text = item.UserItem
+                        ? Loc.GetString("repository-insert-item")
+                        : Loc.GetString("repository-eject-item");
+                    PutInsideButton.OnPressed -= PutInsideHandler;
+                    PutInsideButton.OnPressed += PutInsideHandler;
+                };
+
+                containedItems.AddChild(control);
             }
-
-            if (_currentCategory == _allCategory && !item.UserItem)
-            {
-                ContainedItems.AddChild(control);
-                continue;
-            }
-
-            if (item.Category != _currentCategory.Item1 || item.UserItem)
-                continue;
-
-            ContainedItems.AddChild(control);
         }
     }
+    // stalker-en-changes-end
 
     private void Clear()
     {
-        ContainedItems.RemoveAllChildren();
+        ItemContainer.RemoveAllChildren();  // Stalker-en
     }
     private string FormatDescription(string description)
     {
@@ -301,7 +307,7 @@ public sealed partial class StalkerRepositoryMenu : DefaultWindow
         ItemDesc.Visible = true;
         ItemCategory.Visible = true;
         PutInsideButton.Visible = true;
-        foreach (var child in ContainedItems.Children)
+        foreach (var child in ItemContainer.Children) // stalker-en
         {
             if (child is not StalkerRepositoryItemControl stalkerRepositoryItemControl)
                 continue;

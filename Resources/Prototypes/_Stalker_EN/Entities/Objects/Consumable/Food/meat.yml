@@ -469,6 +469,7 @@
   - type: Construction
     graph: MeatSalo
     node: meat salo
+  - type: Craftable
 
 - type: entity
   name: cvarci
@@ -660,6 +661,9 @@
           Quantity: 5
         - ReagentId: TableSalt
           Quantity: 5
+  - type: Perishable
+    rotAfter: 9999
+    molsPerSecondPerUnitMass: 0
   - type: TimedDespawn
     lifetime: 600 # 10 min
   - type: SpawnOnDespawn
@@ -769,6 +773,9 @@
           Quantity: 5
         - ReagentId: TableSalt
           Quantity: 10
+  - type: Perishable
+    rotAfter: 9999
+    molsPerSecondPerUnitMass: 0
   - type: TimedDespawn
     lifetime: 600 # 10 min
   - type: SpawnOnDespawn
@@ -879,6 +886,9 @@
           Quantity: 10
         - ReagentId: TableSalt
           Quantity: 5
+  - type: Perishable
+    rotAfter: 9999
+    molsPerSecondPerUnitMass: 0
   - type: TimedDespawn
     lifetime: 300 # 5 min
   - type: SpawnOnDespawn
@@ -986,6 +996,9 @@
           Quantity: 1
         - ReagentId: TableSalt
           Quantity: 4
+  - type: Perishable
+    rotAfter: 9999
+    molsPerSecondPerUnitMass: 0
   - type: TimedDespawn
     lifetime: 20 # 20 seconds
   - type: SpawnOnDespawn

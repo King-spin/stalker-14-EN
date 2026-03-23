@@ -56,7 +56,7 @@
   name: Cordon-MilBase2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ########################## ПБ - Подземка кордона
 - type: entity
@@ -65,7 +65,7 @@
   name: Podzem-PB
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -73,7 +73,7 @@
   name: KPodzem-PB1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -81,7 +81,7 @@
   name: KPodzem-PB2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################### ПБ - Лощина
 - type: entity
@@ -90,7 +90,7 @@
   name: LohinaPB
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -98,7 +98,7 @@
   name: LohinaPB1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ##########################СВАЛКА- лощина
 - type: entity
@@ -107,7 +107,7 @@
   name: Svalka-Lohina
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ##########################СВАЛКА-КОРДОН
 - type: entity
@@ -116,7 +116,7 @@
   name: Cordon-Svalka
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -124,7 +124,7 @@
   name: Svalka-Kordon2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -132,7 +132,7 @@
   name: Kordon-Svalka1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ##########################СВАЛКА-ПОДЗЕМКА СВАЛКИ
 - type: entity
@@ -258,7 +258,7 @@
   name: Cordon-TL1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################################Свалка-Агропром
 - type: entity
@@ -267,7 +267,7 @@
   name: Svalka-Agro1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -275,7 +275,7 @@
   name: Agro-Svalka2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################################Свалка-Болота
 - type: entity
@@ -284,7 +284,7 @@
   name: Bolota-Svalka1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################################Кордон-Болота
 - type: entity
@@ -293,7 +293,7 @@
   name: Bolota-Cordon1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -301,7 +301,7 @@
   name: Bolota-Cordon2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -309,7 +309,7 @@
   name: BolotaVxod
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################################Агропром-Болота
 - type: entity
@@ -318,7 +318,7 @@
   name: Bolota-Agro1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ##################################################### Свалка-Грех
 - type: entity
@@ -327,7 +327,7 @@
   name: Svalka-Oazis
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################## Свалка - Топь
 - type: entity
@@ -336,7 +336,7 @@
   name: Svalka-Top
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################## Агропром - Топь
 - type: entity
@@ -345,7 +345,7 @@
   name: Agroprom-Top
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######################################## Чистилище - Предбанник - Кордон - НИИ
 - type: entity
@@ -587,7 +587,7 @@
   name: Predbannik-MilBase1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
   - type: AccessReader
     access: [["Military"]]
 
@@ -598,7 +598,7 @@
   name: Рыжий лес - Топи
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -606,7 +606,7 @@
   name: Рыжий лес - Свалка
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBaseUncollide
@@ -739,7 +739,7 @@
   name: Bar-Topi
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -775,7 +775,7 @@
   name: Deserter-Lohina1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -783,7 +783,7 @@
   name: Deserter-Lohina2
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 - type: entity
   parent: MapTeleportBase
@@ -791,7 +791,7 @@
   name: Serephim-Lohina1
   components:
   - type: Portal
-    cooldown: 30
+    cooldown: 5
 
 ######## СВОБОДА
 - type: entity

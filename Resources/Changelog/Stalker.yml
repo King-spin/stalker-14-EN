@@ -1729,5 +1729,80 @@
   id: 182
   time: '2026-03-20T20:21:23.220652+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/681
+- author: DuckManZach
+  changes:
+  - message: Updated the Stash UI to be more usable
+    type: Tweak
+  id: 183
+  time: '2026-03-22T11:19:52.396274+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/670
+- author: dallaszzz
+  changes:
+  - message: Overhauled the ambient music to use music from SoC CS and CoP
+    type: Add
+  - message: Ambient music now plays unique track based on day/night and map
+    type: Add
+  - message: All the old ambient music tracks are gone
+    type: Remove
+  id: 184
+  time: '2026-03-22T11:33:00.393959+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/682
+- author: dallaszzz
+  changes:
+  - message: Fixed the backup emote making no sound for everyone but loners
+    type: Fix
+  - message: The female laughs were reverted back to vanilla
+    type: Tweak
+  - message: Some laugh sfx with dialogue in them were removed
+    type: Remove
+  id: 185
+  time: '2026-03-22T11:35:54.417354+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/683
+- author: Roland410
+  changes:
+  - message: Adds new repository categories to make items easier to find.
+    type: Add
+  - message: Organizes the repository items into proper categories.
+    type: Tweak
+  id: 186
+  time: '2026-03-22T11:43:32.256242+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/689
+- author: me, @FrauzJ
+  changes:
+  - message: Swamps now has the pit.
+    type: Add
+  - message: Safezone markers for swamp
+    type: Add
+  - message: Removed rng cave portals in swamp
+    type: Remove
+  - message: 3x3 grabber anoms no longer spawn in swamps.
+    type: Tweak
+  - message: 'For admins: translated swamp warp points'
+    type: Fix
+  id: 187
+  time: '2026-03-22T22:21:28.777382+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/697
+- author: me, @LaCumbiaDelCoronavirus
+  changes:
+  - message: Swamps now has the pit.
+    type: Add
+  - message: Safezone markers for swamp
+    type: Add
+  - message: Removed rng cave portals in swamp (AND invisible walls)
+    type: Remove
+  - message: 3x3 grabber anoms no longer spawn in swamps.
+    type: Tweak
+  - message: fixed troll portals in swamps
+    type: Fix
+  id: 188
+  time: '2026-03-23T11:06:07.371740+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/699
+- author: me
+  changes:
+  - message: Some entities in Swamps were translated
+    type: Fix
+  id: 189
+  time: '2026-03-23T11:59:45.961997+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/700
 Name: Stalker
 Order: -1

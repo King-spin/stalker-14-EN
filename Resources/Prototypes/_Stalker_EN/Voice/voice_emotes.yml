@@ -197,9 +197,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: LonerLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -384,9 +384,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: BanditLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -573,9 +573,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: DutyLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -758,9 +758,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: EcologistsLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -943,9 +943,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: FreedomLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -1128,9 +1128,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: MercLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -1313,9 +1313,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: MilitaryLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:
@@ -1500,9 +1500,9 @@
       params:
         variation: 0.125
     Laugh:
-      collection: MonolithLaugh
+      collection: FemaleLaugh
       params:
-        pitch: 1.2
+        variation: 0.125
     Sneeze:
       collection: FemaleSneezes
       params:

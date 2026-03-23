@@ -19,7 +19,7 @@
     - type: TimerTrigger
     - type: ScatteringGrenade
       fillPrototype: PelletClusterLethal
-      capacity: 80
+      capacity: 8 # EN
     - type: ContainerContainer
       containers:
         cluster-payload: !type:Container
@@ -43,13 +43,13 @@
       explosionType: Default
       maxIntensity: 5
       intensitySlope: 2
-      totalIntensity: 40 # about a ~4 tile radius
+      totalIntensity: 70 # EN this might be too big tee hee
       canCreateVacuum: false
     - type: TriggerOnUse
     - type: TimerTrigger
     - type: ScatteringGrenade
       fillPrototype: PelletClusterLethal
-      capacity: 80
+      capacity: 8 # EN
     - type: ContainerContainer
       containers:
         cluster-payload: !type:Container

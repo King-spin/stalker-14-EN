@@ -87,9 +87,9 @@
   - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_1.ogg
   - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_2.ogg
   - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_4.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_5.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_6.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_5.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Loners/Laugh/laughter_6.ogg
 
 - type: soundCollection
   id: LonerMedkit
@@ -182,10 +182,10 @@
 - type: soundCollection
   id: BanditLaugh
   files:
-  - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_1.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_2.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_1.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_2.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_3.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_4.ogg
   - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_5.ogg
   - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_6.ogg
   - /Audio/_Stalker_EN/VoiceLines/Bandit/Laugh/laughter_7.ogg
@@ -364,13 +364,13 @@
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_1.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_2.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_4.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_5.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_6.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_7.ogg
   - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_8.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_9.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_10.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_9.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Ecologists/Laugh/laughter_10.ogg
 
 - type: soundCollection
   id: EcologistsMedkit
@@ -462,7 +462,7 @@
 - type: soundCollection
   id: FreedomLaugh
   files:
-  - /Audio/_Stalker_EN/VoiceLines/Freedom/Laugh/laughter_1.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Freedom/Laugh/laughter_1.ogg
   - /Audio/_Stalker_EN/VoiceLines/Freedom/Laugh/laughter_2.ogg
   - /Audio/_Stalker_EN/VoiceLines/Freedom/Laugh/laughter_3.ogg
   - /Audio/_Stalker_EN/VoiceLines/Freedom/Laugh/laughter_4.ogg
@@ -544,10 +544,10 @@
 - type: soundCollection
   id: MercLaugh
   files:
-  - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_1.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_2.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_1.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_2.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_3.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_4.ogg
   - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_5.ogg
   - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_6.ogg
   - /Audio/_Stalker_EN/VoiceLines/Merc/Laugh/laughter_7.ogg
@@ -637,9 +637,9 @@
   id: MilitaryLaugh
   files:
   - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_1.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_2.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_2.ogg
   - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_4.ogg
   - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_5.ogg
   - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_6.ogg
   - /Audio/_Stalker_EN/VoiceLines/Military/Laugh/laughter_7.ogg
@@ -741,9 +741,9 @@
   - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_1.ogg
   - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_2.ogg
   - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_3.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_4.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_5.ogg
-  - /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_6.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_4.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_5.ogg
+  #- /Audio/_Stalker_EN/VoiceLines/Monolith/Laugh/laughter_6.ogg
 
 - type: soundCollection
   id: MonolithMedkit
