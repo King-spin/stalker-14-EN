@@ -1849,5 +1849,16 @@
   id: 194
   time: '2026-03-24T23:46:19.666739+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/707
+- author: crocodilecarousel
+  changes:
+  - message: Garbage Bar is different
+    type: Tweak
+  - message: Adds a dedicated Garbage Bar NPC, Tooth
+    type: Add
+  - message: Adds fleamarket NPCs
+    type: Add
+  id: 195
+  time: '2026-03-25T09:32:05.847669+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/709
 Name: Stalker
 Order: -1
