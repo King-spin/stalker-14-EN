@@ -18,15 +18,15 @@
       - cash_100
       layerFunction: Threshold
     - type: StackLayerThreshold
-      thresholds: [10, 100]
+      thresholds: [3, 10]
     - type: Sprite
-      sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+      sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
       state: cash
       layers:
       - state: cash
         map: ["base"]
     - type: Item
-      sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+      sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
       size: Small
     - type: Physics
       bodyType: Dynamic
@@ -56,7 +56,7 @@
 - type: stack
   id: ArtifactShards
   name: stack-hryvnias
-  icon: { sprite: /Textures/_Stalker_EN/Objects/Economy/hryvnia.rsi, state: cash }
+  icon: { sprite: /Textures/_Stalker_EN/Objects/Economy/artifact_shards.rsi, state: cash }
   spawn: ArtifactShards
   splitAmounts: [1, 5, 10, 25, 50, 100, 500]
 
@@ -66,7 +66,7 @@
   suffix: Stalker, 5
   components:
   - type: Icon
-    sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+    sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
     state: cash_10
   - type: Stack
     count: 5
@@ -77,7 +77,7 @@
   suffix: Stalker, 10
   components:
   - type: Icon
-    sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+    sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
     state: cash_10
   - type: Stack
     count: 10
@@ -88,7 +88,7 @@
   suffix: Stalker, 25
   components:
   - type: Icon
-    sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+    sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
     state: cash_10
   - type: Stack
     count: 25
@@ -99,7 +99,7 @@
   suffix: Stalker, 100
   components:
   - type: Icon
-    sprite: _Stalker_EN/Objects/Economy/hryvnia.rsi
+    sprite: _Stalker_EN/Objects/Economy/artifact_shards.rsi
     state: cash_100
   - type: Stack
     count: 100
