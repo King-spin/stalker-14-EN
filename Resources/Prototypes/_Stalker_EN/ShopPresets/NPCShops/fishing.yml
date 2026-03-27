@@ -48,8 +48,13 @@
       items:
         AcousticGuitarInstrument: 500
         Blunt: 500
-    - name: Cooking
+    - name: Provisions
       priority: 2
+      items:
+        STDrinkBeerCanBaltic: 50
+        DrinkBeerBottleFull: 150
+    - name: Cooking
+      priority: 3
       items:
         STCookingFriedFish: 2000
         STCookingFrogLegs: 2000

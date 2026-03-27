@@ -2,7 +2,7 @@
   id: MoonshineStillActive
   parent: MoonshineStill
   name: moonshine still
-  suffix: ST, Mapping
+  suffix: ST, Mapping, Active
   description: The lid is closed tight. It needs some time to work.
   components:
   - type: AmbientSound
@@ -20,7 +20,7 @@
   id: MoonshineStillFull
   parent: MoonshineStill
   name: moonshine still
-  suffix: ST, Mapping
+  suffix: ST, Mapping, Full
   description: It's stopped bubbling, hopefully it's safe to open. Jar that moonshine!
   components:
   - type: Craftable

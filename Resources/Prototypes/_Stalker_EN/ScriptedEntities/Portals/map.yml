@@ -147,9 +147,6 @@
   parent: MapTeleportBase
   id: YantarLabLadder
   name: Yantar Lab Ladder
-  components:
-  - type: Portal
-    cooldown: 15
 
 - type: entity
   parent: MapTeleportBase
@@ -163,14 +160,9 @@
   parent: MapTeleportBase
   id: Yantar-Lab
   name: Yantar-Lab
-
-- type: entity
-  parent: MapTeleportBaseUncollide
-  id: Yantar-LabUncollide
-  name: Yantar-LabUncollide
   components:
-  - type: LinkByString
-    linkString: Yantar-Lab
+  - type: Portal
+    cooldown: 15
 
 - type: entity
   parent: MapTeleportBase
@@ -197,6 +189,48 @@
   components:
   - type: LinkByString
     linkString: Yantar-Lab3
+
+- type: entity
+  parent: MapTeleportBase
+  id: Yantar-Rostok
+  name: Yantar-Rostok
+  components:
+  - type: Portal
+    cooldown: 5
+
+- type: entity
+  parent: MapTeleportBase
+  id: Yantar-DeadCity
+  name: Yantar-DeadCity
+  components:
+  - type: Portal
+    cooldown: 5
+
+- type: entity
+  parent: MapTeleportBase
+  id: Yantar-Agroprom
+  name: Yantar-Agroprom
+  components:
+  - type: Portal
+    cooldown: 5
+
+# Monolith
+
+- type: entity
+  parent: MapTeleportBase
+  id: Mono-Yantar
+  name: Mono-Yantar
+  components:
+  - type: AccessReader
+    access: [["Monolith"]]
+
+- type: entity
+  parent: MapTeleportBaseUncollide
+  id: Mono-YantarUncollide
+  name: Mono-YantarUncollide
+  components:
+  - type: LinkByString
+    linkString: Mono-Yantar
 
 # Merc
 

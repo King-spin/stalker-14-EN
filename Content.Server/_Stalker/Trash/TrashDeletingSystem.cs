@@ -127,7 +127,7 @@ public sealed class TrashDeletingSystem : EntitySystem
         // --- Pause maps with no players ---
         foreach (var map in _mapMan.GetAllMapIds())
         {
-            if (map == MapId.Nullspace || map == new MapId(1)) // Never pause map 1
+            if (map == MapId.Nullspace)
                 continue;
 
             // Skip maps that explicitly disable pausing

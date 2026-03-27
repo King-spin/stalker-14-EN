@@ -94,6 +94,9 @@ public abstract class SharedPortalSystem : EntitySystem
 
         var subject = args.OtherEntity;
 
+        if (subject == EntityUid.Invalid || !EntityManager.EntityExists(subject))
+            return;
+
         // best not.
         if (Transform(subject).Anchored)
             return;
@@ -158,6 +161,12 @@ public abstract class SharedPortalSystem : EntitySystem
 
             // pick a target and teleport there
             var target = _random.Pick(link.LinkedEntities);
+
+            if (target == EntityUid.Invalid || !EntityManager.EntityExists(target))
+                return;
+
+            if (!HasComp<TransformComponent>(target))
+                return;
 
             if (HasComp<PortalComponent>(target))
             {
