@@ -132,6 +132,7 @@
         # Melee
         StalkerBallBat: 50
         # Pistols
+        STWeaponPistolC96: 1200
         STWeaponPistolM1911Chrome: 1500
         WeaponPistolStalkerTT: 250
         WeaponPistolStalkerAPS: 500
@@ -168,6 +169,7 @@
         BasePPSHMag: 250
         BizonMag: 1100
           # Other
+        STSTC96ClipEmpty: 120  
         M1911Mag7: 150
         Base556Mag10: 80
         556Mag20: 220

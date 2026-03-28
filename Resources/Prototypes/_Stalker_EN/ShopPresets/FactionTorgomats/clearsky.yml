@@ -136,6 +136,7 @@
       StalkerBallBat: 50
       STThrowingknifeYellow: 300
       # Pistols
+      STWeaponPistolHiPower: 400
       STWeaponPistolP99: 500
       STWeaponPistolM1911Chrome: 1000
       STWeaponPistolUSP: 1700
@@ -189,6 +190,7 @@
       BizonMag: 750
       BizonMag919: 800
       # Other
+      HiPowerMag13: 120
       P99Mag15: 140
       M1911Mag7: 120
       USPMag12: 200
