@@ -26,7 +26,7 @@
   parent: ClothingHeadHardsuitSevaHelmMonolith
   id: ClothingHeadHardsuitSevaHelmMonolithPriest
   name: Seva "Priest" Helmet
-  description: Despite the predominantly glass composition, it is quite durable. Has been painted and up-armored by Mololith soldiers.
+  description: Despite the predominantly glass composition, it is quite durable. Has been painted and up-armored by Monolith soldiers.
   categories: [ HideSpawnMenu ]
   components:
   - type: Sprite
