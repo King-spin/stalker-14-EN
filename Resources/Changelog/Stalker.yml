@@ -1895,5 +1895,13 @@
   id: 199
   time: '2026-03-28T02:01:35.682117+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/693
+- author: BELNAKBU
+  changes:
+  - message: Now you can wear a balaclava,etc and lower visor. The visor restriction
+      only applies to the STgasmask and everything that had BlockMask tag.
+    type: Add
+  id: 200
+  time: '2026-03-28T15:37:29.298804+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/722
 Name: Stalker
 Order: -1
