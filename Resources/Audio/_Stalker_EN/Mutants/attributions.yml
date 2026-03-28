@@ -1,5 +1,5 @@
 - files: ["hiss.ogg"]
-  license: "LicenseRef-proprietary"
+  license: "NOASSERTION"
   copyright: "sample modified by carousel in compliance with EULA terms"
   source: "https://soundtrackloops.com/"
 
@@ -14,7 +14,7 @@
   source: "https://freesound.org/people/killumimati/sounds/381761/"
 
 - files: ["bear_hit.ogg"]
-  license: "LicenseRef-royalty-free"
+  license: "NOASSERTION"
   copyright: "FilmCow"
   source: "https://filmcow.itch.io/filmcow-sfx"
 
