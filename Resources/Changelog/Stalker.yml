@@ -1782,5 +1782,149 @@
   id: 187
   time: '2026-03-22T22:21:28.777382+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/697
+- author: me, @LaCumbiaDelCoronavirus
+  changes:
+  - message: Swamps now has the pit.
+    type: Add
+  - message: Safezone markers for swamp
+    type: Add
+  - message: Removed rng cave portals in swamp (AND invisible walls)
+    type: Remove
+  - message: 3x3 grabber anoms no longer spawn in swamps.
+    type: Tweak
+  - message: fixed troll portals in swamps
+    type: Fix
+  id: 188
+  time: '2026-03-23T11:06:07.371740+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/699
+- author: me
+  changes:
+  - message: Some entities in Swamps were translated
+    type: Fix
+  id: 189
+  time: '2026-03-23T11:59:45.961997+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/700
+- author: RebelledCombine
+  changes:
+  - message: Fixed damage falloff. It should now decrease bullet damage the longer
+      it travels.
+    type: Fix
+  - message: Integrated RMC's bullet prediction system into our code so they now work
+      together properly.
+    type: Fix
+  id: 190
+  time: '2026-03-24T00:13:19.483671+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/704
+- author: RebelledCombine
+  changes:
+  - message: Reduced the damage falloff on rifle rounds.
+    type: Tweak
+  id: 191
+  time: '2026-03-24T21:37:16.189990+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/706
+- author: stickycheZ101
+  changes:
+  - message: added a shovel to sido's shop
+    type: Add
+  id: 192
+  time: '2026-03-24T21:48:15.277506+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/690
+- author: Cassandra
+  changes:
+  - message: The ecologists have secured a small supply of seeds to test their ability
+      to grow in the zone.
+    type: Add
+  id: 193
+  time: '2026-03-24T21:51:13.299375+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/692
+- author: Roland410
+  changes:
+  - message: Expand's Kesha's bunker into the "illegal bar" that can be used by anyone,
+      mainly those banned from RV and such. This is a GREEN zone.
+    type: Add
+  - message: Adds Kosmos cigarettes to Kesha's shop.
+    type: Add
+  - message: Changes Kesha's prices to more reasonable values.
+    type: Tweak
+  id: 194
+  time: '2026-03-24T23:46:19.666739+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/707
+- author: crocodilecarousel
+  changes:
+  - message: Garbage Bar is different
+    type: Tweak
+  - message: Adds a dedicated Garbage Bar NPC, Tooth
+    type: Add
+  - message: Adds fleamarket NPCs
+    type: Add
+  id: 195
+  time: '2026-03-25T09:32:05.847669+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/709
+- author: BELNAKBU
+  changes:
+  - message: "Now you can raise the visor of the VityazC helmet, drink and eat while\
+      \ it\u2019s open, and show your identity"
+    type: Add
+  id: 196
+  time: '2026-03-25T22:10:19.864732+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/688
+- author: King-spin
+  changes:
+  - message: Allows sledgehammers to be stored on back
+    type: Add
+  id: 197
+  time: '2026-03-26T12:49:26.716319+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/714
+- author: dallaszzz
+  changes:
+  - message: Fixes ambient music on yantar, yantar lab and swamps
+    type: Fix
+  id: 198
+  time: '2026-03-28T01:55:41.015603+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/718
+- author: stickycheZ101
+  changes:
+  - message: added a new variety of cigarettes; the Greyman's Specials
+    type: Add
+  - message: added a new smokables category to most faction vendors, that contains
+      almost every variety of cigarette
+    type: Add
+  - message: added the comedically large blunt, an absolutely massive picket of weed,
+      obtainabloe from your local admin
+    type: Add
+  id: 199
+  time: '2026-03-28T02:01:35.682117+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/693
+- author: BELNAKBU
+  changes:
+  - message: Now you can wear a balaclava,etc and lower visor. The visor restriction
+      only applies to the STgasmask and everything that had BlockMask tag.
+    type: Add
+  id: 200
+  time: '2026-03-28T15:37:29.298804+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/722
+- author: dallaszzz
+  changes:
+  - message: Tweaks a bunch of things with monolith
+    type: Tweak
+  id: 201
+  time: '2026-03-28T15:43:26.826861+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/720
+- author: Noguchi47
+  changes:
+  - message: 2 brand new pistols, Browning Hi-Power and Mauser C96
+    type: Add
+  - message: added the new pistols in various of vendors, find out IC as always :3
+    type: Add
+  id: 202
+  time: '2026-03-28T15:46:00.728080+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/721
+- author: dallaszzz
+  changes:
+  - message: Fixes issues with the new mono content
+    type: Fix
+  id: 203
+  time: '2026-03-28T17:24:30.604160+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/724
 Name: Stalker
 Order: -1

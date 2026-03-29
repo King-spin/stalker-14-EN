@@ -355,6 +355,7 @@
     - name: shop-category-utilities
       priority: 10
       items:
+        Shovel: 100
         STCombatKnife: 25
         BoxZiptie: 50
         BoxSafebox: 300
@@ -385,7 +386,11 @@
         BookCookingStalkerGuide: 200
         BookCookingStalkerHomemade: 600
         STRag: 10
-
+        # Cameras
+        STCamera: 750
+        STCameraVintage: 1200
+        STCameraDamaged: 400
+        STCameraFilm: 150
     - name: shop-category-customization
       priority: 11
       items:
@@ -489,6 +494,18 @@
         STCookingHrechanyky: 2000
         STCookingKebabMeat: 2000
         STCookingPickledSausage: 2000
+
+    - name: Smokables #explained using D&D lifestyle expenses
+      priority: 14
+      items:
+        CigPackBub: 250 #comfortable
+        CigPackGreen: 150 #poor
+        CigPackRed: 200 #modest
+        CigPackBlue: 150 #poor
+        CigPackBlack: 200 #modest
+        CigPackMixed: 250 #comfortable
+        CigPackMarlboro: 200 #modest
+        CigPackKosmos: 100 #squalid
 
   sponsorCategories:
     SponsorBread:

@@ -434,6 +434,7 @@
         STDetectorAD2Blueprint: 1000
         STDetectorAD3Blueprint: 3000
         STZoneArtifactDetectorBushBlueprint: 3000
+        ClothingEarsPsyHelmBlueprint: 5000
         STZoneArtifactDetectorResponseBlueprint: 6000
         STZoneArtifactDetectorSpruceBlueprint: 12000
         DetectorVelesBlueprint: 10000
@@ -456,3 +457,34 @@
         # Instruments
         CardBin: 100
         PokerCardBin: 150
+
+
+    - name: Smokables #explained using D&D lifestyle expenses
+      priority: 14
+      items:
+        CigPackBub: 250 #comfortable
+        CigPackGreen: 150 #poor
+        CigPackRed: 200 #modest
+        CigPackBlue: 150 #poor
+        CigPackBlack: 200 #modest
+        CigPackMixed: 250 #comfortable
+        CigPackMarlboro: 200 #modest
+        CigPackKosmos: 100 #squalid
+
+    - name: Gardening
+      priority: 15
+      items:
+        HydroponicsToolScythe: 200
+        HydroponicsToolMiniHoe: 70
+        Bucket: 60
+        StalkerGrinder: 150
+        RobustHarvestChemistryBottleStalker: 50
+        E-Z-NutrientChemistryBottleStalker: 50
+        CannabisSeedsStalker: 70
+        STCarrotSeeds: 70
+        STTomatoSeeds: 70
+        STPotatoSeeds: 70
+        STCabbageSeeds: 70
+        STOnionSeeds: 70
+        STRiceSeeds: 70
+        STCornSeeds: 70

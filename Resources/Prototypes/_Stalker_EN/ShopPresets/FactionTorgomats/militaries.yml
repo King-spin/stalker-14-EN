@@ -344,6 +344,18 @@
       ClothingTorsoTurtlenecksKhakiTurtleneck: 50
       ClothingTorsoTurtlenecksMatrosska: 50
 
+  - name: Smokables #explained using D&D lifestyle expenses
+    priority: 13
+    items:
+      CigPackBub: 250 #comfortable
+      CigPackGreen: 150 #poor
+      CigPackRed: 200 #modest
+      CigPackBlue: 150 #poor
+      CigPackBlack: 200 #modest
+      CigPackMixed: 250 #comfortable
+      CigPackMarlboro: 200 #modest
+      CigPackKosmos: 100 #squalid
+
 - type: shopPreset
   id: OKSOPShopPresetEN # OKSOP REWORK IN-PROGRESS, SELL PRICES ARE SAME AS SIDOROVICH
   minSellPrice: 5

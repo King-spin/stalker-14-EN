@@ -203,6 +203,11 @@ public partial class SharedGunSystem
 
     private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
+
+        
+        if (!component.VerbsEnabled)
+            return; 
+
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 

@@ -76,6 +76,9 @@
     self: 0.1
   - type: RepositoryItem # stalker-en change
     categoryName: repository-miscellaneous-category
+  - type: Tag
+    tags:
+    - Document
 
 - type: entity
   parent: BaseItem

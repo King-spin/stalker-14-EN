@@ -85,6 +85,8 @@
         Slash: 0
   - type: BonusMeleeDamage
     heavyDamageMultiplier: 1.25
+  - type: TimedDespawn
+    lifetime: 60
 
 - type: entity
   parent: MobMutantApparitionBase
