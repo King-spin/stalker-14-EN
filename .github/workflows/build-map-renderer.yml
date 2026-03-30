@@ -1,4 +1,4 @@
-﻿﻿name: Build & Test Map Renderer
+﻿name: Build & Test Map Renderer
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    if: "github.actor != 'PJBot' && github.event.pull_request.draft == false"
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     strategy:
       matrix:
         os: [ubuntu-latest]
