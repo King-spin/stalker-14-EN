@@ -127,14 +127,14 @@
       STWeaponSMGVZ61: 700
 
     #Lumber
-    STTradePlankT1: 40
-    STTradePlankT2: 60
-    STTradePlankT3: 80
-    STTradePlankT4: 100
-    STLogStalkerT1: 20
-    STLogStalkerT2: 30
-    STLogStalkerT3: 40
-    STLogStalkerT4: 50
+      STTradePlankT1: 40
+      STTradePlankT2: 60
+      STTradePlankT3: 80
+      STTradePlankT4: 100
+      STLogStalkerT1: 20
+      STLogStalkerT2: 30
+      STLogStalkerT3: 40
+      STLogStalkerT4: 50
 
   - name: shop-category-magazines
     priority: 2
