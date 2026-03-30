@@ -2002,5 +2002,12 @@
   id: 211
   time: '2026-03-30T20:17:24.455493+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/737
+- author: BELNAKBU
+  changes:
+  - message: Map renderer fix
+    type: Fix
+  id: 212
+  time: '2026-03-30T21:46:00.044155+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/738
 Name: Stalker
 Order: -1
