@@ -100,6 +100,7 @@
         STWeaponRifleL85: 2100 # T2
         STWeaponRifleSCARH: 6000 # T3
         STWeaponRifleM16: 4000 # T2
+        STWeaponRifleM16M203: 5000 # T2
         STWeaponRifleFAL: 1750 # T3
         STWeaponRifleFALo: 8000 # T3
         STWeaponRifleGalil: 7000 # T3

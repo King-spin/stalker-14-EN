@@ -20,6 +20,7 @@
         # Rifles
         STWeaponRifleAKS74U: 2050
         STWeaponRifleM16: 3200
+        STWeaponRifleM16M203: 4000 # T2
         STWeaponRifleAKS74: 3800
 
     - name: shop-category-magazines
