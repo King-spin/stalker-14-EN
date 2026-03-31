@@ -33,6 +33,16 @@
     MutantPartBurerBrain: 3500
     MutantPartControllerBrain: 6500
 
+    #Lumber
+    STTradePlankT1: 40
+    STTradePlankT2: 60
+    STTradePlankT3: 80
+    STTradePlankT4: 100
+    STLogStalkerT1: 20
+    STLogStalkerT2: 30
+    STLogStalkerT3: 40
+    STLogStalkerT4: 50
+
   categories:
     - name: shop-category-weapons
       priority: 1
@@ -249,6 +259,7 @@
         STCameraVintage: 1200
         STCameraDamaged: 400
         STCameraFilm: 150
+        STLoggingChainsaw: 1000
 
     - name: shop-category-modules
       priority: 11
