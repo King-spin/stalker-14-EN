@@ -153,6 +153,16 @@
     STFoodJarMeatEel: 1450
     STFoodJarWholeEelFermented: 3100
 
+    #Lumber
+    STTradePlankT1: 40
+    STTradePlankT2: 60
+    STTradePlankT3: 80
+    STTradePlankT4: 100
+    STLogStalkerT1: 20
+    STLogStalkerT2: 30
+    STLogStalkerT3: 40
+    STLogStalkerT4: 50
+
     # Smuggling
     TradeBox: 4000
 
@@ -450,6 +460,7 @@
         BookCookingStalkerGuide: 200
         BookCookingStalkerHomemade: 800
         STRag: 10
+        STLoggingChainsaw: 1000
         BoomboxPortable: 500
         # Cameras
         STCamera: 750

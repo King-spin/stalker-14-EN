@@ -37,10 +37,16 @@
   id: Lighter
 
 - type: Tag
+  id: Lumber
+
+- type: Tag
   id: MagazineDesertEagle
 
 - type: Tag
   id: MagazineDesertEagleMagnum
+
+#- type: Tag
+#  id: MagazineM1911
 
 - type: Tag
   id: MagazineP99
