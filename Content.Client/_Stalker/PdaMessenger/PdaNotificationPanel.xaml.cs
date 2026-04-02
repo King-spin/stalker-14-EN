@@ -53,33 +53,22 @@ public sealed partial class PdaNotificationPanel : PanelContainer
 
     private void UpdateFactionIcon()
     {
-        // Hide icon if no bandIcon
-        if (string.IsNullOrEmpty(_bandId))
-        {
-            FactionIcon.Visible = false;
-            return;
-        }
-
         if (_usePngIcons)
         {
-            // PNG icon mode - map bandIcon to texture path
+            // PNG icon mode - map bandIcon to texture path (always returns a path, even for unknown)
             var texturePath = GetTexturePathForBandIcon(_bandId);
-            if (texturePath is null)
-            {
-                FactionIcon.Visible = false;
-                return;
-            }
 
             try
             {
                 var resourceCache = IoCManager.Resolve<IResourceCache>();
-                if (resourceCache.TryGetResource<TextureResource>(texturePath.Value, out var texture))
+                if (resourceCache.TryGetResource<TextureResource>(texturePath, out var texture))
                 {
                     FactionIcon.Texture = texture;
                     FactionIcon.Visible = true;
                 }
                 else
                 {
+                    // Failed to load texture - hide icon
                     FactionIcon.Visible = false;
                 }
             }
@@ -90,8 +79,8 @@ public sealed partial class PdaNotificationPanel : PanelContainer
         }
         else
         {
-            // Sprite icon mode - use RSI sprite from /Textures/_Stalker/Icons/Patches/band.rsi
-            var spriteState = GetSpriteStateForBandIcon(_bandId);
+            // Sprite icon mode - use RSI sprite from band.rsi (same as STMessenger)
+            var spriteState = GetSpriteStateForBandIcon(_bandId ?? string.Empty);
             if (spriteState is null)
             {
                 FactionIcon.Visible = false;
@@ -161,9 +150,13 @@ public sealed partial class PdaNotificationPanel : PanelContainer
 
     /// <summary>
     /// Maps bandIcon name to PNG texture path.
+    /// Returns NoData.png if bandIcon is unknown.
     /// </summary>
-    private static ResPath? GetTexturePathForBandIcon(string bandIcon)
+    private static ResPath GetTexturePathForBandIcon(string? bandIcon)
     {
+        if (string.IsNullOrEmpty(bandIcon))
+            return new ResPath("/Textures/_Stalker_EN/Factions/NoData.png");
+
         return bandIcon switch
         {
             // Major factions
@@ -172,7 +165,7 @@ public sealed partial class PdaNotificationPanel : PanelContainer
             "band" => new ResPath("/Textures/_Stalker_EN/Factions/STBanditsBand.png"),
             "rene" => new ResPath("/Textures/_Stalker_EN/Factions/STRenegatsBand.png"),
             "monolith" => new ResPath("/Textures/_Stalker_EN/Factions/STMonolithBand.png"),
-            "cn" => new ResPath("/Textures/_Stalker_EN/Factions/STClearSkyBand.png"),
+            "cn" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
             "stalker" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
             "merc" => new ResPath("/Textures/_Stalker_EN/Factions/STMercenariesBand.png"),
             "army" => new ResPath("/Textures/_Stalker_EN/Factions/STMilitaryBand.png"),
@@ -201,7 +194,8 @@ public sealed partial class PdaNotificationPanel : PanelContainer
             "medbeysprite" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
             "grajdansksprite" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
 
-            _ => null // Unknown icon - no texture will be shown
+            // Unknown faction - use NoData placeholder
+            _ => new ResPath("/Textures/_Stalker_EN/Factions/NoData.png")
         };
     }
 
