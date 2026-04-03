@@ -2074,5 +2074,12 @@
   id: 219
   time: '2026-04-02T21:12:12.369584+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/748
+- author: CattyLucky
+  changes:
+  - message: Added new quests.
+    type: Add
+  id: 220
+  time: '2026-04-03T12:25:38.197112+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/749
 Name: Stalker
 Order: -1
