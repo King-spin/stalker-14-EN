@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Inventory.Events;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Inventory.ArtifactSlots;
 
@@ -12,7 +11,6 @@ namespace Content.Shared.Inventory.ArtifactSlots;
 public sealed class SharedArtifactSlotSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
 
@@ -141,7 +139,7 @@ public sealed class SharedArtifactSlotSystem : EntitySystem
 
     /// <summary>
     /// Gets the current active artifact slot count for a mob.
-    /// Returns 0 if no GrantsArtifactSlotsComponent is equipped.
+    /// Returns 0 if no ArtifactSlotsComponent exists.
     /// </summary>
     public int GetActiveCount(EntityUid uid, ArtifactSlotsComponent? artifactSlots = null)
     {
@@ -149,5 +147,25 @@ public sealed class SharedArtifactSlotSystem : EntitySystem
             return 0;
 
         return artifactSlots.ActiveCount;
+    }
+
+    /// <summary>
+    /// Checks whether a specific artifact slot is currently active on the entity.
+    /// Returns false if the slot is not an artifact slot or if its index >= ActiveCount.
+    /// </summary>
+    public bool IsArtifactSlotActive(EntityUid uid, string slotName, InventoryComponent inv, ArtifactSlotsComponent? artifactSlots = null)
+    {
+        if (!Resolve(uid, ref artifactSlots, false))
+            return false;
+
+        if (artifactSlots.ActiveCount <= 0)
+            return false;
+
+        var sortedSlots = GetArtifactSlotsSorted(inv);
+        var index = sortedSlots.IndexOf(slotName);
+        if (index < 0)
+            return false;
+
+        return index < artifactSlots.ActiveCount;
     }
 }
