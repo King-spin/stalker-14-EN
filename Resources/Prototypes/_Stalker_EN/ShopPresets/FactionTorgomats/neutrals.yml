@@ -107,16 +107,6 @@
     FoodMeatSTFishSteakCooked: 75
     FoodMeatSTEelCooked: 150
 
-    #Lumber
-    STTradePlankT1: 40
-    STTradePlankT2: 60
-    STTradePlankT3: 80
-    STTradePlankT4: 100
-    STLogStalkerT1: 20
-    STLogStalkerT2: 30
-    STLogStalkerT3: 40
-    STLogStalkerT4: 50
-
   categories:
   - name: shop-category-weapons
     priority: 1
@@ -228,6 +218,7 @@
       FoodTinMRE: 120
       DrinkLemonadehBottleFull: 50
       STFoodMeatSalami: 350
+      HerculesBottleFull: 200
 
   - name: shop-category-armor
     priority: 6
