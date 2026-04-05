@@ -2125,5 +2125,13 @@
   id: 225
   time: '2026-04-04T20:17:56.156129+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/750
+- author: BELNAKBU
+  changes:
+  - message: Even when you dont have pda in your pockets or hands you ll get popup.
+      And another bug fix
+    type: Add
+  id: 226
+  time: '2026-04-05T14:58:29.895744+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/760
 Name: Stalker
 Order: -1
