@@ -2190,5 +2190,17 @@
   id: 231
   time: '2026-04-06T20:20:35.797330+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/765
+- author: dallaszzz
+  changes:
+  - message: Overhauled gasmask functionality and economy
+    type: Tweak
+  - message: Removed lead plates
+    type: Remove
+  - message: Artifacts now ignore resistances on personal damage (rad protection does
+      not stop artifact damage)
+    type: Tweak
+  id: 232
+  time: '2026-04-06T20:22:20.209296+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/747
 Name: Stalker
 Order: -1
