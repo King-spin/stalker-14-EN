@@ -2182,5 +2182,13 @@
   id: 230
   time: '2026-04-06T14:02:15.996142+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/764
+- author: teecoding
+  changes:
+  - message: Messenger PDA now correctly restores faction channels and password access
+      after respawning
+    type: Fix
+  id: 231
+  time: '2026-04-06T20:20:35.797330+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/765
 Name: Stalker
 Order: -1
