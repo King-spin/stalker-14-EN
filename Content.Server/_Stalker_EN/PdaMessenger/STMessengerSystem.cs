@@ -990,7 +990,25 @@ public sealed partial class STMessengerSystem : EntitySystem
 
         // Already claimed — don't overwrite (e.g. looted PDA with someone else's data)
         if (!string.IsNullOrEmpty(server.OwnerCharacterName))
+        {
+            // If the rightful owner is re-equipping their own PDA (e.g. after death/respawn),
+            // update the cache so faction/rank resolution points to the correct (held) PDA.
+            if (TryComp<ActorComponent>(holder, out var ownerActor))
+            {
+                var holderId = ownerActor.PlayerSession.UserId.UserId;
+                var holderName = MetaData(holder).EntityName;
+
+                if (holderId == server.OwnerUserId
+                    && holderName == server.OwnerCharacterName)
+                {
+                    _characterToPda[(holderId, holderName)] = pdaUid;
+                    _messengerPdas[pdaUid] = (progUid.Value, pdaUid);
+                    server.OwnerBand = ResolveMobBand(holder);
+                }
+            }
+
             return;
+        }
 
         // Only initialize for player-controlled entities
         if (!TryComp<ActorComponent>(holder, out var actor))
