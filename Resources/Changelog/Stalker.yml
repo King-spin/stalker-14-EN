@@ -2209,5 +2209,13 @@
   id: 233
   time: '2026-04-07T01:05:14.843943+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/759
+- author: BELNAKBU
+  changes:
+  - message: 2 new dolls for admins, a little change of HumanoidAppearance, new poster
+      sprite and some bug fix
+    type: Add
+  id: 234
+  time: '2026-04-07T22:41:30.553907+00:00'
+  url: https://github.com/coolmankid12345/stalker-14-EN/pull/771
 Name: Stalker
 Order: -1
