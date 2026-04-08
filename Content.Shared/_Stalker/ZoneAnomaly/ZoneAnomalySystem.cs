@@ -14,9 +14,9 @@ public sealed class ZoneAnomalySystem : SharedZoneAnomalySystem
 
     /// <summary>
     /// How often to check anomaly state machines. State transitions use timers of 2-5 seconds,
-    /// so per-tick checks (30/sec) are wasteful. 4 checks/sec is enough.
+    /// so per-tick checks (30/sec) are wasteful. 5 checks/sec is enough.
     /// </summary>
-    private const float StateCheckInterval = 0.25f;
+    private const float StateCheckInterval = 0.2f;
 
     private float _stateCheckAccumulator;
 
