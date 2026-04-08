@@ -224,6 +224,16 @@
   - type: Portal
     cooldown: 5
 
+# JupiterPlant
+
+- type: entity
+  parent: MapTeleportBase
+  id: RedForest-JupiterPlant
+  name: RedForest-JupiterPlant
+  components:
+  - type: Portal
+    cooldown: 5
+
 # Monolith
 
 - type: entity
