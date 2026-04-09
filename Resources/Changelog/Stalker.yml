@@ -2263,5 +2263,12 @@
   id: 240
   time: '2026-04-09T21:41:17.750310+00:00'
   url: https://github.com/coolmankid12345/stalker-14-EN/pull/778
+- author: crocodilecarousel
+  changes:
+  - message: Adjusted artifacts for use with limited artifact slots
+    type: Tweak
+  id: 241
+  time: '2026-04-09T22:18:22.972729+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/763
 Name: Stalker
 Order: -1
