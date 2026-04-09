@@ -83,6 +83,24 @@
   - type: AccessReader
     access: [ [ "MilitaryBarraks" ] ]
 
+- type: entity
+  parent: MapTeleportBase
+  id: Yantar-MBase
+  name: Yantar-MBase
+  components:
+  - type: AccessReader
+    access: [["MilitaryBarraks"]]
+
+- type: entity
+  parent: MapTeleportBaseUncollide
+  id: Yantar-MBaseUncollide
+  name: Yantar-MBaseUncollide
+  components:
+  - type: LinkByString
+    linkString: Yantar-MBase
+  - type: AccessReader
+    access: [ [ "MilitaryBarraks" ] ]
+
 # Red Forest / Limansk
 
 - type: entity
