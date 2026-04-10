@@ -21,7 +21,7 @@
         volume: -2
     minAngle: 40 # stalker EN change
     maxAngle: 75 # stalker EN change
-    angleIncrease: 1.5 # stalker EN change
+    angleIncrease: 1.25
     selectedMode: Burst
     availableModes:
     - Burst
