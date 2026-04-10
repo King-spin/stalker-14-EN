@@ -12,19 +12,20 @@
   - type: Clothing
     sprite: _Stalker_EN/Objects/Weapons/Guns/Rifles/m16/inhand.rsi # stalker EN change
   - type: Gun
-    fireRate: 4.5
+    fireRate: 6
+    burstFireRate: 12
+    burstCooldown: 0.25 # stalker EN change
     soundGunshot:
       path: /Audio/_Stalker/Effects/Guns/m4.ogg
       params:
         volume: -2
-    minAngle: 50
-    maxAngle: 100
-    angleIncrease: 1
+    minAngle: 40 # stalker EN change
+    maxAngle: 75 # stalker EN change
+    angleIncrease: 1.5 # stalker EN change
     selectedMode: Burst
     availableModes:
     - Burst
     - SemiAuto
-    - FullAuto # stalker EN change
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -42,12 +43,12 @@
         whitelist:
           tags:
           - STWeaponModuleRifleSilencerNato
-      gun_module_scope:
-        name: Scope
-        priority: 2
-        whitelist:
-          tags:
-          - STWeaponModuleRifleScopeNato
+      #gun_module_scope:
+        #name: Scope
+        #priority: 2
+        #whitelist:
+          #tags:
+          #- STWeaponModuleRifleScopeNato
       gun_chamber:
         name: Chamber
         startingItem:
@@ -63,6 +64,6 @@
 - type: entity
   parent: STBaseWeaponRifleM16
   id: STWeaponRifleM16
-  name: M16 # stalker EN change
+  name: M16A2 # stalker EN change
   description: Legendary American rifle from Vietnam era. Appears in the Zone through military depots and black market dealers. Despite its age, remains a formidable weapon in skilled hands.
 
