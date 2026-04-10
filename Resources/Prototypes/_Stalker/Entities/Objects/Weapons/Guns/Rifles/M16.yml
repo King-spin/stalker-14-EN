@@ -68,6 +68,6 @@
 - type: entity
   parent: STBaseWeaponRifleM16
   id: STWeaponRifleM16
-  name: M16A2 # stalker EN change
+  name: M16 # stalker EN change
   description: Legendary American rifle from Vietnam era. Appears in the Zone through military depots and black market dealers. Despite its age, remains a formidable weapon in skilled hands.
 
