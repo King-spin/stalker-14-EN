@@ -310,22 +310,14 @@ namespace Content.Client.PDA
             ProgramView.Visible = false;
         }
 
-        private TimeSpan _lastDisplayedTime;
-
         protected override void Draw(DrawingHandleScreen handle)
         {
             base.Draw(handle);
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-            var truncated = TimeSpan.FromSeconds((int)stationTime.TotalSeconds);
-
-            // Only update when the second actually changes to avoid per-frame layout invalidation
-            if (truncated != _lastDisplayedTime)
-            {
-                _lastDisplayedTime = truncated;
-                StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time-stalker",
-                    ("time", truncated.ToString("hh\\:mm\\:ss"))));
-            }
+            
+            StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time-stalker", // Stalker-en-changes - PDA UI
+                ("time", stationTime.ToString("hh\\:mm\\:ss"))));
         }
     }
 }
