@@ -42,6 +42,14 @@ namespace Content.Client.PDA
             IoCManager.InjectDependencies(this);
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
+            // Add border to ProgramBar
+            ProgramBarBorder.PanelOverride = new StyleBoxFlat
+            {
+                BorderColor = Color.FromHex("#5a5a5a"),
+                BorderThickness = new Thickness(1),
+                BackgroundColor = Color.FromHex("#1a1a1e"),
+            };
+
             HomeButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/home.png"));
             FlashLightToggleButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/light.png"));
             EjectPenButton.IconTexture = new SpriteSpecifier.Texture(new("/Textures/Interface/pencil.png"));
@@ -83,6 +91,9 @@ namespace Content.Client.PDA
             {
                 _clipboard.SetText(_instructions);
             };
+
+
+
 
             HideAllViews();
             ToHomeScreen();
