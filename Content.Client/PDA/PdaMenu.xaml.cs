@@ -13,6 +13,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.PDA
 {
+    /// <summary>
+    /// Client-side PDA menu with three views: Home, Settings, and Program content.
+    /// Maintains a local cache of program items to avoid recreating UI controls on every state update,
+    /// which prevents click loss when server updates arrive during user interaction.
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class PdaMenu : PdaWindow
     {
@@ -34,7 +39,28 @@ namespace Content.Client.PDA
 
         private int _currentView;
 
+        /// <summary>
+        /// Fired when the user requests deactivation of the current program (Home or Settings button).
+        /// The BUI subscriber sends a Deactivate message to the server.
+        /// </summary>
         public event Action? OnProgramDeactivated;
+
+        /// <summary>
+        /// Fired when the user selects a program from the program bar.
+        /// The BUI subscriber sends an Activate message to the server.
+        /// The server automatically deactivates any previously active program.
+        /// </summary>
+        public event Action<EntityUid>? OnProgramActivate;
+
+        /// <summary>
+        /// Fired when the user requests installation of a program cartridge.
+        /// </summary>
+        public event Action<EntityUid>? OnProgramInstall;
+
+        /// <summary>
+        /// Fired when the user requests uninstallation of a program.
+        /// </summary>
+        public event Action<EntityUid>? OnProgramUninstall;
 
         public PdaMenu()
         {
@@ -92,13 +118,13 @@ namespace Content.Client.PDA
                 _clipboard.SetText(_instructions);
             };
 
-
-
-
-            HideAllViews();
             ToHomeScreen();
         }
 
+        /// <summary>
+        /// Applies server state to the UI. Does not change navigation state — that is handled
+        /// separately by <see cref="SyncActiveProgram"/> and <see cref="OnServerProgramDeactivated"/>.
+        /// </summary>
         public void UpdateState(PdaUpdateState state)
         {
             FlashLightToggleButton.IsActive = state.FlashlightEnabled;
@@ -114,7 +140,6 @@ namespace Content.Client.PDA
             {
                 PdaOwnerLabel.Visible = false;
             }
-
 
             if (state.PdaOwnerInfo.IdOwner != null || state.PdaOwnerInfo.JobTitle != null)
             {
@@ -132,7 +157,6 @@ namespace Content.Client.PDA
             _stationName = state.StationName ?? Loc.GetString("comp-pda-ui-unknown");
             StationNameLabel.SetMarkup(Loc.GetString("comp-pda-ui-station",
                 ("station", _stationName)));
-
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
 
@@ -177,84 +201,162 @@ namespace Content.Client.PDA
 
         private EntityUid? _activeProgram;
 
-        public void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs, Action<EntityUid> onActivate, Action<EntityUid> onInstall, Action<EntityUid> onUninstall)
+        /// <summary>
+        /// Cache of program items by EntityUid. Items are reused on state updates
+        /// to avoid recreating controls and losing click events.
+        /// </summary>
+        private readonly Dictionary<EntityUid, PdaProgramItem> _programItems = new();
+
+        /// <summary>
+        /// Synchronizes the local active program state with the server's authoritative state.
+        /// Called from <see cref="PdaBoundUserInterface.UpdateState"/> on each state push.
+        /// Updates the highlight on all program items.
+        /// </summary>
+        public void SyncActiveProgram(EntityUid? serverActiveProgram)
         {
-            ProgramBarContent.RemoveAllChildren();
+            _activeProgram = serverActiveProgram;
 
-            if (programs.Count == 0)
+            foreach (var (uid, item) in _programItems)
             {
-                ProgramBarContent.AddChild(new Label()
-                {
-                    Text = Loc.GetString("comp-pda-io-no-programs-available"),
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalAlignment = VAlignment.Center,
-                    VerticalExpand = true
-                });
-
-                return;
-            }
-
-            foreach (var (uid, component) in programs)
-            {
-                var item = new PdaProgramItem();
-                item.ProgramTitle = Loc.GetString(component.ProgramName);
-
-                if (component.Icon is not null)
-                    item.Icon.SetFromSpriteSpecifier(component.Icon);
-
-                // Highlight if this is the active program
-                if (_activeProgram == uid)
-                    item.BackgroundColor = Color.FromHex("#316dca");
-
-                item.OnPressed += _ =>
-                {
-                    if (_activeProgram.HasValue && _activeProgram.Value != uid)
-                        OnProgramDeactivated?.Invoke();
-                    _activeProgram = uid;
-                    onActivate(uid);
-                };
-
-                switch (component.InstallationStatus)
-                {
-                    case InstallationStatus.Cartridge:
-                        item.InstallButton.Visible = true;
-                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-install-button");
-                        item.InstallButton.OnPressed += _ => onInstall(uid);
-                        break;
-                    case InstallationStatus.Installed:
-                        item.InstallButton.Visible = true;
-                        item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-uninstall-button");
-                        item.InstallButton.OnPressed += _ => onUninstall(uid);
-                        break;
-                }
-
-                item.NotificationDot.Visible = component.HasNotification;
-                if (component.HasNotification)
-                {
-                    item.NotificationDot.PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = Color.FromHex("#CC4444"),
-                    };
-                }
-
-                ProgramBarContent.AddChild(item);
+                item.BackgroundColor = _activeProgram == uid
+                    ? Color.FromHex("#316dca")
+                    : Color.FromHex("#25252a");
             }
         }
 
         /// <summary>
-        /// Changes the current view to the home screen and deactivates any active program
+        /// Updates the program bar with the available programs.
+        /// Reuses existing items to avoid recreating controls, which prevents click loss
+        /// when server updates arrive during user interaction.
+        /// </summary>
+        public void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)
+        {
+            var remainingUids = new HashSet<EntityUid>(programs.Count);
+
+            foreach (var (uid, component) in programs)
+            {
+                remainingUids.Add(uid);
+
+                if (_programItems.TryGetValue(uid, out var item))
+                    UpdateExistingItem(item, component, uid);
+                else
+                    CreateNewItem(component, uid);
+            }
+
+            RemoveStaleItems(remainingUids);
+        }
+
+        /// <summary>
+        /// Updates an existing program item with new component data.
+        /// Does not recreate the control — just updates text, icon, and buttons.
+        /// </summary>
+        private void UpdateExistingItem(PdaProgramItem item, CartridgeComponent component, EntityUid uid)
+        {
+            item.ProgramTitle = Loc.GetString(component.ProgramName);
+
+            if (component.Icon is not null)
+                item.Icon.SetFromSpriteSpecifier(component.Icon);
+
+            UpdateInstallButton(item, component.InstallationStatus, uid);
+            UpdateNotificationDot(item, component.HasNotification);
+        }
+
+        /// <summary>
+        /// Creates a new program item, wires up event handlers, and adds it to the program bar.
+        /// Events are wired once at creation time — update path uses the stored handler reference.
+        /// </summary>
+        private void CreateNewItem(CartridgeComponent component, EntityUid uid)
+        {
+            var item = new PdaProgramItem();
+            item.ProgramTitle = Loc.GetString(component.ProgramName);
+
+            if (component.Icon is not null)
+                item.Icon.SetFromSpriteSpecifier(component.Icon);
+
+            // Server manages deactivation of the previous program, so only Activate is needed.
+            // No separate Deactivate message is sent when switching between programs.
+            item.OnPressed += _ => OnProgramActivate?.Invoke(uid);
+
+            UpdateInstallButton(item, component.InstallationStatus, uid);
+
+            _programItems[uid] = item;
+            ProgramBarContent.AddChild(item);
+        }
+
+        /// <summary>
+        /// Updates the install/uninstall button text and handler based on the current installation status.
+        /// Unsubscribes the previous handler before assigning a new one to avoid stale closures.
+        /// </summary>
+        private void UpdateInstallButton(PdaProgramItem item, InstallationStatus status, EntityUid uid)
+        {
+            item.InstallButton.OnPressed -= item.OnInstall;
+
+            switch (status)
+            {
+                case InstallationStatus.Cartridge:
+                    item.InstallButton.Visible = true;
+                    item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-install-button");
+                    item.OnInstall = _ => OnProgramInstall?.Invoke(uid);
+                    item.InstallButton.OnPressed += item.OnInstall;
+                    break;
+                case InstallationStatus.Installed:
+                    item.InstallButton.Visible = true;
+                    item.InstallButton.Text = Loc.GetString("cartridge-bound-user-interface-uninstall-button");
+                    item.OnInstall = _ => OnProgramUninstall?.Invoke(uid);
+                    item.InstallButton.OnPressed += item.OnInstall;
+                    break;
+                default:
+                    item.InstallButton.Visible = false;
+                    item.OnInstall = null;
+                    break;
+            }
+        }
+
+        private void UpdateNotificationDot(PdaProgramItem item, bool hasNotification)
+        {
+            item.NotificationDot.Visible = hasNotification;
+            if (hasNotification)
+            {
+                item.NotificationDot.PanelOverride = new StyleBoxFlat
+                {
+                    BackgroundColor = Color.FromHex("#CC4444"),
+                };
+            }
+        }
+
+        /// <summary>
+        /// Removes program items that no longer exist on the server.
+        /// </summary>
+        private void RemoveStaleItems(HashSet<EntityUid> remainingUids)
+        {
+            var toRemove = new List<EntityUid>();
+            foreach (var (uid, item) in _programItems)
+            {
+                if (!remainingUids.Contains(uid))
+                {
+                    toRemove.Add(uid);
+                    ProgramBarContent.RemoveChild(item);
+                }
+            }
+            foreach (var uid in toRemove)
+                _programItems.Remove(uid);
+        }
+
+        /// <summary>
+        /// Switches to the Home view and deactivates the current program if one is active.
         /// </summary>
         public void ToHomeScreen()
         {
             HomeButton.IsCurrent = true;
             SettingsButton.IsCurrent = false;
 
-            DeactivateActiveProgram();
             ChangeView(HomeViewIndex);
+            DeactivateActiveProgram();
         }
 
         /// <summary>
-        /// Deactivates the currently active program and triggers the deactivation event
+        /// Deactivates the currently active program. Only fires <see cref="OnProgramDeactivated"/>
+        /// if a program was actually active. Safe to call when no program is active.
         /// </summary>
         public void DeactivateActiveProgram()
         {
@@ -262,13 +364,12 @@ namespace Content.Client.PDA
             {
                 _activeProgram = null;
                 OnProgramDeactivated?.Invoke();
-                // Refresh program bar to remove highlight
-                // Note: The caller should call UpdateAvailablePrograms again to refresh visuals
             }
         }
 
         /// <summary>
-        /// Changes the current view to the program content view
+        /// Switches to the Program view and deselects Home/Settings tabs.
+        /// Called by the BUI when a cartridge UI fragment is attached.
         /// </summary>
         public void ToProgramView()
         {
@@ -279,35 +380,26 @@ namespace Content.Client.PDA
         }
 
         /// <summary>
-        /// Gets the currently active view number
+        /// Handles server-side program deactivation. If the user is currently viewing a program,
+        /// returns to the Home screen. Safe to call even when no program was active.
         /// </summary>
-        public int GetCurrentView() => _currentView;
+        public void OnServerProgramDeactivated()
+        {
+            if (_currentView == ProgramContentViewIndex)
+                ToHomeScreen();
+        }
 
 
         /// <summary>
-        /// Changes the current view to the given view number
+        /// Switches visibility of the three views based on the given view index.
         /// </summary>
         public void ChangeView(int view)
         {
-            // Use named references instead of relying on child order
-            var views = new Control[] { HomeView, SettingsView, ProgramView };
-
-            if (views.Length <= view || view < 0)
-                return;
-
-            for (var i = 0; i < views.Length; i++)
-            {
-                views[i].Visible = (i == view);
-            }
+            HomeView.Visible = view == HomeViewIndex;
+            SettingsView.Visible = view == SettingsViewIndex;
+            ProgramView.Visible = view == ProgramContentViewIndex;
 
             _currentView = view;
-        }
-
-        private void HideAllViews()
-        {
-            HomeView.Visible = false;
-            SettingsView.Visible = false;
-            ProgramView.Visible = false;
         }
 
         protected override void Draw(DrawingHandleScreen handle)
@@ -315,7 +407,6 @@ namespace Content.Client.PDA
             base.Draw(handle);
 
             var stationTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
-            
             StationTimeLabel.SetMarkup(Loc.GetString("comp-pda-ui-station-time-stalker", // Stalker-en-changes - PDA UI
                 ("time", stationTime.ToString("hh\\:mm\\:ss"))));
         }

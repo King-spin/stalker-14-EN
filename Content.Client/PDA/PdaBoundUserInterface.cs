@@ -89,6 +89,9 @@ namespace Content.Client.PDA
             };
 
             _menu.OnProgramDeactivated += DeactivateActiveCartridge;
+            _menu.OnProgramActivate += ActivateCartridge;
+            _menu.OnProgramInstall += InstallCartridge;
+            _menu.OnProgramUninstall += UninstallCartridge;
 
             var borderColorComponent = GetBorderColorComponent();
             if (borderColorComponent == null)
@@ -103,29 +106,39 @@ namespace Content.Client.PDA
         {
             base.UpdateState(state);
 
-            if (state is not PdaUpdateState updateState)
-                return;
+            // Handle both CartridgeLoaderUiState (from Activate/Deactivate) and PdaUpdateState (from PdaSystem)
+            var cartridgeState = state as CartridgeLoaderUiState;
+            var serverActiveProgram = cartridgeState != null
+                ? EntMan.GetEntity(cartridgeState.ActiveUI)
+                : null;
 
-            if (_menu == null)
+            if (state is PdaUpdateState updateState)
             {
-                _pdaSystem.Log.Error("PDA state received before menu was created.");
+                if (_menu == null)
+                {
+                    _pdaSystem.Log.Error("PDA state received before menu was created.");
+                    return;
+                }
+
+                _menu.SyncActiveProgram(serverActiveProgram);
+                _menu.UpdateState(updateState);
+
+                // stalker-en-changes-start: always show password button — if the user can see the PDA UI,
+                // they already passed the server's OnOpenAttempt auth check (owner, unlocked, or no lock).
+                // Server-side IsAuthorized in OnOpenSettings provides the actual security gate.
+                _menu.SetPasswordButton.Visible = true;
+                // stalker-en-changes-end
+            }
+            else if (_menu == null)
+            {
                 return;
             }
 
-            _menu.UpdateState(updateState);
-
-            // stalker-en-changes-start: always show password button — if the user can see the PDA UI,
-            // they already passed the server's OnOpenAttempt auth check (owner, unlocked, or no lock).
-            // Server-side IsAuthorized in OnOpenSettings provides the actual security gate.
-            _menu.SetPasswordButton.Visible = true;
-            // stalker-en-changes-end
-
-            // Switch to home if there's no active program and we're on program view
-            // This handles the case when server closes a program
-            if (updateState.ActiveUI == null && _menu.GetCurrentView() == PdaMenu.ProgramContentViewIndex)
-            {
-                _menu.ToHomeScreen();
-            }
+            // Server is the source of truth for which view to show.
+            if (serverActiveProgram != null)
+                _menu.ToProgramView();
+            else if (serverActiveProgram.HasValue)
+                _menu.OnServerProgramDeactivated();
         }
 
         protected override void AttachCartridgeUI(Control cartridgeUIFragment, string? title)
@@ -149,7 +162,7 @@ namespace Content.Client.PDA
 
         protected override void UpdateAvailablePrograms(List<(EntityUid, CartridgeComponent)> programs)
         {
-            _menu?.UpdateAvailablePrograms(programs, ActivateCartridge, InstallCartridge, UninstallCartridge);
+            _menu?.UpdateAvailablePrograms(programs);
         }
 
         protected override void Dispose(bool disposing)
@@ -157,6 +170,9 @@ namespace Content.Client.PDA
             if (disposing && _menu != null)
             {
                 _menu.OnProgramDeactivated -= DeactivateActiveCartridge;
+                _menu.OnProgramActivate -= ActivateCartridge;
+                _menu.OnProgramInstall -= InstallCartridge;
+                _menu.OnProgramUninstall -= UninstallCartridge;
             }
 
             base.Dispose(disposing);

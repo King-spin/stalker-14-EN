@@ -32,6 +32,11 @@ public sealed partial class PdaProgramItem : ContainerButton
         set => _styleBox.BackgroundColor = value;
     }
 
+    /// <summary>
+    /// Stores the current install button handler so it can be unsubscribed and rebound.
+    /// </summary>
+    public Action<ButtonEventArgs>? OnInstall;
+
     public PdaProgramItem()
     {
         RobustXamlLoader.Load(this);
