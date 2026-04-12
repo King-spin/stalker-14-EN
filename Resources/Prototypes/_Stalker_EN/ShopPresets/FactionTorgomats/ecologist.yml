@@ -330,9 +330,9 @@
         CigPackBlack: 100
         CigarCase: 500
         CigarGoldCase: 1000
-        STElasticRubberRed: 50
-        STElasticRubberGreen: 50
-        STElasticRubberBlue: 50
+        STElasticRubberRed: 1
+        STElasticRubberGreen: 1
+        STElasticRubberBlue: 1
         FoldedFlagMili: 250
         # Cameras
         STCamera: 750
@@ -362,11 +362,11 @@
         ClothingMaskNeckBalaklava2: 10
         ClothingMaskNeckBalaklava3: 10
         # NECK
+        ClothingBandageStalkerKrest: 10
         ClothingNeckScarfBrown: 100
         ClothingNeckScarfGray: 100
         # faction
         ClothingBandageStalkerPurple: 10
-        ClothingBandageStalkerKrest: 10
         ClothingNeckScarfSci: 100
         ClothingNeckScarfUkraine: 100
         # TORSO

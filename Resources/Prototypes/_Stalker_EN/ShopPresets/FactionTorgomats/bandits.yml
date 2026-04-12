@@ -360,9 +360,9 @@
         Matchbox: 10
         HatchetStalker: 150
         ClothingHeatBagStalker: 100
-        STElasticRubberRed: 50
-        STElasticRubberGreen: 50
-        STElasticRubberBlue: 50
+        STElasticRubberRed: 1
+        STElasticRubberGreen: 1
+        STElasticRubberBlue: 1
         FoldedFlagBand: 250
         STRag: 10
         # Cameras
