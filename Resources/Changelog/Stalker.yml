@@ -2400,5 +2400,12 @@
   id: 256
   time: '2026-04-13T18:09:17.642872+00:00'
   url: https://github.com/stalker-14-EN/stalker-14-EN/pull/794
+- author: BELNAKBU
+  changes:
+  - message: Now pop up nots will show when general channel is muted
+    type: Tweak
+  id: 257
+  time: '2026-04-13T19:37:15.001257+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/806
 Name: Stalker
 Order: -1
