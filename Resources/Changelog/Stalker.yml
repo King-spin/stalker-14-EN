@@ -2389,5 +2389,16 @@
   id: 255
   time: '2026-04-13T16:51:51.007085+00:00'
   url: https://github.com/stalker-14-EN/stalker-14-EN/pull/803
+- author: Nox38, @CaramelKitten
+  changes:
+  - message: Added a new T3 helmet for Freedom - the Sphere-08 "Turtle".
+    type: Add
+  - message: Rewrote Sphere helmet descriptions.
+    type: Tweak
+  - message: Added Sphere helmets to Freedom and Duty vendors for 2500r.
+    type: Tweak
+  id: 256
+  time: '2026-04-13T18:09:17.642872+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/794
 Name: Stalker
 Order: -1
