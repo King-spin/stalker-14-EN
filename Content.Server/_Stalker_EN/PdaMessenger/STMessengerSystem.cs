@@ -1386,9 +1386,13 @@ public sealed partial class STMessengerSystem : EntitySystem
     {
         // Toggle disguise
         server.IsDisguised = !server.IsDisguised;
-        Dirty(ent, server);
 
-        // The BUI system will automatically push new state because component is dirty
+        // Force UI update by resending the state immediately
+        if (TryComp<CartridgeLoaderComponent>(ent, out var loader))
+        {
+            var state = BuildUiState(ent, server);
+            _cartridgeLoader.UpdateCartridgeUiState(ent, state, null, loader);
+        }
     }
 
     #endregion

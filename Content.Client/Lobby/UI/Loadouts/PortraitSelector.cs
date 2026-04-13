@@ -38,7 +38,7 @@ public sealed class PortraitSelector : BoxContainer
         VerticalExpand = true;
 
         var scroll = new ScrollContainer { HorizontalExpand = true, VerticalExpand = true };
-        _grid = new GridContainer { Columns = 2, HorizontalExpand = true };
+        _grid = new GridContainer { Columns = 4, HorizontalExpand = true };
         scroll.AddChild(_grid);
         AddChild(scroll);
 
@@ -83,6 +83,7 @@ public sealed class PortraitSelector : BoxContainer
             && textureEntries.Count > 0)
         {
             selectedId = textureEntries[_random.Next(textureEntries.Count)].TexturePath;
+            OnPortraitSelected?.Invoke(selectedId);
         }
 
         foreach (var entry in textureEntries)

@@ -350,12 +350,13 @@
   textures:
     - "/Textures/_Stalker_EN/Portraits/sin/sin_1.png"
 
-# MARK: Seraphim (Department: StalkerReligius)
+
+# MARK: Pilgrims (Department: StalkerReligius)
 
 - type: characterPortrait
   id: Portrait_StalkerPostulant
   name: st-portrait-postulant
-  bandId: STSeraphimsBand
+  bandId: STPilgrimsBand
   jobId: StalkerPostulant
   isFallback: true
   textures:
@@ -364,7 +365,7 @@
 - type: characterPortrait
   id: Portrait_StalkerBishop
   name: st-portrait-bishop
-  bandId: STSeraphimsBand
+  bandId: STPilgrimsBand
   jobId: StalkerBishop
   isFallback: true
   textures:

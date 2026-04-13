@@ -9,7 +9,7 @@ namespace Content.Shared._Stalker.Portraits;
 /// <summary>
 /// Resolves CharacterPortraitComponent.PortraitId into PortraitTexturePath.
 /// Works at MapInit, ComponentAdd (runtime spawn), and manual calls.
-/// If no PortraitId is set, picks a random fallback portrait matching the entity's band + rank.
+/// If no PortraitId is set, picks a random texture from available portraits for the entity's job/band.
 /// </summary>
 public sealed class CharacterPortraitSystem : EntitySystem
 {
@@ -35,74 +35,104 @@ public sealed class CharacterPortraitSystem : EntitySystem
 
     /// <summary>
     /// Resolve portrait into texture path.
-    /// If PortraitId is explicitly set — pick a random texture from it.
-    /// If empty — pick a random fallback matching the entity's band + rank.
+    /// If PortraitId is explicitly set — pick random texture from that prototype.
+    /// If empty — pick random texture from portraits matching the entity's job/band.
     /// </summary>
     public void ResolvePortrait(EntityUid uid, CharacterPortraitComponent comp)
     {
-        // If portrait ID explicitly set — pick random texture from it
+        // If portrait ID explicitly set — pick random texture from that prototype
         if (!string.IsNullOrEmpty(comp.PortraitId))
         {
             if (_protoManager.TryIndex<CharacterPortraitPrototype>(comp.PortraitId, out var proto))
             {
                 comp.PortraitTexturePath = PickRandomTexture(proto.Textures);
                 Dirty(uid, comp);
-                return;
             }
         }
-
-        // No ID set — find matching fallback by band + rank
-        if (TryComp<BandsComponent>(uid, out var bands))
+        else
         {
-            // Try 1: Full band + rank hierarchy lookup
-            if (bands.BandProto.HasValue)
+            // No ID set — pick random from matching portraits for MAIN portrait
+            string? targetBandId = null;
+            string? targetJobId = null;
+
+            // Get band and job from BandsComponent (for NPCs)
+            if (TryComp<BandsComponent>(uid, out var bands))
             {
-                var band = bands.BandProto.Value;
-                var rankId = bands.BandRankId;
+                targetBandId = bands.BandProto?.Id ?? bands.BandName;
 
-                if (_protoManager.TryIndex<STBandPrototype>(band, out var bandProto) &&
-                    bandProto.Hierarchy.TryGetValue(rankId, out var jobProtoId))
+                if (bands.BandProto.HasValue)
                 {
-                    var jobId = jobProtoId.Id;
-                    var matches = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                        .Where(p => p.BandId == band.Id && p.JobId == jobId && p.IsFallback)
-                        .ToList();
-
-                    if (matches.Count > 0)
+                    if (_protoManager.TryIndex<STBandPrototype>(bands.BandProto.Value, out var bandProto) &&
+                        bandProto.Hierarchy.TryGetValue(bands.BandRankId, out var jobProtoId))
                     {
-                        var chosen = PickRandomTexture(matches);
-                        comp.PortraitTexturePath = chosen;
-                        Dirty(uid, comp);
-                        return;
+                        targetJobId = jobProtoId.Id;
                     }
                 }
             }
 
-            // Try 2: No BandProto — match by BandName (e.g. "Zombie")
-            if (!string.IsNullOrEmpty(bands.BandName))
-            {
-                var matches = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                    .Where(p => p.BandId == bands.BandName && p.IsFallback)
-                    .ToList();
-
-                if (matches.Count > 0)
+            // Find all matching portraits
+            var matches = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+                .Where(p =>
                 {
-                    var chosen = PickRandomTexture(matches);
-                    comp.PortraitTexturePath = chosen;
-                    Dirty(uid, comp);
-                    return;
-                }
+                    // Must match band if we have one
+                    if (!string.IsNullOrEmpty(targetBandId) && p.BandId != targetBandId)
+                        return false;
+
+                    // Match by job if specified (or include portraits with no job restriction)
+                    if (!string.IsNullOrEmpty(targetJobId) && !string.IsNullOrEmpty(p.JobId) && p.JobId != targetJobId)
+                        return false;
+
+                    return true;
+                })
+                .ToList();
+
+            if (matches.Count > 0)
+            {
+                // Pick random portrait, then random texture from it
+                var chosenProto = matches[_random.Next(matches.Count)];
+                comp.PortraitTexturePath = PickRandomTexture(chosenProto.Textures);
+                Dirty(uid, comp);
             }
         }
 
-        // Final fallback: any random portrait (but skip admin-only ones without bandId)
-        var any = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-            .Where(p => !string.IsNullOrEmpty(p.BandId)) // Skip admin-only portraits
-            .ToList();
-        if (any.Count > 0)
+        // Resolve Disguise Portrait Path (for Clear Sky / Monolith disguise)
+        // Always resolve this for NPCs (who don't have profiles)
+        ResolveDisguisePortrait(uid, comp);
+    }
+
+    /// <summary>
+    /// Resolves the disguise portrait path randomly from Stalker portraits
+    /// if the entity belongs to a faction capable of disguise.
+    /// </summary>
+    private void ResolveDisguisePortrait(EntityUid uid, CharacterPortraitComponent comp)
+    {
+        // Factions that can disguise as Stalkers
+        var canDisguise = false;
+
+        if (TryComp<BandsComponent>(uid, out var bands) && bands.BandProto.HasValue)
         {
-            comp.PortraitTexturePath = PickRandomTexture(any);
-            Dirty(uid, comp);
+            var bandId = bands.BandProto.Value.Id;
+            canDisguise = (bandId == "STClearSkyBand" || bandId == "STMonolithBand");
+        }
+
+        if (!canDisguise)
+            return;
+
+        // Find Stalker portraits
+        var stalkerPortraits = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+            .Where(p => p.JobId == "Stalker")
+            .ToList();
+
+        if (stalkerPortraits.Count > 0)
+        {
+            // If manually set, use it. If empty, pick random.
+            // (For NPCs this will always be random)
+            if (string.IsNullOrEmpty(comp.DisguisedPortraitPath))
+            {
+                var chosenProto = stalkerPortraits[_random.Next(stalkerPortraits.Count)];
+                comp.DisguisedPortraitPath = PickRandomTexture(chosenProto.Textures);
+                Dirty(uid, comp);
+            }
         }
     }
 
@@ -112,11 +142,5 @@ public sealed class CharacterPortraitSystem : EntitySystem
             return string.Empty;
 
         return texturePaths[_random.Next(texturePaths.Count)];
-    }
-
-    private string PickRandomTexture(List<CharacterPortraitPrototype> portraits)
-    {
-        var proto = portraits[_random.Next(portraits.Count)];
-        return PickRandomTexture(proto.Textures);
     }
 }
