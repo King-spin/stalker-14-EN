@@ -1088,6 +1088,12 @@ namespace Content.Client.Lobby.UI
                 SetDirty();
             };
 
+            _loadoutWindow.OnClearSkyDisguiseSelected += portraitId =>
+            {
+                Profile = Profile?.WithDisguisePortrait(portraitId);
+                SetDirty();
+            };
+
             _loadoutWindow.OnLoadoutUnpressed += (loadoutGroup, loadoutProto) =>
             {
                 roleLoadout.RemoveLoadout(loadoutGroup, loadoutProto, _prototypeManager);

@@ -1,8 +1,10 @@
 using Content.Client.UserInterface.Fragments;
+using Content.Shared._Stalker.PdaMessenger;
 using Content.Shared._Stalker_EN.PdaMessenger;
 using Content.Shared.CartridgeLoader;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Maths;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._Stalker_EN.PdaMessenger;
@@ -17,6 +19,7 @@ public sealed partial class STMessengerUi : UIFragment
     private STMessengerMainPage? _mainPage;
     private STMessengerChannelPage? _channelPage;
     private STMessengerComposePage? _composePage;
+    private Button? _disguiseButton;
     private BoundUserInterface? _userInterface;
 
     private string? _currentChatId;
@@ -61,6 +64,19 @@ public sealed partial class STMessengerUi : UIFragment
         _root.AddChild(_mainPage);
         _root.AddChild(_channelPage);
         _root.AddChild(_composePage);
+
+        // Disguise toggle button (only visible for Clear Sky and Monolith)
+        _disguiseButton = new Button
+        {
+            Text = Loc.GetString("st-messenger-disguise-btn"),
+            HorizontalAlignment = Control.HAlignment.Center,
+            Margin = new Thickness(5),
+        };
+        _disguiseButton.OnPressed += _ =>
+        {
+            _userInterface?.SendMessage(new CartridgeUiMessage(new STMessengerToggleDisguiseEvent()));
+        };
+        _root.AddChild(_disguiseButton);
 
         _channelPage.Visible = false;
         _composePage.Visible = false;
@@ -171,6 +187,16 @@ public sealed partial class STMessengerUi : UIFragment
         }
 
         _mainPage?.UpdateState(messengerState);
+
+        // Update disguise button visibility and text
+        if (_disguiseButton != null)
+        {
+            var canDisguise = messengerState.OwnerBand == "STClearSkyBand" || messengerState.OwnerBand == "STMonolithBand";
+            _disguiseButton.Visible = canDisguise;
+            _disguiseButton.Text = messengerState.IsDisguised
+                ? Loc.GetString("st-messenger-disguise-on")
+                : Loc.GetString("st-messenger-disguise-off");
+        }
 
         if (_currentChatId is not null && _channelPage is { Visible: true })
         {

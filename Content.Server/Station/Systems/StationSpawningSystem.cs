@@ -12,7 +12,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.PDA;
-using Content.Shared.Portraits;
+using Content.Shared._Stalker_EN.Portraits;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
@@ -47,6 +47,7 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly CharacterPortraitSystem _portraitSystem = default!;
 
     /// <summary>
     /// Attempts to spawn a player character onto the given station.
@@ -118,14 +119,6 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             var jobEntity = Spawn(prototype.JobEntity, coordinates);
             _mindSystem.MakeSentient(jobEntity);
 
-            // Set character portrait for PDA notifications (non-humanoid entities too)
-            if (profile != null && !string.IsNullOrEmpty(profile.SelectedPortraitId) &&
-                _prototypeManager.TryIndex<CharacterPortraitPrototype>(profile.SelectedPortraitId, out var portraitProto))
-            {
-                var portraitComp = EnsureComp<CharacterPortraitComponent>(jobEntity);
-                portraitComp.PortraitTexturePath = portraitProto.TexturePath;
-            }
-
             // Make sure custom names get handled, what is gameticker control flow whoopy.
             if (loadout != null)
             {
@@ -149,13 +142,27 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             _humanoidSystem.LoadProfile(entity.Value, profile);
             _metaSystem.SetEntityName(entity.Value, profile.Name);
 
-            // Set character portrait for PDA notifications
-            if (!string.IsNullOrEmpty(profile.SelectedPortraitId) &&
-                _prototypeManager.TryIndex<CharacterPortraitPrototype>(profile.SelectedPortraitId, out var portraitProto))
+            // stalker-en-start
+            // Set character portrait for PDA notifications.
+            // If player selected one — use it. Otherwise, system picks a random fallback for the role.
+            var portraitComp = EnsureComp<CharacterPortraitComponent>(entity.Value);
+            if (!string.IsNullOrEmpty(profile.SelectedPortraitId))
             {
-                var portraitComp = EnsureComp<CharacterPortraitComponent>(entity.Value);
-                portraitComp.PortraitTexturePath = portraitProto.TexturePath;
+                portraitComp.PortraitId = profile.SelectedPortraitId;
             }
+            _portraitSystem.ResolvePortrait(entity.Value, portraitComp);
+
+            // Resolve disguise portrait for factions that can disguise (e.g. Clear Sky, Monolith)
+            if (!string.IsNullOrEmpty(profile.DisguisePortraitId))
+            {
+                if (_prototypeManager.TryIndex<CharacterPortraitPrototype>(profile.DisguisePortraitId, out var disguiseProto))
+                {
+                    portraitComp.DisguisedPortraitPath = disguiseProto.Textures.Count > 0
+                        ? disguiseProto.Textures[0]
+                        : string.Empty;
+                }
+            }
+            // stalker-en-end
 
             if (profile.FlavorText != "" && _configurationManager.GetCVar(CCVars.FlavorText))
             {

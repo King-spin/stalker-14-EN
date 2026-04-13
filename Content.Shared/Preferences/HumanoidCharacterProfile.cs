@@ -4,7 +4,7 @@ using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Portraits;
+using Content.Shared._Stalker_EN.Portraits;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Traits;
@@ -129,6 +129,13 @@ namespace Content.Shared.Preferences
         /// </summary>
         [DataField]
         public ProtoId<CharacterPortraitPrototype> SelectedPortraitId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Selected portrait for disguise (e.g., Clear Sky or Monolith masquerading as Stalker).
+        /// </summary>
+        [DataField]
+        public string DisguisePortraitId { get; set; } = string.Empty;
+
         // stalker-en-changes-end
 
         /// <summary>
@@ -177,7 +184,8 @@ namespace Content.Shared.Preferences
             string stAliasAdjective = "", // stalker-en-changes
             string stAliasNoun = "", // stalker-en-changes
             string stAliasColor = "", // stalker-en-changes
-            string selectedPortraitId = "") // stalker-en-changes: portrait
+            string selectedPortraitId = "", // stalker-en-changes: portrait
+            string disguisePortraitId = "") // stalker-en-changes: disguise
         {
             Name = name;
             FlavorText = flavortext;
@@ -197,6 +205,7 @@ namespace Content.Shared.Preferences
             STAliasNoun = stAliasNoun; // stalker-en-changes
             STAliasColor = stAliasColor; // stalker-en-changes
             SelectedPortraitId = selectedPortraitId; // stalker-en-changes: portrait
+            DisguisePortraitId = disguisePortraitId; // stalker-en-changes: disguise
             var hasHighPrority = false;
             foreach (var (key, value) in _jobPriorities)
             {
@@ -231,7 +240,8 @@ namespace Content.Shared.Preferences
                 other.STAliasAdjective, // stalker-en-changes
                 other.STAliasNoun, // stalker-en-changes
                 other.STAliasColor, // stalker-en-changes
-                other.SelectedPortraitId) // stalker-en-changes: portrait
+                other.SelectedPortraitId, // stalker-en-changes: portrait
+                other.DisguisePortraitId) // stalker-en-changes: disguise
         {
         }
 
@@ -390,6 +400,14 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterProfile WithSelectedPortrait(string portraitId)
         {
             return new(this) { SelectedPortraitId = portraitId };
+        }
+
+        /// <summary>
+        /// Returns a copy of this profile with the specified Clear Sky disguise portrait.
+        /// </summary>
+        public HumanoidCharacterProfile WithDisguisePortrait(string portraitId)
+        {
+            return new(this) { DisguisePortraitId = portraitId };
         }
         // stalker-en-changes-end
 
@@ -569,6 +587,7 @@ namespace Content.Shared.Preferences
             if (STAliasNoun != other.STAliasNoun) return false;
             if (STAliasColor != other.STAliasColor) return false;
             if (SelectedPortraitId != other.SelectedPortraitId) return false;
+            if (DisguisePortraitId != other.DisguisePortraitId) return false;
             // stalker-en-changes-end
             return Appearance.MemberwiseEquals(other.Appearance);
         }
@@ -847,6 +866,7 @@ namespace Content.Shared.Preferences
             hashCode.Add(STAliasNoun);
             hashCode.Add(STAliasColor);
             hashCode.Add(SelectedPortraitId);
+            hashCode.Add(DisguisePortraitId);
             // stalker-en-changes-end
             return hashCode.ToHashCode();
         }

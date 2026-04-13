@@ -55,14 +55,12 @@ public sealed partial class PdaNotificationPanel : PanelContainer
 
     private void UpdateFactionIcon()
     {
-        // Priority 1: Character portrait (if set)
-        if (!string.IsNullOrEmpty(_portraitId))
+        // When _usePngIcons is true — use character portrait if available
+        if (_usePngIcons && !string.IsNullOrEmpty(_portraitId))
         {
             try
             {
                 var resourceCache = IoCManager.Resolve<IResourceCache>();
-                // Portrait texture path is stored in the prototype, but we receive it as a direct path here
-                // The server resolves the prototype and sends the texture path
                 var texturePath = _portraitId;
 
                 if (resourceCache.TryGetResource<TextureResource>(texturePath, out var texture))
@@ -77,41 +75,10 @@ public sealed partial class PdaNotificationPanel : PanelContainer
                 // Fall through to band icon
             }
         }
-
-        // Priority 2: Faction band icon
-        if (_usePngIcons)
-        {
-            // PNG icon mode - map bandIcon to texture path (always returns a path, even for unknown)
-            var texturePath = GetTexturePathForBandIcon(_bandId);
-
-            try
-            {
-                var resourceCache = IoCManager.Resolve<IResourceCache>();
-                if (resourceCache.TryGetResource<TextureResource>(texturePath, out var texture))
-                {
-                    FactionIcon.Texture = texture;
-                    FactionIcon.Visible = true;
-                }
-                else
-                {
-                    // Failed to load texture - hide icon
-                    FactionIcon.Visible = false;
-                }
-            }
-            catch
-            {
-                FactionIcon.Visible = false;
-            }
-        }
         else
         {
             // Sprite icon mode - use RSI sprite from band.rsi (same as STMessenger)
             var spriteState = GetSpriteStateForBandIcon(_bandId ?? string.Empty);
-            if (spriteState is null)
-            {
-                FactionIcon.Visible = false;
-                return;
-            }
 
             try
             {
@@ -131,7 +98,7 @@ public sealed partial class PdaNotificationPanel : PanelContainer
     /// <summary>
     /// Maps bandIcon name to RSI sprite state name.
     /// </summary>
-    private static string? GetSpriteStateForBandIcon(string bandIcon)
+    private static string GetSpriteStateForBandIcon(string bandIcon)
     {
         return bandIcon switch
         {
@@ -170,58 +137,7 @@ public sealed partial class PdaNotificationPanel : PanelContainer
             "medbeysprite" => "med",
             "grajdansksprite" => "ne",
 
-            _ => null // Unknown icon
-        };
-    }
-
-    /// <summary>
-    /// Maps bandIcon name to PNG texture path.
-    /// Returns NoData.png if bandIcon is unknown.
-    /// </summary>
-    private static ResPath GetTexturePathForBandIcon(string? bandIcon)
-    {
-        if (string.IsNullOrEmpty(bandIcon))
-            return new ResPath("/Textures/_Stalker_EN/Factions/NoData.png");
-
-        return bandIcon switch
-        {
-            // Major factions
-            "freedom" => new ResPath("/Textures/_Stalker_EN/Factions/STFreedomBand.png"),
-            "Dolg" => new ResPath("/Textures/_Stalker_EN/Factions/STDolgBand.png"),
-            "band" => new ResPath("/Textures/_Stalker_EN/Factions/STBanditsBand.png"),
-            "rene" => new ResPath("/Textures/_Stalker_EN/Factions/STRenegatsBand.png"),
-            "monolith" => new ResPath("/Textures/_Stalker_EN/Factions/STMonolithBand.png"),
-            "cn" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "stalker" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "merc" => new ResPath("/Textures/_Stalker_EN/Factions/STMercenariesBand.png"),
-            "army" => new ResPath("/Textures/_Stalker_EN/Factions/STMilitaryBand.png"),
-            "voen" => new ResPath("/Textures/_Stalker_EN/Factions/STMilitaryBand.png"),
-            "sci" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-            "sci_decan" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-            "sci_rector" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-
-            // Minor factions - map to closest available texture
-            "militia" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "ecologists" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-            "ecologistred" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-            "seraphim" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "zavet" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "greh" => new ResPath("/Textures/_Stalker_EN/Factions/STRenegatsBand.png"),
-            "sbu" => new ResPath("/Textures/_Stalker_EN/Factions/STMilitaryBand.png"),
-            "un" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
-            "project-1" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
-            "trader" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
-            "clowns" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
-            "jaba" => new ResPath("/Textures/_Stalker_EN/Factions/STBanditsBand.png"),
-            "pilgrim" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "guide" => new ResPath("/Textures/_Stalker_EN/Factions/STStalkerBand.png"),
-            "pack" => new ResPath("/Textures/_Stalker_EN/Factions/STRenegatsBand.png"),
-            "symbiote" => new ResPath("/Textures/_Stalker_EN/Factions/STRenegatsBand.png"),
-            "medbeysprite" => new ResPath("/Textures/_Stalker_EN/Factions/STSciBand.png"),
-            "grajdansksprite" => new ResPath("/Textures/_Stalker_EN/Factions/STNeutralBand.png"),
-
-            // Unknown faction - use NoData placeholder
-            _ => new ResPath("/Textures/_Stalker_EN/Factions/NoData.png")
+            _ => "nodata" // Unknown icon
         };
     }
 

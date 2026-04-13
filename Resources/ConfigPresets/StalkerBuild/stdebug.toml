@@ -11,8 +11,8 @@ lobbyenabled = false
 
 maxplayers = 80
 soft_max_players = 60
-
-role_timers = true
+role_whitelist = false
+role_timers = false
 peaceful_end = false
 contraband_examine = false
 

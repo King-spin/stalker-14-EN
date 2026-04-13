@@ -2,215 +2,395 @@
 #
 # TEXTURE LOCATION:
 #   Place PNG files in: /Textures/_Stalker_EN/Portraits/
-#   Recommended size: 128x128 pixels
+#   Recommended size: 100x160 pixels
 #
-# Each portrait is tied to ONE role (jobId).
-# To add multiple portraits for the same role, create separate entries with different IDs.
-# Use isFallback: true to mark the default portrait for a role.
+# Each portrait prototype represents ONE role and can have MULTIPLE texture variants.
+# NPCs pick one randomly. Players choose one in the loadout screen.
+# Use isFallback: true to include this portrait in random selection.
 
-# ============================================
-# DEPARTMENT: Stalker
-# ============================================
+# MARK: Stalker (Department: Stalker)
 
 - type: characterPortrait
   id: Portrait_StalkerRookie
-  name: "Rookie Stalker"
+  name: st-portrait-rookie-stalker
+  bandId: STStalkerBand
   jobId: StalkerRookie
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/stalker_rookie.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/stalkers/rookies/rookie_1.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/rookies/rookie_2.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/rookies/rookie_3.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/rookies/rookie_4.png"
 
 - type: characterPortrait
   id: Portrait_Stalker
-  name: "Experienced Stalker"
+  name: st-portrait-stalker
+  bandId: STStalkerBand
   jobId: Stalker
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/stalker.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_1.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_2.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_3.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_4.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_5.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_6.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_7.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_8.png"
+    - "/Textures/_Stalker_EN/Portraits/stalkers/stalker_9.png"
+
+# MARK: Neutral (Department: Stalker)
 
 - type: characterPortrait
   id: Portrait_StalkerNeutral
-  name: "Neutral Stalker"
+  name: st-portrait-neutral-stalker
+  bandId: STNeutralBand
   jobId: StalkerNeutral
-  texturePath: "/Textures/_Stalker_EN/Portraits/stalker_neutral.png"
-
-# ============================================
-# DEPARTMENT: StalkerAdvanced
-# ============================================
-
-- type: characterPortrait
-  id: Portrait_StalkerDolg
-  name: "Dolg Soldier"
-  jobId: StalkerDolg
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/dolg.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/neutral/neut_1.png"
+    - "/Textures/_Stalker_EN/Portraits/neutral/neut_2.png"
+    - "/Textures/_Stalker_EN/Portraits/neutral/neut_3.png"
+    - "/Textures/_Stalker_EN/Portraits/neutral/neut_4.png"
+    - "/Textures/_Stalker_EN/Portraits/neutral/neut_5.png"
+    - "/Textures/_Stalker_EN/Portraits/journalist/journalist_1.png"
 
-- type: characterPortrait
-  id: Portrait_StalkerHeadDolg
-  name: "Dolg Commander"
-  jobId: StalkerHeadDolg
-  texturePath: "/Textures/_Stalker_EN/Portraits/dolg_commander.png"
-
-- type: characterPortrait
-  id: Portrait_StalkerFreedom
-  name: "Freedom Fighter"
-  jobId: StalkerFreedom
-  isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/freedom.png"
-
-- type: characterPortrait
-  id: Portrait_StalkerHeadFreedom
-  name: "Freedom Commander"
-  jobId: StalkerHeadFreedom
-  texturePath: "/Textures/_Stalker_EN/Portraits/freedom_commander.png"
-
-- type: characterPortrait
-  id: Portrait_StalkerClearSky
-  name: "Clear Sky Researcher"
-  jobId: StalkerClearSky
-  isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/clearsky.png"
-
-- type: characterPortrait
-  id: Portrait_StalkerHeadClearSky
-  name: "Clear Sky Leader"
-  jobId: StalkerHeadClearSky
-  texturePath: "/Textures/_Stalker_EN/Portraits/clearsky_leader.png"
+# MARK: Journalist (Department: StalkerAdvanced)
 
 - type: characterPortrait
   id: Portrait_StalkerJournalist
-  name: "Journalist"
+  name: st-portrait-journalist
+  bandId: STJournalistsBand
   jobId: StalkerJournalist
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/journalist.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/journalist/journalist_1.png"
 
-# ============================================
-# DEPARTMENT: StalkerBrigands
-# ============================================
+# MARK: Dolg (Department: StalkerAdvanced)
+
+- type: characterPortrait
+  id: Portrait_StalkerDolg
+  name: st-portrait-dolg
+  bandId: STDolgBand
+  jobId: StalkerDolg
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_1.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_2.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_3.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_4.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_5.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_6.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_7.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_8.png"
+
+- type: characterPortrait
+  id: Portrait_StalkerHeadDolg
+  name: st-portrait-dolg-commander
+  bandId: STDolgBand
+  jobId: StalkerHeadDolg
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_head_2.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_head_3.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_head_4.png"
+    - "/Textures/_Stalker_EN/Portraits/duty/dolg_head_5.png"
+
+# MARK: Freedom (Department: StalkerAdvanced)
+
+- type: characterPortrait
+  id: Portrait_StalkerFreedom
+  name: st-portrait-freedom
+  bandId: STFreedomBand
+  jobId: StalkerFreedom
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_1.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_2.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_3.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_4.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_5.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_6.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_7.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_8.png"
+
+- type: characterPortrait
+  id: Portrait_StalkerHeadFreedom
+  name: st-portrait-freedom-commander
+  bandId: STFreedomBand
+  jobId: StalkerHeadFreedom
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_head_2.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_head_3.png"
+    - "/Textures/_Stalker_EN/Portraits/freedom/freedom_head_4.png"
+
+# MARK: Clear Sky (Department: StalkerAdvanced)
+
+- type: characterPortrait
+  id: Portrait_StalkerClearSky
+  name: st-portrait-clearsky
+  bandId: STClearSkyBand
+  jobId: StalkerClearSky
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/clearsky/clearsky_1.png"
+    - "/Textures/_Stalker_EN/Portraits/clearsky/clearsky_2.png"
+    - "/Textures/_Stalker_EN/Portraits/clearsky/clearsky_3.png"
+
+- type: characterPortrait
+  id: Portrait_StalkerHeadClearSky
+  name: st-portrait-clearsky-leader
+  bandId: STClearSkyBand
+  jobId: StalkerHeadClearSky
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/clearsky/clearsky_head_1.png"
+
+# MARK: Bandit (Department: StalkerBrigands)
 
 - type: characterPortrait
   id: Portrait_StalkerBandit
-  name: "Bandit"
+  name: st-portrait-bandit
+  bandId: STBanditsBand
   jobId: StalkerBandit
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/bandit.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_1.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_2.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_3.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_4.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_5.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_6.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_7.png"
 
 - type: characterPortrait
   id: Portrait_StalkerHeadBandit
-  name: "Bandit Leader"
+  name: st-portrait-bandit-leader
+  bandId: STBanditsBand
   jobId: StalkerHeadBandit
-  texturePath: "/Textures/_Stalker_EN/Portraits/bandit_leader.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/bandit/bandit_head_2.png"
+
+# MARK: Mercenary (Department: StalkerBrigands)
 
 - type: characterPortrait
   id: Portrait_StalkerMercenary
-  name: "Mercenary"
+  name: st-portrait-mercenary
+  bandId: STMercenariesBand
   jobId: StalkerMercenary
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/mercenary.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_1.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_2.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_3.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_4.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_5.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_6.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_7.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_8.png"
 
 - type: characterPortrait
   id: Portrait_StalkerHeadMercenary
-  name: "Mercenary Leader"
+  name: st-portrait-mercenary-leader
+  bandId: STMercenariesBand
   jobId: StalkerHeadMercenary
-  texturePath: "/Textures/_Stalker_EN/Portraits/mercenary_leader.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_head_2.png"
+    - "/Textures/_Stalker_EN/Portraits/mercenaries/merc_head_3.png"
+
+# MARK: Renegade (Department: StalkerBrigands)
 
 - type: characterPortrait
   id: Portrait_StalkerRene
-  name: "Renegade"
+  name: st-portrait-renegade
+  bandId: STRenegatsBand
   jobId: StalkerRene
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/renegat.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_1.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_2.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_3.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_4.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_5.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_6.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_7.png"
 
 - type: characterPortrait
   id: Portrait_StalkerHeadRene
-  name: "Renegade Leader"
+  name: st-portrait-renegade-leader
+  bandId: STRenegatsBand
   jobId: StalkerHeadRene
-  texturePath: "/Textures/_Stalker_EN/Portraits/renegat_leader.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/renegade/rene_head_2.png"
 
-# ============================================
-# DEPARTMENT: StalkerOfficials
-# ============================================
+# MARK: Military (Department: StalkerOfficials)
 
 - type: characterPortrait
   id: Portrait_Military
-  name: "Military Soldier"
+  name: st-portrait-military
+  bandId: STMilitaryBand
   jobId: Military
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/military.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/military/mili_1.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_2.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_3.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_4.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_5.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_6.png"
 
 - type: characterPortrait
   id: Portrait_MilitaryOfficer
-  name: "Military Officer"
+  name: st-portrait-military-officer
+  bandId: STMilitaryBand
   jobId: MilitaryOfficer
-  texturePath: "/Textures/_Stalker_EN/Portraits/military_officer.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/military/mili_officer_1.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_officer_2.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_officer_3.png"
 
 - type: characterPortrait
   id: Portrait_MilitaryHead
-  name: "Military Commander"
+  name: st-portrait-military-commander
+  bandId: STMilitaryBand
   jobId: MilitaryHead
-  texturePath: "/Textures/_Stalker_EN/Portraits/military_commander.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/military/mili_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_head_2.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_head_3.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_head_4.png"
+    - "/Textures/_Stalker_EN/Portraits/military/mili_head_5.png"
+
+# MARK: Scientists (Department: StalkerOfficials)
 
 - type: characterPortrait
   id: Portrait_Sci
-  name: "Scientist"
+  name: st-portrait-scientist
+  bandId: STSciBand
   jobId: sci
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/sci.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_2.png"
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_3.png"
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_4.png"
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_5.png"
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_6.png"
 
 - type: characterPortrait
-  id: Portrait_SciDecan
-  name: "Science Dean"
+  id: Portrait_SciHead
+  name: st-portrait-sci-head
+  bandId: STSciBand
   jobId: sci_decan
-  texturePath: "/Textures/_Stalker_EN/Portraits/sci_decan.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/scientists/sci_head_2.png"
 
-- type: characterPortrait
-  id: Portrait_SciRector
-  name: "Science Rector"
-  jobId: sci_rector
-  texturePath: "/Textures/_Stalker_EN/Portraits/sci_rector.png"
-
-# ============================================
-# DEPARTMENT: StalkerUnitedNations
-# ============================================
+# MARK: United Nations (Department: StalkerUnitedNations)
 
 - type: characterPortrait
   id: Portrait_StalkerUN
-  name: "UN Representative"
+  name: st-portrait-un
+  bandId: STUNBand
   jobId: StalkerUN
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/un.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/un/un_1.png"
+    - "/Textures/_Stalker_EN/Portraits/un/un_2.png"
 
-# ============================================
-# DEPARTMENT: StalkerReligius
-# ============================================
+# MARK: Monolith (Department: StalkerReligius)
 
 - type: characterPortrait
   id: Portrait_StalkerMonolith
-  name: "Monolith Fanatic"
+  name: st-portrait-monolith
+  bandId: STMonolithBand
   jobId: StalkerMonolith
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/monolith.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_1.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_2.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_3.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_4.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_5.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_6.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_7.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_8.png"
 
 - type: characterPortrait
   id: Portrait_StalkerHeadMonolith
-  name: "Monolith Leader"
+  name: st-portrait-monolith-leader
+  bandId: STMonolithBand
   jobId: StalkerHeadMonolith
-  texturePath: "/Textures/_Stalker_EN/Portraits/monolith_leader.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_head_1.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_head_2.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_head_3.png"
+    - "/Textures/_Stalker_EN/Portraits/monolith/mono_head_4.png"
+
+# MARK: Greh/Sin (Department: StalkerReligius)
 
 - type: characterPortrait
   id: Portrait_StalkerGreh
-  name: "Greh"
+  name: st-portrait-greh
+  bandId: STGrehBand
   jobId: StalkerGreh
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/greh.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/sin/sin_1.png"
+
+# MARK: Seraphim (Department: StalkerReligius)
 
 - type: characterPortrait
   id: Portrait_StalkerPostulant
-  name: "Postulant"
+  name: st-portrait-postulant
+  bandId: STSeraphimsBand
   jobId: StalkerPostulant
   isFallback: true
-  texturePath: "/Textures/_Stalker_EN/Portraits/postulant.png"
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/seraphim/seraphim_1.png"
 
 - type: characterPortrait
   id: Portrait_StalkerBishop
-  name: "Bishop"
+  name: st-portrait-bishop
+  bandId: STSeraphimsBand
   jobId: StalkerBishop
-  texturePath: "/Textures/_Stalker_EN/Portraits/bishop.png"
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/seraphim/seraphim_bishop_1.png"
+
+# MARK: Zombie
+
+- type: characterPortrait
+  id: Portrait_Zombie
+  name: st-portrait-zombie
+  bandId: Zombie
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/zombiefied/zombie_1.png"
+    - "/Textures/_Stalker_EN/Portraits/zombiefied/zombie_2.png"
+    - "/Textures/_Stalker_EN/Portraits/zombiefied/zombie_3.png"
+    - "/Textures/_Stalker_EN/Portraits/zombiefied/zombie_4.png"
+
+# MARK: Admin
+
+- type: characterPortrait
+  id: Portrait_Admems
+  name: st-portrait-admems
+  isFallback: true
+  textures:
+    - "/Textures/_Stalker_EN/Portraits/admems/admem_1.png"
+    - "/Textures/_Stalker_EN/Portraits/admems/admem_2.png"
+    - "/Textures/_Stalker_EN/Portraits/admems/admem_3.png"
+    - "/Textures/_Stalker_EN/Portraits/admems/admem_4.png"

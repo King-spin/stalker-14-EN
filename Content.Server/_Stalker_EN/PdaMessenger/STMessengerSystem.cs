@@ -7,8 +7,9 @@ using Content.Server.Mind;
 using Content.Server.PDA;
 using Content.Server.PDA.Ringer;
 using Content.Shared._Stalker.Bands;
+using Content.Shared._Stalker.PdaMessenger;
 using Content.Shared._Stalker.Portraits;
-using Content.Shared.Portraits;
+using Content.Shared._Stalker_EN.Portraits;
 using Content.Shared._Stalker_EN.CCVar;
 using Content.Shared._Stalker_EN.CharacterRank;
 using Content.Shared._Stalker_EN.FactionRelations;
@@ -65,6 +66,7 @@ public sealed partial class STMessengerSystem : EntitySystem
     private const int MaxPseudonymSuffix = 999;
     private static readonly TimeSpan InteractionCooldown = TimeSpan.FromSeconds(0.5);
     private static readonly ProtoId<STBandPrototype> ClearSkyBandId = "STClearSkyBand";
+    private static readonly ProtoId<STBandPrototype> MonolithBandId = "STMonolithBand";
 
     /// <summary>
     /// Maps (userId, charName) → anonymous pseudonym for the current round.
@@ -253,6 +255,9 @@ public sealed partial class STMessengerSystem : EntitySystem
                 break;
             case STMessengerNavigateToNewsEvent navigateToNews:
                 OnNavigateToNews(args.LoaderUid, navigateToNews);
+                break;
+            case STMessengerToggleDisguiseEvent toggleDisguise:
+                OnToggleDisguiseEvent(ent, server, args);
                 break;
         }
     }
@@ -517,8 +522,8 @@ public sealed partial class STMessengerSystem : EntitySystem
             var holder = xform.ParentUid;
             if (holder.IsValid() && TryComp<BandsComponent>(holder, out var bands))
             {
-                // Clear Sky is disguised as Loners on PDA (lore consistency)
-                if (bands.BandProto == ClearSkyBandId)
+                // Clear Sky & Monolith disguise as Loners on PDA (lore consistency)
+                if (server.IsDisguised && (bands.BandProto == ClearSkyBandId || bands.BandProto == MonolithBandId))
                     return "stalker";
 
                 if (!string.IsNullOrEmpty(bands.BandStatusIcon))
@@ -529,8 +534,8 @@ public sealed partial class STMessengerSystem : EntitySystem
         // Try 2: Fallback to OwnerBand and map to bandIcon
         if (server.OwnerBand.HasValue)
         {
-            // Clear Sky disguise
-            if (server.OwnerBand.Value == ClearSkyBandId)
+            // Clear Sky / Monolith disguise
+            if (server.IsDisguised && (server.OwnerBand.Value == ClearSkyBandId || server.OwnerBand.Value == MonolithBandId))
                 return "stalker";
 
             return GetBandIconForBandProto(server.OwnerBand.Value);
@@ -541,26 +546,33 @@ public sealed partial class STMessengerSystem : EntitySystem
 
     /// <summary>
     /// Gets the selected character portrait texture path for the player who owns the PDA.
-    /// Returns null if no portrait is selected and no fallback exists.
+    /// Walks up the transform hierarchy to find the mob entity.
     /// </summary>
     private string? GetPortraitId(STMessengerServerComponent server)
     {
-        // Try to get portrait from the mob holding the PDA
         if (TryComp<TransformComponent>(server.Owner, out var xform))
         {
-            var holder = xform.ParentUid;
-            if (holder.IsValid() && TryComp<CharacterPortraitComponent>(holder, out var portraitComp))
-            {
-                if (!string.IsNullOrEmpty(portraitComp.PortraitTexturePath))
-                    return portraitComp.PortraitTexturePath;
-            }
-        }
+            var current = xform.ParentUid;
 
-        // Fallback: try on the PDA entity itself
-        if (TryComp<CharacterPortraitComponent>(server.Owner, out var pdaPortrait))
-        {
-            if (!string.IsNullOrEmpty(pdaPortrait.PortraitTexturePath))
-                return pdaPortrait.PortraitTexturePath;
+            while (current.IsValid())
+            {
+                if (TryComp<CharacterPortraitComponent>(current, out var portraitComp))
+                {
+                    // If disguised and has a disguise path — use it
+                    if (server.IsDisguised && !string.IsNullOrEmpty(portraitComp.DisguisedPortraitPath))
+                        return portraitComp.DisguisedPortraitPath;
+
+                    // Otherwise use normal portrait
+                    if (!string.IsNullOrEmpty(portraitComp.PortraitTexturePath))
+                        return portraitComp.PortraitTexturePath;
+                }
+
+                var parentXform = CompOrNull<TransformComponent>(current);
+                if (parentXform == null)
+                    break;
+
+                current = parentXform.ParentUid;
+            }
         }
 
         return null;
@@ -932,7 +944,9 @@ public sealed partial class STMessengerSystem : EntitySystem
             directMessages,
             contactInfos,
             navigateToChatId,
-            draftMessage);
+            draftMessage,
+            server.IsDisguised,
+            server.OwnerBand);
     }
 
     private int CountUnread(string chatId, List<STMessengerMessage>? channelMessages, STMessengerServerComponent server)
@@ -1366,6 +1380,15 @@ public sealed partial class STMessengerSystem : EntitySystem
             contactIdentity.UserId, contactIdentity.CharName, factionName);
 
         return true;
+    }
+
+    private void OnToggleDisguiseEvent(Entity<STMessengerComponent> ent, STMessengerServerComponent server, CartridgeMessageEvent args)
+    {
+        // Toggle disguise
+        server.IsDisguised = !server.IsDisguised;
+        Dirty(ent, server);
+
+        // The BUI system will automatically push new state because component is dirty
     }
 
     #endregion

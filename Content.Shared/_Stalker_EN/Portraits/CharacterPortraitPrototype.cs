@@ -1,11 +1,11 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Portraits;
+namespace Content.Shared._Stalker_EN.Portraits;
 
 /// <summary>
-/// Defines a character portrait that can be selected during character customization.
-/// Portraits are filtered by faction (band) and optionally by specific job.
-/// Used as sender icons in PDA notifications.
+/// Defines a set of character portraits for a specific role.
+/// Multiple textures per portrait allow random variation for NPCs
+/// and player choice in the loadout screen.
 /// </summary>
 [Prototype("characterPortrait")]
 public sealed partial class CharacterPortraitPrototype : IPrototype
@@ -27,22 +27,28 @@ public sealed partial class CharacterPortraitPrototype : IPrototype
     public string? Description { get; private set; }
 
     /// <summary>
-    /// Path to the portrait texture (PNG format).
-    /// Example: /Textures/_Stalker_EN/Portraits/freedom_1.png
+    /// The faction (band) this portrait belongs to.
+    /// Leave empty to make the portrait admin-only (hidden from players).
     /// </summary>
-    [DataField(required: true)]
-    public string TexturePath { get; private set; } = string.Empty;
+    [DataField]
+    public string BandId { get; private set; } = string.Empty;
 
     /// <summary>
-    /// The role (job) this portrait is tied to.
-    /// Players with this job will see the portrait in their customization menu.
+    /// Optional role restriction. If set, only characters with this job can use the portrait.
+    /// If null/empty, any member of the band can use it.
     /// </summary>
-    [DataField(required: true)]
-    public string JobId { get; private set; } = string.Empty;
+    [DataField]
+    public string? JobId { get; private set; }
 
     /// <summary>
-    /// If true, this portrait is used as a fallback when no other portrait is available
-    /// for the character's role.
+    /// List of available portrait textures for this role.
+    /// NPCs pick one randomly. Players choose one in the loadout screen.
+    /// </summary>
+    [DataField(required: true)]
+    public List<string> Textures { get; private set; } = new();
+
+    /// <summary>
+    /// If true, this portrait is used as a fallback when no specific portrait is selected.
     /// </summary>
     [DataField]
     public bool IsFallback { get; private set; }

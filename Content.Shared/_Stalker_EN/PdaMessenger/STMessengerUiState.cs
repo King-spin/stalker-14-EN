@@ -46,13 +46,25 @@ public sealed class STMessengerUiState : BoundUserInterfaceState
     /// </summary>
     public readonly string? DraftMessage;
 
+    /// <summary>
+    /// If true, Clear Sky disguise mode is active (PDA icon shows Stalker).
+    /// </summary>
+    public readonly bool IsDisguised;
+
+    /// <summary>
+    /// Band prototype ID of the owner (e.g. "STClearSkyBand"). Used to show/hide disguise button.
+    /// </summary>
+    public readonly string? OwnerBand;
+
     public STMessengerUiState(
         string messengerId,
         List<STMessengerChat> channels,
         List<STMessengerChat> directMessages,
         List<STMessengerContactInfo> contacts,
         string? navigateToChatId = null,
-        string? draftMessage = null)
+        string? draftMessage = null,
+        bool isDisguised = false,
+        string? ownerBand = null)
     {
         MessengerId = messengerId;
         Channels = channels;
@@ -60,5 +72,7 @@ public sealed class STMessengerUiState : BoundUserInterfaceState
         Contacts = contacts;
         NavigateToChatId = navigateToChatId;
         DraftMessage = draftMessage;
+        IsDisguised = isDisguised;
+        OwnerBand = ownerBand;
     }
 }

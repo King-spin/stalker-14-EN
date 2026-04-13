@@ -96,6 +96,13 @@ public sealed partial class STMessengerServerComponent : Component
     /// </summary>
     [ViewVariables]
     public ProtoId<STBandPrototype>? OwnerBand;
+
+    /// <summary>
+    /// If true, Clear Sky members disguise as Stalkers in PDA messages.
+    /// Defaults to true (masked).
+    /// </summary>
+    [DataField, ViewVariables(VVAccess.ReadWrite)]
+    public bool IsDisguised = true;
 }
 
 /// <summary>
