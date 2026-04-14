@@ -45,4 +45,11 @@ public sealed class STBandPrototype : IPrototype
     [DataField]
     public int? ManagingRankId { get; set; } = null;
 
+    /// <summary>
+    /// If true, members of this band can disguise as Stalkers in PDA messages.
+    /// Used by Clear Sky and Monolith factions.
+    /// </summary>
+    [DataField]
+    public bool CanDisguiseAsStalker { get; set; } = false;
+
 }

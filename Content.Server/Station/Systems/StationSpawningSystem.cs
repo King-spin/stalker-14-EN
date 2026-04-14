@@ -17,7 +17,6 @@ using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Content.Shared.Roles;
 using Content.Shared.Station;
-using Content.Shared._Stalker.Portraits;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -27,6 +26,7 @@ using Robust.Shared.Utility;
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
 
 namespace Content.Server.Station.Systems;
 
@@ -144,22 +144,43 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
 
             // stalker-en-start
             // Set character portrait for PDA notifications.
-            // If player selected one — use it. Otherwise, system picks a random fallback for the role.
+            // If player selected one — validate and use it directly as texture path.
+            // Otherwise, system picks a random fallback for the role.
             var portraitComp = EnsureComp<CharacterPortraitComponent>(entity.Value);
             if (!string.IsNullOrEmpty(profile.SelectedPortraitId))
             {
-                portraitComp.PortraitId = profile.SelectedPortraitId;
-            }
-            _portraitSystem.ResolvePortrait(entity.Value, portraitComp);
+                // Validate that the texture path exists in any portrait prototype
+                var textureExists = _prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+                    .Any(p => p.Textures.Contains(profile.SelectedPortraitId));
 
-            // Resolve disguise portrait for factions that can disguise (e.g. Clear Sky, Monolith)
+                if (textureExists)
+                {
+                    // Use the selected texture path directly
+                    portraitComp.PortraitTexturePath = profile.SelectedPortraitId;
+                    Dirty(entity.Value, portraitComp);
+                }
+                else
+                {
+                    // Invalid texture path, let system pick random fallback
+                    _portraitSystem.ResolvePortrait(entity.Value, portraitComp);
+                }
+            }
+            else
+            {
+                // No portrait selected, let system pick random fallback
+                _portraitSystem.ResolvePortrait(entity.Value, portraitComp);
+            }
+
+            // Resolve disguise portrait for factions that can disguise (e.g. Clear Sky)
+            // DisguisePortraitId stores the texture path directly, not a ProtoId
             if (!string.IsNullOrEmpty(profile.DisguisePortraitId))
             {
-                if (_prototypeManager.TryIndex<CharacterPortraitPrototype>(profile.DisguisePortraitId, out var disguiseProto))
+                var textureExists = _prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+                    .Any(p => p.Textures.Contains(profile.DisguisePortraitId));
+
+                if (textureExists)
                 {
-                    portraitComp.DisguisedPortraitPath = disguiseProto.Textures.Count > 0
-                        ? disguiseProto.Textures[0]
-                        : string.Empty;
+                    portraitComp.DisguisedPortraitPath = profile.DisguisePortraitId;
                 }
             }
             // stalker-en-end

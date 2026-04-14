@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Shared.Administration;
-using Content.Shared._Stalker.Portraits;
 using Content.Shared._Stalker_EN.Portraits;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -47,7 +46,6 @@ public sealed class ListPortraitsCommand : IConsoleCommand
             }
 
             shell.WriteLine($"--- Entity {uid} ---");
-            shell.WriteLine($"PortraitId: {comp.PortraitId ?? "(empty)"}");
             shell.WriteLine($"TexturePath: {comp.PortraitTexturePath ?? "(empty)"}");
             return;
         }
@@ -67,7 +65,6 @@ public sealed class ListPortraitsCommand : IConsoleCommand
             shell.WriteLine($"Name: {proto.Name}");
             shell.WriteLine($"JobId: {proto.JobId ?? "(any)"}");
             shell.WriteLine($"BandId: {proto.BandId}");
-            shell.WriteLine($"Fallback: {proto.IsFallback}");
             shell.WriteLine($"Texture count: {proto.Textures.Count}");
             for (int i = 0; i < proto.Textures.Count; i++)
             {
@@ -80,7 +77,7 @@ public sealed class ListPortraitsCommand : IConsoleCommand
         shell.WriteLine("--- Portrait list ---");
         foreach (var p in portraits)
         {
-            shell.WriteLine($"ID: {p.ID,-35} | Job: {p.JobId ?? "All",-20} | Fallback: {p.IsFallback} | Textures: {p.Textures.Count}");
+            shell.WriteLine($"ID: {p.ID,-35} | Job: {p.JobId ?? "All",-20} | Band: {p.BandId,-15} | Textures: {p.Textures.Count}");
         }
         shell.WriteLine("\nUse 'listportraits <ID>' to see texture paths.");
         shell.WriteLine("Use 'listportraits <UID>' to see the selected portrait on an entity.");

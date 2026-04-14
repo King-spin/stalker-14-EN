@@ -10,11 +10,13 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Log;
 
-namespace Content.Client.Lobby.UI.Loadouts;
+namespace Content.Client._Stalker_EN.Portraits;
 
 /// <summary>
-/// Simple grid-based portrait selector for the LoadoutWindow Portrait tab.
+/// Grid-based portrait selector for the character profile editor.
+/// Displays available portrait textures and allows player selection.
 /// </summary>
 public sealed class PortraitSelector : BoxContainer
 {
@@ -25,13 +27,22 @@ public sealed class PortraitSelector : BoxContainer
     private readonly Label _previewName;
     private readonly Label _previewDesc;
     private readonly Dictionary<string, Button> _buttons = new();
+    private readonly ISawmill _sawmill;
 
+    /// <summary>
+    /// Event raised when a portrait texture is selected.
+    /// Passes the texture path of the selected portrait.
+    /// </summary>
     public event Action<string>? OnPortraitSelected;
 
+    /// <summary>
+    /// Initializes a new instance of the PortraitSelector.
+    /// </summary>
     public PortraitSelector()
     {
         _resCache = IoCManager.Resolve<IResourceCache>();
         _random = IoCManager.Resolve<IRobustRandom>();
+        _sawmill = Logger.GetSawmill("st.portrait.selector");
 
         Orientation = LayoutOrientation.Horizontal;
         HorizontalExpand = true;
@@ -65,6 +76,12 @@ public sealed class PortraitSelector : BoxContainer
         AddChild(preview);
     }
 
+    /// <summary>
+    /// Sets up the portrait selector with the given portraits and selected texture path.
+    /// </summary>
+    /// <param name="portraits">List of portrait prototypes to display.</param>
+    /// <param name="selectedId">Texture path of the currently selected portrait.</param>
+    /// <param name="protoMan">Prototype manager for localization.</param>
     public void Setup(List<CharacterPortraitPrototype> portraits, string? selectedId, IPrototypeManager protoMan)
     {
         _grid.RemoveAllChildren();
@@ -79,11 +96,11 @@ public sealed class PortraitSelector : BoxContainer
         }
 
         // Fallback: auto-select random if none selected
+        // Note: We don't invoke OnPortraitSelected here to avoid overwriting user's profile choice
         if ((string.IsNullOrEmpty(selectedId) || !textureEntries.Any(t => t.TexturePath == selectedId))
             && textureEntries.Count > 0)
         {
             selectedId = textureEntries[_random.Next(textureEntries.Count)].TexturePath;
-            OnPortraitSelected?.Invoke(selectedId);
         }
 
         foreach (var entry in textureEntries)
@@ -105,6 +122,13 @@ public sealed class PortraitSelector : BoxContainer
         }
     }
 
+    /// <summary>
+    /// Creates a button for a portrait texture.
+    /// </summary>
+    /// <param name="proto">The portrait prototype.</param>
+    /// <param name="texturePath">The texture path.</param>
+    /// <param name="index">The texture index in the prototype.</param>
+    /// <returns>A button configured for the portrait.</returns>
     private Button CreateButton(CharacterPortraitPrototype proto, string texturePath, int index)
     {
         var btn = new Button { MinSize = new Vector2(64, 64), ToggleMode = true };
@@ -112,8 +136,11 @@ public sealed class PortraitSelector : BoxContainer
         var texRect = new TextureRect { Stretch = TextureRect.StretchMode.KeepCentered, HorizontalExpand = true, VerticalExpand = true };
         btn.AddChild(texRect);
 
-        if (_resCache.TryGetResource<TextureResource>(texturePath, out var tex))
+        var fullPath = AddPortraitPrefix(texturePath);
+        if (_resCache.TryGetResource<TextureResource>(fullPath, out var tex))
             texRect.Texture = tex;
+        else
+            _sawmill.Warning($"Portrait texture not found: {fullPath}");
 
         btn.OnToggled += _ =>
         {
@@ -130,6 +157,11 @@ public sealed class PortraitSelector : BoxContainer
         return btn;
     }
 
+    /// <summary>
+    /// Updates the preview panel with the selected portrait.
+    /// </summary>
+    /// <param name="proto">The portrait prototype.</param>
+    /// <param name="texturePath">The texture path to display.</param>
     private void UpdatePreview(CharacterPortraitPrototype proto, string texturePath)
     {
         _previewName.Text = proto.Textures.Count > 1
@@ -137,9 +169,39 @@ public sealed class PortraitSelector : BoxContainer
             : Loc.GetString(proto.Name);
         _previewDesc.Text = proto.Description != null ? Loc.GetString(proto.Description) : string.Empty;
 
-        if (_resCache.TryGetResource<TextureResource>(texturePath, out var tex))
+        var fullPath = AddPortraitPrefix(texturePath);
+        if (_resCache.TryGetResource<TextureResource>(fullPath, out var tex))
             _previewRect.Texture = tex;
         else
+        {
+            _sawmill.Warning($"Portrait texture not found: {fullPath}");
             _previewRect.Texture = null;
+        }
+    }
+
+    /// <summary>
+    /// Adds the portrait texture prefix to a relative path.
+    /// If the path already has the prefix, returns it as-is (for migration).
+    /// </summary>
+    private string AddPortraitPrefix(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+            return string.Empty;
+
+        // If path already has the prefix, return as-is (migration support)
+        if (path.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix))
+            return path;
+
+        return CharacterPortraitPrototype.PortraitTexturePrefix + path;
+    }
+
+    /// <summary>
+    /// Disposes of the portrait selector and clears button references.
+    /// </summary>
+    /// <param name="disposing">Whether managed resources should be disposed.</param>
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        _buttons.Clear();
     }
 }

@@ -124,14 +124,14 @@ namespace Content.Shared.Preferences
         public string STAliasColor { get; set; } = string.Empty;
 
         /// <summary>
-        /// Player-selected character portrait for PDA notifications and other UI elements.
+        /// Player-selected character portrait texture path for PDA notifications and other UI elements.
         /// Validated server-side against available portraits for the character's faction/job.
         /// </summary>
         [DataField]
-        public ProtoId<CharacterPortraitPrototype> SelectedPortraitId { get; set; } = string.Empty;
+        public string SelectedPortraitId { get; set; } = string.Empty;
 
         /// <summary>
-        /// Selected portrait for disguise (e.g., Clear Sky or Monolith masquerading as Stalker).
+        /// Selected portrait for disguise (e.g., Clear Sky masquerading as Stalker).
         /// </summary>
         [DataField]
         public string DisguisePortraitId { get; set; } = string.Empty;
@@ -749,11 +749,35 @@ namespace Content.Shared.Preferences
             // stalker-en-changes-end
 
             // stalker-en-changes: portrait validation
-            // Validate selected portrait exists
-            if (!string.IsNullOrEmpty(SelectedPortraitId) &&
-                !prototypeManager.HasIndex<CharacterPortraitPrototype>(SelectedPortraitId))
+            // Validate selected portrait texture path exists in any prototype
+            // Support both old full paths and new relative paths
+            if (!string.IsNullOrEmpty(SelectedPortraitId))
             {
-                SelectedPortraitId = string.Empty;
+                var relativePath = SelectedPortraitId.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix)
+                    ? SelectedPortraitId.Substring(CharacterPortraitPrototype.PortraitTexturePrefix.Length)
+                    : SelectedPortraitId;
+
+                var textureExists = prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+                    .Any(p => p.Textures.Contains(relativePath));
+                if (!textureExists)
+                {
+                    SelectedPortraitId = string.Empty;
+                }
+            }
+
+            // Validate disguise portrait texture path
+            if (!string.IsNullOrEmpty(DisguisePortraitId))
+            {
+                var relativePath = DisguisePortraitId.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix)
+                    ? DisguisePortraitId.Substring(CharacterPortraitPrototype.PortraitTexturePrefix.Length)
+                    : DisguisePortraitId;
+
+                var textureExists = prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
+                    .Any(p => p.Textures.Contains(relativePath));
+                if (!textureExists)
+                {
+                    DisguisePortraitId = string.Empty;
+                }
             }
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.

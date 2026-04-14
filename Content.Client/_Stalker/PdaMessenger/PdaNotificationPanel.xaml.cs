@@ -67,7 +67,6 @@ public sealed partial class PdaNotificationPanel : PanelContainer
                 {
                     FactionIcon.Texture = texture;
                     FactionIcon.Visible = true;
-                    return;
                 }
             }
             catch

@@ -465,13 +465,13 @@
       band: Stalker
       bandIcon: rookie
       bandProto: STStalkerBand
-      bandRankId: 1
     - type: Access
       tags:
         - Rookie
     - type: Loadout
       prototypes: [ RookieGear ]
-    - type: CharacterPortrait # Stalker EN change
+    - type: CharacterPortrait
+      portraitJobId: StalkerRookie
 
 # Stalker EN change end
 

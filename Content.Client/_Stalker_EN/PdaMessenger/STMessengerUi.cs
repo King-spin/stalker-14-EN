@@ -65,7 +65,7 @@ public sealed partial class STMessengerUi : UIFragment
         _root.AddChild(_channelPage);
         _root.AddChild(_composePage);
 
-        // Disguise toggle button (only visible for Clear Sky and Monolith)
+        // Disguise toggle button (only visible for Clear Sky)
         _disguiseButton = new Button
         {
             Text = Loc.GetString("st-messenger-disguise-btn"),
@@ -191,7 +191,7 @@ public sealed partial class STMessengerUi : UIFragment
         // Update disguise button visibility and text
         if (_disguiseButton != null)
         {
-            var canDisguise = messengerState.OwnerBand == "STClearSkyBand" || messengerState.OwnerBand == "STMonolithBand";
+            var canDisguise = messengerState.OwnerBand == "STClearSkyBand";
             _disguiseButton.Visible = canDisguise;
             _disguiseButton.Text = messengerState.IsDisguised
                 ? Loc.GetString("st-messenger-disguise-on")

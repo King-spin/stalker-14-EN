@@ -10,6 +10,11 @@ namespace Content.Shared._Stalker_EN.Portraits;
 [Prototype("characterPortrait")]
 public sealed partial class CharacterPortraitPrototype : IPrototype
 {
+    /// <summary>
+    /// Prefix for portrait texture paths. Added to relative paths in YAML to form full paths.
+    /// </summary>
+    public const string PortraitTexturePrefix = "/Textures/_Stalker_EN/Portraits/";
+
     [ViewVariables]
     [IdDataField]
     public string ID { get; private set; } = default!;
@@ -46,16 +51,4 @@ public sealed partial class CharacterPortraitPrototype : IPrototype
     /// </summary>
     [DataField(required: true)]
     public List<string> Textures { get; private set; } = new();
-
-    /// <summary>
-    /// If true, this portrait is used as a fallback when no specific portrait is selected.
-    /// </summary>
-    [DataField]
-    public bool IsFallback { get; private set; }
-
-    /// <summary>
-    /// Whether this portrait should be available by default or locked behind conditions.
-    /// </summary>
-    [DataField]
-    public bool UnlockedByDefault { get; private set; } = true;
 }

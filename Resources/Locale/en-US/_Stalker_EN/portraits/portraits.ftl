@@ -42,7 +42,7 @@ st-portrait-military-officer = Military Officer
 st-portrait-military-commander = Military Commander
 
 st-portrait-scientist = Scientist
-st-portrait-sci-decan = Science Dean
+st-portrait-sci-decan = Science Decan
 st-portrait-sci-rector = Science Rector
 
 st-portrait-un = UN Representative

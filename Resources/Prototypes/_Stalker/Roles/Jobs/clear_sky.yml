@@ -110,6 +110,7 @@
   factionId: ClearSky
   maxMembers: 11
   managingRankId: 2
+  canDisguiseAsStalker: true
   hierarchy:
     1: StalkerClearSky
     2: StalkerHeadClearSky

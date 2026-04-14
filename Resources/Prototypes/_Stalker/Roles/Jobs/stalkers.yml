@@ -54,7 +54,7 @@
         band: Stalker
         bandIcon: stalker
         bandProto: STStalkerBand
-        bandRankId: 2
+        bandRankId: 1
       - type: BlockTackingHolyItems
       - type: TeethPull
         teethProto: ToothStalker
@@ -127,7 +127,7 @@
         band: Stalker
         bandIcon: ne
         bandProto: STStalkerBand
-        bandRankId: 3
+        bandRankId: 2
       - type: BlockTackingHolyItems
       - type: TeethPull
         teethProto: ToothStalker
@@ -151,12 +151,10 @@
   name: Stalker
   factionId: Stalker
   maxMembers: 10000
-  managingRankId: 3 # stalker EN change
+  managingRankId: 2
   hierarchy:
-  # stalker EN change start
-    1: StalkerRookie # stalker EN change: a stalker with rank 1 is a rookie so why there was Stalker?
-    2: Stalker # stalker EN change :from StalkerVeteran to Stalker
-    3: StalkerVeteran
-    4: StalkerGuide
-# stalker EN change end
+    1: Stalker
+    2: StalkerVeteran
+    3: StalkerGuide
+
 
