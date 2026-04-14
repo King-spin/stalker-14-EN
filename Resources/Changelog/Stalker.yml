@@ -2421,5 +2421,12 @@
   id: 259
   time: '2026-04-14T11:20:52.701268+00:00'
   url: https://github.com/stalker-14-EN/stalker-14-EN/pull/818
+- author: BELNAKBU
+  changes:
+  - message: bug fix  by ticket 0153
+    type: Add
+  id: 260
+  time: '2026-04-14T19:39:15.682260+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/817
 Name: Stalker
 Order: -1
