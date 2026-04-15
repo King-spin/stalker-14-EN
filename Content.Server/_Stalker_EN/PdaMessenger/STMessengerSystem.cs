@@ -608,10 +608,10 @@ public sealed partial class STMessengerSystem : EntitySystem
         if (string.IsNullOrEmpty(path))
             return path;
 
-        if (path.StartsWith(Content.Shared._Stalker_EN.Portraits.CharacterPortraitPrototype.PortraitTexturePrefix))
+        if (path.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix))
             return path;
 
-        return Content.Shared._Stalker_EN.Portraits.CharacterPortraitPrototype.PortraitTexturePrefix + path;
+        return CharacterPortraitPrototype.PortraitTexturePrefix + path;
     }
 
 
