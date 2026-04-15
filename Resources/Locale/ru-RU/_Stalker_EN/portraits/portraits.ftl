@@ -48,7 +48,7 @@ st-portrait-sci-rector = Ректор
 st-portrait-un = Представитель ООН
 
 st-portrait-monolith = Монолитовец
-st-portrait-monolith-leader = Лидер Монолита
+st-portrait-monolith-leader = Проповедник Монолита
 
 st-portrait-greh = Греховец
 st-portrait-postulant = Постулант

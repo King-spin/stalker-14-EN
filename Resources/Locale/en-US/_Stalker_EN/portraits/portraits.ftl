@@ -17,11 +17,11 @@ st-portrait-rookie-stalker = Rookie Stalker
 st-portrait-stalker = Stalker
 st-portrait-neutral-stalker = Neutral Stalker
 
-st-portrait-dolg = Dolg Soldier
-st-portrait-dolg-commander = Dolg Commander
+st-portrait-dolg = Duty Soldier
+st-portrait-dolg-commander = Duti Leader
 
 st-portrait-freedom = Freedom Fighter
-st-portrait-freedom-commander = Freedom Commander
+st-portrait-freedom-commander = Freedom Leader
 
 st-portrait-clearsky = Clear Sky
 st-portrait-clearsky-leader = Clear Sky Leader
@@ -48,7 +48,7 @@ st-portrait-sci-rector = Science Rector
 st-portrait-un = UN Representative
 
 st-portrait-monolith = Monolith Fanatic
-st-portrait-monolith-leader = Monolith Leader
+st-portrait-monolith-leader = Monolith Preacher
 
 st-portrait-greh = Greh
 st-portrait-postulant = Postulant
