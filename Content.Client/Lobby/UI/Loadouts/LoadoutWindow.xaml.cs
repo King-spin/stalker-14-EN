@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Client.Lobby.UI.Loadouts;
 
@@ -20,10 +21,11 @@ public sealed partial class LoadoutWindow : FancyWindow
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutPressed;
     public event Action<ProtoId<LoadoutGroupPrototype>, ProtoId<LoadoutPrototype>>? OnLoadoutUnpressed;
 
-    private readonly List<LoadoutGroupContainer> _groups = new();
+    private List<LoadoutGroupContainer> _groups = new();
 
     public HumanoidCharacterProfile Profile;
 
+    // CCvar.
     private int _maxLoadoutNameLength;
 
     public LoadoutWindow(HumanoidCharacterProfile profile, RoleLoadout loadout, RoleLoadoutPrototype proto, ICommonSession session, IDependencyCollection collection)
@@ -36,6 +38,7 @@ public sealed partial class LoadoutWindow : FancyWindow
         _maxLoadoutNameLength = configManager.GetCVar(CCVars.MaxLoadoutNameLength);
         RoleNameEdit.IsValid = text => text.Length <= _maxLoadoutNameLength;
 
+        // Hide if we can't edit the name.
         if (!proto.CanCustomizeName)
         {
             RoleNameBox.Visible = false;
@@ -55,6 +58,7 @@ public sealed partial class LoadoutWindow : FancyWindow
             RoleNameEdit.OnTextChanged += args => OnNameChanged?.Invoke(args.Text);
         }
 
+        // Hide if no groups
         if (proto.Groups.Count == 0)
         {
             LoadoutGroupsContainer.Visible = false;
