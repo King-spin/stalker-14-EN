@@ -52,11 +52,5 @@ public sealed class STBandPrototype : IPrototype
     [DataField]
     public ProtoId<JobPrototype>? DisguiseTargetJobId { get; set; }
 
-    /// <summary>
-    /// Target band icon for disguise in PDA notifications. Used to select which patch to show when disguised.
-    /// For example, Clear Sky uses "stalker" to show stalker patch when disguised.
-    /// </summary>
-    [DataField]
-    public string? DisguiseTargetBandIcon { get; set; }
 
 }

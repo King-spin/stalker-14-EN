@@ -64,7 +64,6 @@ public sealed partial class STMessengerUi : UIFragment
         _root.AddChild(_channelPage);
         _root.AddChild(_composePage);
 
-        // Disguise is now handled by ActionChangeBand action in the inventory
 
         _channelPage.Visible = false;
         _composePage.Visible = false;

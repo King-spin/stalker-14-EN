@@ -508,8 +508,7 @@ public sealed partial class STMessengerSystem : EntitySystem
     /// <summary>
     /// Gets the band icon name for a player based on their band/faction.
     /// Uses the mob holding the PDA (not the PDA entity itself).
-    /// Returns BandStatusIcon from BandsComponent, using AltBand when disguised.
-    /// Falls back to OwnerBand if mob is not available.
+    /// Returns BandStatusIcon from BandsComponent
     /// </summary>
     private string? GetBandIcon(STMessengerServerComponent server)
     {
