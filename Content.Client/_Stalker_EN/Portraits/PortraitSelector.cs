@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Client._Stalker_EN.Portraits;
 
@@ -87,30 +88,53 @@ public sealed class PortraitSelector : BoxContainer
         _grid.RemoveAllChildren();
         _buttons.Clear();
 
+        // Validate input
+        if (portraits == null || portraits.Count == 0)
+        {
+            _previewName.Text = Loc.GetString("st-portrait-no-portraits-available");
+            _previewDesc.Text = string.Empty;
+            _previewRect.Texture = null;
+            return;
+        }
+
         // Flatten portraits: each texture becomes a button
-        var textureEntries = new List<(CharacterPortraitPrototype Proto, string TexturePath, int Index)>();
+        var textureEntries = new List<(CharacterPortraitPrototype Proto, ResPath TexturePath, int Index)>();
         foreach (var proto in portraits)
         {
+            if (proto?.Textures == null || proto.Textures.Count == 0)
+            {
+                _sawmill.Warning($"Portrait prototype {proto?.ID ?? "unknown"} has no textures");
+                continue;
+            }
+
             for (var i = 0; i < proto.Textures.Count; i++)
                 textureEntries.Add((proto, proto.Textures[i], i));
         }
 
+        if (textureEntries.Count == 0)
+        {
+            _previewName.Text = Loc.GetString("st-portrait-no-textures-available");
+            _previewDesc.Text = string.Empty;
+            _previewRect.Texture = null;
+            return;
+        }
+
         // Fallback: auto-select random if none selected
         // Note: We don't invoke OnPortraitSelected here to avoid overwriting user's profile choice
-        if ((string.IsNullOrEmpty(selectedId) || !textureEntries.Any(t => t.TexturePath == selectedId))
+        if ((string.IsNullOrEmpty(selectedId) || !textureEntries.Any(t => t.TexturePath.ToString() == selectedId))
             && textureEntries.Count > 0)
         {
-            selectedId = textureEntries[_random.Next(textureEntries.Count)].TexturePath;
+            selectedId = textureEntries[_random.Next(textureEntries.Count)].TexturePath.ToString();
         }
 
         foreach (var entry in textureEntries)
         {
             var btn = CreateButton(entry.Proto, entry.TexturePath, entry.Index);
-            btn.Pressed = entry.TexturePath == selectedId;
-            if (entry.TexturePath == selectedId)
+            btn.Pressed = entry.TexturePath.ToString() == selectedId;
+            if (entry.TexturePath.ToString() == selectedId)
                 UpdatePreview(entry.Proto, entry.TexturePath);
 
-            _buttons[entry.TexturePath] = btn;
+            _buttons[entry.TexturePath.ToString()] = btn;
             _grid.AddChild(btn);
         }
 
@@ -126,18 +150,18 @@ public sealed class PortraitSelector : BoxContainer
     /// Creates a button for a portrait texture.
     /// </summary>
     /// <param name="proto">The portrait prototype.</param>
-    /// <param name="texturePath">The texture path.</param>
+    /// <param name="texturePath">The texture path (ResPath).</param>
     /// <param name="index">The texture index in the prototype.</param>
     /// <returns>A button configured for the portrait.</returns>
-    private Button CreateButton(CharacterPortraitPrototype proto, string texturePath, int index)
+    private Button CreateButton(CharacterPortraitPrototype proto, ResPath texturePath, int index)
     {
         var btn = new Button { MinSize = new Vector2(64, 64), ToggleMode = true };
 
         var texRect = new TextureRect { Stretch = TextureRect.StretchMode.KeepCentered, HorizontalExpand = true, VerticalExpand = true };
         btn.AddChild(texRect);
 
-        var fullPath = AddPortraitPrefix(texturePath);
-        if (_resCache.TryGetResource<TextureResource>(fullPath, out var tex))
+        var fullPath = proto.GetFullPath(texturePath);
+        if (_resCache.TryGetResource<TextureResource>(fullPath.ToString(), out var tex))
             texRect.Texture = tex;
         else
             _sawmill.Warning($"Portrait texture not found: {fullPath}");
@@ -150,7 +174,7 @@ public sealed class PortraitSelector : BoxContainer
                     kvp.Value.Pressed = false;
                 btn.Pressed = true;
                 UpdatePreview(proto, texturePath);
-                OnPortraitSelected?.Invoke(texturePath);
+                OnPortraitSelected?.Invoke(texturePath.ToString());
             }
         };
 
@@ -161,38 +185,23 @@ public sealed class PortraitSelector : BoxContainer
     /// Updates the preview panel with the selected portrait.
     /// </summary>
     /// <param name="proto">The portrait prototype.</param>
-    /// <param name="texturePath">The texture path to display.</param>
-    private void UpdatePreview(CharacterPortraitPrototype proto, string texturePath)
+    /// <param name="texturePath">The texture path to display (ResPath).</param>
+    private void UpdatePreview(CharacterPortraitPrototype proto, ResPath texturePath)
     {
+        var textureIndex = proto.Textures.IndexOf(texturePath);
         _previewName.Text = proto.Textures.Count > 1
-            ? Loc.GetString("st-portrait-preview-multi", ("name", Loc.GetString(proto.Name)), ("current", proto.Textures.IndexOf(texturePath) + 1), ("total", proto.Textures.Count))
+            ? Loc.GetString("st-portrait-preview-multi", ("name", Loc.GetString(proto.Name)), ("current", textureIndex + 1), ("total", proto.Textures.Count))
             : Loc.GetString(proto.Name);
         _previewDesc.Text = proto.Description != null ? Loc.GetString(proto.Description) : string.Empty;
 
-        var fullPath = AddPortraitPrefix(texturePath);
-        if (_resCache.TryGetResource<TextureResource>(fullPath, out var tex))
+        var fullPath = proto.GetFullPath(texturePath);
+        if (_resCache.TryGetResource<TextureResource>(fullPath.ToString(), out var tex))
             _previewRect.Texture = tex;
         else
         {
             _sawmill.Warning($"Portrait texture not found: {fullPath}");
             _previewRect.Texture = null;
         }
-    }
-
-    /// <summary>
-    /// Adds the portrait texture prefix to a relative path.
-    /// If the path already has the prefix, returns it as-is (for migration).
-    /// </summary>
-    private string AddPortraitPrefix(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return string.Empty;
-
-        // If path already has the prefix, return as-is (migration support)
-        if (path.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix))
-            return path;
-
-        return CharacterPortraitPrototype.PortraitTexturePrefix + path;
     }
 
     /// <summary>

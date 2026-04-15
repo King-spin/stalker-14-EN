@@ -576,7 +576,8 @@ namespace Content.Client.Lobby.UI
             // Validate current SelectedPortraitId - if it doesn't exist in available portraits, clear it
             if (!string.IsNullOrEmpty(Profile?.SelectedPortraitId))
             {
-                var textureExists = portraits.Any(p => p.Textures.Contains(Profile.SelectedPortraitId));
+                var portraitPath = new Robust.Shared.Utility.ResPath(Profile.SelectedPortraitId);
+                var textureExists = portraits.Any(p => p.Textures.Contains(portraitPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == Profile.SelectedPortraitId));
                 if (!textureExists)
                 {
                     Profile = Profile.WithSelectedPortrait(string.Empty);
@@ -615,7 +616,8 @@ namespace Content.Client.Lobby.UI
                 // Validate current DisguisePortraitId - if it doesn't exist in available portraits, clear it
                 if (!string.IsNullOrEmpty(Profile?.DisguisePortraitId))
                 {
-                    var textureExists = disguisePortraits.Any(p => p.Textures.Contains(Profile.DisguisePortraitId));
+                    var portraitPath = new Robust.Shared.Utility.ResPath(Profile.DisguisePortraitId);
+                    var textureExists = disguisePortraits.Any(p => p.Textures.Contains(portraitPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == Profile.DisguisePortraitId));
                     if (!textureExists)
                     {
                         Profile = Profile.WithDisguisePortrait(string.Empty);

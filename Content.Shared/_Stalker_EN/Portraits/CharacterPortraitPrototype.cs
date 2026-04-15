@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Stalker_EN.Portraits;
 
@@ -48,7 +49,40 @@ public sealed partial class CharacterPortraitPrototype : IPrototype
     /// <summary>
     /// List of available portrait textures for this role.
     /// NPCs pick one randomly. Players choose one in the loadout screen.
+    /// Paths can be either relative (without prefix) or absolute.
     /// </summary>
     [DataField(required: true)]
-    public List<string> Textures { get; private set; } = new();
+    public List<ResPath> Textures { get; private set; } = new();
+
+    /// <summary>
+    /// Gets the full path for a texture, ensuring the prefix is present.
+    /// If the path is already absolute (starts with /), returns it as-is.
+    /// </summary>
+    public ResPath GetFullPath(ResPath path)
+    {
+        if (path == ResPath.Empty)
+            return path;
+
+        var pathString = path.ToString();
+        if (pathString.StartsWith("/"))
+            return path;
+
+        return new ResPath(PortraitTexturePrefix + pathString);
+    }
+
+    /// <summary>
+    /// Converts an absolute path to relative (removes the prefix).
+    /// If the path doesn't start with the prefix, returns it as-is.
+    /// </summary>
+    public ResPath GetRelativePath(ResPath path)
+    {
+        if (path == ResPath.Empty)
+            return path;
+
+        var pathString = path.ToString();
+        if (pathString.StartsWith(PortraitTexturePrefix))
+            return new ResPath(pathString[PortraitTexturePrefix.Length..]);
+
+        return path;
+    }
 }

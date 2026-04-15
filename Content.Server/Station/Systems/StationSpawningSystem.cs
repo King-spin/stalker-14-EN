@@ -150,8 +150,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             if (!string.IsNullOrEmpty(profile.SelectedPortraitId))
             {
                 // Validate that the texture path exists in any portrait prototype
+                var portraitPath = new Robust.Shared.Utility.ResPath(profile.SelectedPortraitId);
                 var textureExists = _prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                    .Any(p => p.Textures.Contains(profile.SelectedPortraitId));
+                    .Any(p => p.Textures.Contains(portraitPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == profile.SelectedPortraitId));
 
                 if (textureExists)
                 {
@@ -175,8 +176,9 @@ public sealed class StationSpawningSystem : SharedStationSpawningSystem
             // DisguisePortraitId stores the texture path directly, not a ProtoId
             if (!string.IsNullOrEmpty(profile.DisguisePortraitId))
             {
+                var portraitPath = new Robust.Shared.Utility.ResPath(profile.DisguisePortraitId);
                 var textureExists = _prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                    .Any(p => p.Textures.Contains(profile.DisguisePortraitId));
+                    .Any(p => p.Textures.Contains(portraitPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == profile.DisguisePortraitId));
 
                 if (textureExists)
                 {

@@ -749,16 +749,16 @@ namespace Content.Shared.Preferences
             // stalker-en-changes-end
 
             // stalker-en-changes: portrait validation
-            // Validate selected portrait texture path exists in any prototype
-            // Support both old full paths and new relative paths
+            // Validate main portrait texture path
             if (!string.IsNullOrEmpty(SelectedPortraitId))
             {
                 var relativePath = SelectedPortraitId.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix)
                     ? SelectedPortraitId.Substring(CharacterPortraitPrototype.PortraitTexturePrefix.Length)
                     : SelectedPortraitId;
 
+                var relativeResPath = new Robust.Shared.Utility.ResPath(relativePath);
                 var textureExists = prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                    .Any(p => p.Textures.Contains(relativePath));
+                    .Any(p => p.Textures.Contains(relativeResPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == SelectedPortraitId));
                 if (!textureExists)
                 {
                     SelectedPortraitId = string.Empty;
@@ -772,8 +772,9 @@ namespace Content.Shared.Preferences
                     ? DisguisePortraitId.Substring(CharacterPortraitPrototype.PortraitTexturePrefix.Length)
                     : DisguisePortraitId;
 
+                var relativeResPath = new Robust.Shared.Utility.ResPath(relativePath);
                 var textureExists = prototypeManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                    .Any(p => p.Textures.Contains(relativePath));
+                    .Any(p => p.Textures.Contains(relativeResPath) || p.Textures.Any(t => p.GetFullPath(t).ToString() == DisguisePortraitId));
                 if (!textureExists)
                 {
                     DisguisePortraitId = string.Empty;

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared._Stalker.Bands;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared._Stalker_EN.Portraits;
 
@@ -15,6 +16,11 @@ public sealed class CharacterPortraitSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     private ISawmill _sawmill = default!;
+
+    /// <summary>
+    /// Job ID for disguise portraits (e.g., Clear Sky disguised as Stalkers).
+    /// </summary>
+    private const string DisguiseTargetJobId = "Stalker";
 
     public override void Initialize()
     {
@@ -46,14 +52,13 @@ public sealed class CharacterPortraitSystem : EntitySystem
         // If texture path is already set (from player profile), validate it
         if (!string.IsNullOrEmpty(comp.PortraitTexturePath))
         {
+            // Convert string to ResPath for validation
+            var currentPath = new ResPath(comp.PortraitTexturePath);
+
             // Check if the texture path exists in any portrait prototype
             // Support both old full paths and new relative paths
-            var relativePath = comp.PortraitTexturePath.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix)
-                ? comp.PortraitTexturePath.Substring(CharacterPortraitPrototype.PortraitTexturePrefix.Length)
-                : comp.PortraitTexturePath;
-
             var textureExists = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-                .Any(p => p.Textures.Contains(relativePath));
+                .Any(p => p.Textures.Any(t => t == currentPath || p.GetFullPath(t) == currentPath));
 
             if (!textureExists)
             {
@@ -63,8 +68,7 @@ public sealed class CharacterPortraitSystem : EntitySystem
             }
             else
             {
-                // Valid path, ensure it has the prefix
-                comp.PortraitTexturePath = AddPortraitPrefix(relativePath);
+                // Valid path - keep as-is (supports both relative and absolute paths)
                 Dirty(uid, comp);
                 ResolveDisguisePortrait(uid, comp);
                 return;
@@ -122,7 +126,8 @@ public sealed class CharacterPortraitSystem : EntitySystem
         {
             // Pick random portrait, then random texture from it
             var chosenProto = matches[_random.Next(matches.Count)];
-            comp.PortraitTexturePath = PickRandomTexture(chosenProto.Textures);
+            var texturePath = PickRandomTexture(chosenProto.Textures);
+            comp.PortraitTexturePath = texturePath.ToString();
             Dirty(uid, comp);
         }
         else
@@ -174,7 +179,7 @@ public sealed class CharacterPortraitSystem : EntitySystem
 
         // Find Stalker portraits
         var stalkerPortraits = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>()
-            .Where(p => p.JobId == "Stalker")
+            .Where(p => p.JobId == DisguiseTargetJobId)
             .ToList();
 
         if (stalkerPortraits.Count > 0)
@@ -184,7 +189,7 @@ public sealed class CharacterPortraitSystem : EntitySystem
             if (string.IsNullOrEmpty(comp.DisguisedPortraitPath))
             {
                 var chosenProto = stalkerPortraits[_random.Next(stalkerPortraits.Count)];
-                comp.DisguisedPortraitPath = PickRandomTexture(chosenProto.Textures);
+                comp.DisguisedPortraitPath = PickRandomTexture(chosenProto.Textures).ToString();
                 Dirty(uid, comp);
             }
         }
@@ -192,34 +197,27 @@ public sealed class CharacterPortraitSystem : EntitySystem
 
     /// <summary>
     /// Picks a random texture from a list of texture paths.
-    /// Returns empty string if list is empty and logs a warning.
-    /// Adds the portrait texture prefix to relative paths.
+    /// Returns empty ResPath if list is empty and logs a warning.
+    /// Returns full path with prefix for relative paths.
     /// </summary>
-    private string PickRandomTexture(List<string> texturePaths)
+    private ResPath PickRandomTexture(List<ResPath> texturePaths)
     {
         if (texturePaths.Count == 0)
         {
             _sawmill.Warning("Attempted to pick random texture from empty list");
-            return string.Empty;
+            return ResPath.Empty;
         }
 
-        var relativePath = texturePaths[_random.Next(texturePaths.Count)];
-        return AddPortraitPrefix(relativePath);
-    }
+        var randomPath = texturePaths[_random.Next(texturePaths.Count)];
 
-    /// <summary>
-    /// Adds the portrait texture prefix to a relative path.
-    /// If the path already has the prefix, returns it as-is (for migration).
-    /// </summary>
-    private string AddPortraitPrefix(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return string.Empty;
+        // Get a prototype to use its GetFullPath method
+        var firstProto = _protoManager.EnumeratePrototypes<CharacterPortraitPrototype>().FirstOrDefault();
+        if (firstProto != null)
+        {
+            return firstProto.GetFullPath(randomPath);
+        }
 
-        // If path already has the prefix, return as-is (migration support)
-        if (path.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix))
-            return path;
-
-        return CharacterPortraitPrototype.PortraitTexturePrefix + path;
+        // Fallback: if no prototype available, return as-is (shouldn't happen in normal operation)
+        return randomPath;
     }
 }
