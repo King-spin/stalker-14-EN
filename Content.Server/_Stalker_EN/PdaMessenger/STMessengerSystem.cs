@@ -516,24 +516,22 @@ public sealed partial class STMessengerSystem : EntitySystem
         // Try 1: Get BandStatusIcon from BandsComponent on the mob
         if (TryComp<TransformComponent>(server.Owner, out var xform))
         {
-            var holder = xform.ParentUid;
-            if (holder.IsValid() && TryComp<BandsComponent>(holder, out var bands))
+            var current = xform.ParentUid;
+
+            while (current.IsValid())
             {
-                var isDisguised = bands.IsDisguised;
+                if (TryComp<BandsComponent>(current, out var bands))
+                {
+                    if (!string.IsNullOrEmpty(bands.BandStatusIcon))
+                        return bands.BandStatusIcon;
+                }
 
-                // If disguised, use AltBand instead of BandStatusIcon
-                if (isDisguised && !string.IsNullOrEmpty(bands.AltBand))
-                    return bands.AltBand;
+                var parentXform = CompOrNull<TransformComponent>(current);
+                if (parentXform == null)
+                    break;
 
-                if (!string.IsNullOrEmpty(bands.BandStatusIcon))
-                    return bands.BandStatusIcon;
+                current = parentXform.ParentUid;
             }
-        }
-
-        // Try 2: Fallback to OwnerBand and map to bandIcon (accounting for disguise)
-        if (server.OwnerBand.HasValue)
-        {
-            return GetBandIconForBandProto(server.OwnerBand.Value);
         }
 
         return null;
@@ -605,7 +603,7 @@ public sealed partial class STMessengerSystem : EntitySystem
     /// <summary>
     /// Adds portrait texture prefix to a path if it doesn't have it.
     /// </summary>
-    private string AddPortraitPrefix(string path)
+    private static string AddPortraitPrefix(string path)
     {
         if (string.IsNullOrEmpty(path))
             return path;
@@ -616,43 +614,6 @@ public sealed partial class STMessengerSystem : EntitySystem
         return Content.Shared._Stalker_EN.Portraits.CharacterPortraitPrototype.PortraitTexturePrefix + path;
     }
 
-    /// <summary>
-    /// Maps band prototype ID to bandIcon name.
-    /// For disguise-capable factions, returns the alternative patch from DisguiseTargetBandIcon.
-    /// </summary>
-    private string? GetBandIconForBandProto(ProtoId<STBandPrototype> bandProtoId, bool isDisguised = false)
-    {
-        // If disguised and the band has an alternative patch, return it
-        if (isDisguised && _protoManager.TryIndex<STBandPrototype>(bandProtoId, out var bandProto))
-        {
-            if (!string.IsNullOrEmpty(bandProto.DisguiseTargetBandIcon))
-                return bandProto.DisguiseTargetBandIcon;
-        }
-
-        return bandProtoId.Id switch
-        {
-            "STFreedomBand" => "freedom",
-            "STDolgBand" => "Dolg",
-            "STBanditsBand" => "band",
-            "STRenegatsBand" => "rene",
-            "STMonolithBand" => "monolith",
-            "STClearSkyBand" => "cn",
-            "STStalkerBand" => "stalker",
-            "STMercenariesBand" => "merc",
-            "STMilitaryBand" => "army",
-            "STSciBand" => "sci",
-            "STMilitiaBand" => "militia",
-            "STAnomalistsBand" => "ecologists",
-            "STSeraphimsBand" => "seraphim",
-            "STCovenantBand" => "zavet",
-            "STGrehBand" => "greh",
-            "STSsuBand" => "sbu",
-            "STUNBand" => "un",
-            "STProjectBand" => "project-1",
-            "STToadsBand" => "jaba",
-            _ => "stalker" // Default
-        };
-    }
 
     private string? FindReplySnippet(string chatId, bool isDm, STMessengerServerComponent server, uint replyId)
     {

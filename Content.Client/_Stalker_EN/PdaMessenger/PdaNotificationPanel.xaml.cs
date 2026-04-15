@@ -19,17 +19,17 @@ public sealed partial class PdaNotificationPanel : PanelContainer
 {
     private static readonly ISawmill Sawmill = Logger.GetSawmill("pda.notifications");
     private readonly IConfigurationManager _configManager;
-    private readonly string? _bandId;
+    private readonly string? _bandIcon;
     private readonly string? _portraitId;
     private readonly bool _isDisguised;
     private bool _usePngIcons;
 
-    public PdaNotificationPanel(string title, string content, string sender, string? bandId = null, string? portraitId = null, bool isDisguised = false)
+    public PdaNotificationPanel(string title, string content, string sender, string? bandIcon = null, string? portraitId = null, bool isDisguised = false)
     {
         RobustXamlLoader.Load(this);
 
         _configManager = IoCManager.Resolve<IConfigurationManager>();
-        _bandId = bandId;
+        _bandIcon = bandIcon;
         _portraitId = portraitId;
         _isDisguised = isDisguised;
 
@@ -80,7 +80,7 @@ public sealed partial class PdaNotificationPanel : PanelContainer
         {
             // Sprite icon mode - use RSI sprite from band.rsi (same as STMessenger)
             // Server already sends the correct bandIcon (accounting for disguise via ActionChangeBand)
-            var spriteState = GetSpriteStateForBandIcon(_bandId ?? string.Empty);
+            var spriteState = _bandIcon ?? string.Empty;
 
             try
             {
@@ -97,51 +97,6 @@ public sealed partial class PdaNotificationPanel : PanelContainer
         }
     }
 
-    /// <summary>
-    /// Maps bandIcon name to RSI sprite state name.
-    /// </summary>
-    private static string GetSpriteStateForBandIcon(string bandIcon)
-    {
-        return bandIcon switch
-        {
-            // Major factions
-            "freedom" => "freedom",
-            "Dolg" => "dolg",
-            "band" => "band",
-            "rene" => "rene",
-            "monolith" => "monolith",
-            "cn" => "cn",
-            "stalker" => "stalker",
-            "merc" => "merc",
-            "army" => "army",
-            "voen" => "voen",
-            "sci" => "sci",
-            "sci_decan" => "sci_decan",
-            "sci_rector" => "sci_rector",
-
-            // Minor factions
-            "militia" => "militia",
-            "ecologists" => "ecologist",
-            "ecologistred" => "ecologist_red",
-            "seraphim" => "seraph",
-            "zavet" => "zavet",
-            "greh" => "greh",
-            "sbu" => "sbu",
-            "un" => "un",
-            "project-1" => "project-1",
-            "trader" => "trader",
-            "clowns" => "clowns",
-            "jaba" => "jaba",
-            "pilgrim" => "pilgrim",
-            "guide" => "guide",
-            "pack" => "pack",
-            "symbiote" => "symbiote",
-            "medbeysprite" => "med",
-            "grajdansksprite" => "ne",
-
-            _ => "nodata" // Unknown icon
-        };
-    }
 
     /// <summary>
     /// Sets the transparency of the notification content (text + icon), but not the background.
