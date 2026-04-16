@@ -245,7 +245,9 @@
         AntiRadMedipen: 300
         STPillboxProbud: 400
         MedkitMilitary: 400
+        Cocainedust: 500
         MedkitScience: 650
+        Crackpowder: 1000
         STPillboxShiza: 15000
 
     - name: shop-category-provisions

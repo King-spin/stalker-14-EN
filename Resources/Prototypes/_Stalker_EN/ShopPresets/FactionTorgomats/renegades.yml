@@ -205,6 +205,8 @@
       MedkitAI2: 250
       MedkitMilitary: 400
       Defibrillator: 700
+      Fentsyringe: 1000
+#      PitbloodMedpipepStalker: 1500
 
   - name: shop-category-provisions
     priority: 5
@@ -255,6 +257,7 @@
       # Containers
       MedkitCMSStalker: 400 # T1
       MedkitGrizzlyStalker: 1000 # T2
+      MethMedpipepStalker: 1000
 
   - name: shop-category-raincoats-and-gasmasks
     priority: 8

@@ -163,7 +163,7 @@
 
     - name: shop-category-medicine
       priority: 4
-      items:
+      items: # i will personally strangle anyone who trys to add drugs to freedom
         STPillboxAntirad: 150
         STGauze: 95
         STOintment: 85

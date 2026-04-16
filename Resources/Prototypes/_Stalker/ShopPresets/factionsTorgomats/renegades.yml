@@ -230,6 +230,9 @@
         MedkitScience: 650
         MedkitElite: 600
         MedkitLAR: 750
+        MethMedpipepStalker: 1000
+        Fentsyringe: 1000
+#        PitbloodMedpipepStalker: 1500
         STPillboxShiza: 15000
     - name: shop-category-modules
       priority: 11
