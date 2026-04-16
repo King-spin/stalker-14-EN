@@ -2482,5 +2482,12 @@
   id: 267
   time: '2026-04-15T19:30:35.090900+00:00'
   url: https://github.com/stalker-14-EN/stalker-14-EN/pull/811
+- author: Nox38
+  changes:
+  - message: Removed double waist bags from vendors.
+    type: Remove
+  id: 268
+  time: '2026-04-16T17:59:26.016645+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/824
 Name: Stalker
 Order: -1
