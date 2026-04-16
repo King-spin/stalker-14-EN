@@ -206,6 +206,7 @@
       MedkitMilitary: 400
       Defibrillator: 700
       Fentsyringe: 1000
+      MethMedpipepStalker: 1000
 #      PitbloodMedpipepStalker: 1500
 
   - name: shop-category-provisions
