@@ -42,11 +42,16 @@ public sealed class CharacterPortraitSystem : EntitySystem
         if (!TryComp<CharacterPortraitComponent>(uid, out var portraitComp))
             return;
 
-        // Skip re-resolution if player explicitly selected a portrait to preserve their choice.
-        // Only auto-resolve when no explicit selection exists.
+        // Skip main portrait re-resolution if player explicitly selected a portrait to preserve their choice.
+        // However, always resolve disguise portrait since it depends on band information.
         if (string.IsNullOrEmpty(portraitComp.PortraitTexturePath))
         {
             ResolvePortrait(uid, portraitComp);
+        }
+        else
+        {
+            // Main portrait already set by player, but still need to resolve disguise portrait.
+            ResolveDisguisePortrait(uid, portraitComp);
         }
     }
 
