@@ -110,6 +110,7 @@
   factionId: ClearSky
   maxMembers: 16
   managingRankId: 2
+  disguiseTargetJobId: Stalker # stalker EN change
   hierarchy:
     1: StalkerClearSky
     2: StalkerHeadClearSky
