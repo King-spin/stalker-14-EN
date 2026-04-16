@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Popups;
 using Content.Shared.Actions;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
@@ -56,22 +55,12 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEntInserted(Entity<HandheldLightComponent> ent, ref EntInsertedIntoContainerMessage args)
         {
-            // Skip if ItemSlotsComponent is not yet initialized during map loading
-            if (!TryComp<ItemSlotsComponent>(ent.Owner, out var itemSlots) ||
-                MetaData(ent.Owner, itemSlots).EntityLifeStage < EntityLifeStage.MapInitialized)
-                return;
-
             // Not guaranteed to be the correct container for our slot, I don't care.
             UpdateLevel(ent);
         }
 
         private void OnEntRemoved(Entity<HandheldLightComponent> ent, ref EntRemovedFromContainerMessage args)
         {
-            // Skip if ItemSlotsComponent is not yet initialized during map loading
-            if (!TryComp<ItemSlotsComponent>(ent.Owner, out var itemSlots) ||
-                MetaData(ent.Owner, itemSlots).EntityLifeStage < EntityLifeStage.MapInitialized)
-                return;
-
             // Ditto above
             UpdateLevel(ent);
         }
@@ -117,15 +106,23 @@ namespace Content.Server.Light.EntitySystems
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
             // Thus we'll just check if the level changes.
 
-            if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
+            try
+            {
+                if (!_powerCell.TryGetBatteryFromSlotOrEntity(ent.Owner, out var battery))
+                    return null;
+
+                var currentCharge = _battery.GetCharge(battery.Value.AsNullable());
+
+                if (MathHelper.CloseToPercent(currentCharge, 0) || ent.Comp.Wattage > currentCharge)
+                    return 0;
+
+                return (byte?)ContentHelpers.RoundToNearestLevels(currentCharge / battery.Value.Comp.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
+            }
+            catch
+            {
+                // ItemSlotsComponent may not be initialized yet during map loading
                 return null;
-
-            var currentCharge = _battery.GetCharge(battery.Value.AsNullable());
-
-            if (MathHelper.CloseToPercent(currentCharge, 0) || ent.Comp.Wattage > currentCharge)
-                return 0;
-
-            return (byte?)ContentHelpers.RoundToNearestLevels(currentCharge / battery.Value.Comp.MaxCharge * 255, 255, HandheldLightComponent.StatusLevels);
+            }
         }
 
         private void OnRemove(Entity<HandheldLightComponent> ent, ref ComponentRemove args)
