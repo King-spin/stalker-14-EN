@@ -1,6 +1,6 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared._Stalker.PdaMessenger;
+namespace Content.Shared._Stalker_EN.PdaMessenger;
 
 /// <summary>
 /// Event sent from server to all clients when a message is sent to the General PDA channel.
@@ -19,11 +19,25 @@ public sealed class PdaGeneralMessageEvent : EntityEventArgs
     /// </summary>
     public readonly string? BandIcon;
 
-    public PdaGeneralMessageEvent(string title, string content, string sender, string? bandIcon = null)
+    /// <summary>
+    /// Character portrait prototype ID for the sender's selected portrait.
+    /// If set, takes priority over BandIcon for notification display.
+    /// </summary>
+    public readonly string? PortraitId;
+
+    /// <summary>
+    /// Whether the sender is disguised (e.g., Clear Sky disguised as Loners).
+    /// Used to display correct faction icon when PNG icons are disabled.
+    /// </summary>
+    public readonly bool IsDisguised;
+
+    public PdaGeneralMessageEvent(string title, string content, string sender, string? bandIcon = null, string? portraitId = null, bool isDisguised = false)
     {
         Title = title;
         Content = content;
         Sender = sender;
         BandIcon = bandIcon;
+        PortraitId = portraitId;
+        IsDisguised = isDisguised;
     }
 }
