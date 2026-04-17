@@ -17,6 +17,7 @@
     - type: DrunkStatusEffect
     - type: RejuvenateRemovedStatusEffect
 
+#stalker en changes
 - type: entity
   parent: [ BloodstreamStatusEffectBase ]
   id: StatusEffectClusmy

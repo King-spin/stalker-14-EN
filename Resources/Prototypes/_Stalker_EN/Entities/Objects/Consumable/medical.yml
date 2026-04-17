@@ -31,9 +31,6 @@
       - Pill
   - type: Item
     size: Tiny
-    sprite: Objects/Misc/reagent_fillings.rsi
-    state: powderpile
-    color: darkgray
   - type: RepositoryItem
     categoryName: repository-medicine-category
   - type: Sprite
@@ -82,10 +79,6 @@
       - Pill
   - type: Item
     size: Tiny
-    sprite: Objects/Misc/reagent_fillings.rsi
-    state: powderpile
-    color: darkgray
-    categoryName: repository-medicine-category
   - type: Sprite
     sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile
