@@ -227,7 +227,7 @@
         STFoodMeatSalami: 350
     - name: shop-category-medicine
       priority: 10
-      items: #i swear to god if any of you try to give freedom drug i will personally strangle you
+      items: 
         STPillboxAntirad: 150
         STGauze: 95
         STOintment: 85
