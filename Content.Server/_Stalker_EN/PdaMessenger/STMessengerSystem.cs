@@ -501,6 +501,8 @@ public sealed partial class STMessengerSystem : EntitySystem
                 var isDisguised = GetIsDisguised(server);
                 var generalEvent = new PdaGeneralMessageEvent(displayName, content, displayName, bandIcon, portraitId, isDisguised);
 
+                var notifiedSessions = new HashSet<ICommonSession>();
+
                 foreach (var (pdaUid, (cartridgeUid, _)) in _messengerPdas)
                 {
 
@@ -511,14 +513,18 @@ public sealed partial class STMessengerSystem : EntitySystem
                     var mobUid = pdaComp.PdaOwner.Value;
 
                     // 2. Find the mob's Mind to get the player's UserId
-                    if (_mind.TryGetMind(mobUid, out var _, out var mindComp))
-                    {
-                        // 4. Find the session by UserId
-                        if (_playerManager.TryGetSessionById(mindComp.UserId, out var session))
-                        {
-                            RaiseNetworkEvent(generalEvent, session!);
-                        }
-                    }
+                    if (!_mind.TryGetMind(mobUid, out _, out var mindComp))
+                        continue;
+
+                    // 3. Find the session by UserId
+                    if (!_playerManager.TryGetSessionById(mindComp.UserId, out var session))
+                        continue;
+
+                    // 4. Skip if this session already received the notification
+                    if (!notifiedSessions.Add(session))
+                        continue;
+
+                    RaiseNetworkEvent(generalEvent, session);
                 }
             }
         }
@@ -574,11 +580,11 @@ public sealed partial class STMessengerSystem : EntitySystem
                 {
                     // If disguised and has a disguise path — use it
                     if (portraitComp.IsDisguised && !string.IsNullOrEmpty(portraitComp.DisguisedPortraitPath))
-                        return AddPortraitPrefix(portraitComp.DisguisedPortraitPath);
+                        return portraitComp.DisguisedPortraitPath;
 
                     // Otherwise use normal portrait
                     if (!string.IsNullOrEmpty(portraitComp.PortraitTexturePath))
-                        return AddPortraitPrefix(portraitComp.PortraitTexturePath);
+                        return portraitComp.PortraitTexturePath;
                 }
 
                 var parentXform = CompOrNull<TransformComponent>(current);
@@ -647,21 +653,6 @@ public sealed partial class STMessengerSystem : EntitySystem
 
         return false;
     }
-
-    /// <summary>
-    /// Adds portrait texture prefix to a path if it doesn't have it.
-    /// </summary>
-    private static string AddPortraitPrefix(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return path;
-
-        if (path.StartsWith(CharacterPortraitPrototype.PortraitTexturePrefix))
-            return path;
-
-        return CharacterPortraitPrototype.PortraitTexturePrefix + path;
-    }
-
 
     private string? FindReplySnippet(string chatId, bool isDm, STMessengerServerComponent server, uint replyId)
     {
