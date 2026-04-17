@@ -1,8 +1,10 @@
 using Content.Client.UserInterface.Fragments;
+using Content.Shared._Stalker.PdaMessenger;
 using Content.Shared._Stalker_EN.PdaMessenger;
 using Content.Shared.CartridgeLoader;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using Robust.Shared.Maths;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client._Stalker_EN.PdaMessenger;
@@ -62,6 +64,7 @@ public sealed partial class STMessengerUi : UIFragment
         _root.AddChild(_channelPage);
         _root.AddChild(_composePage);
 
+
         _channelPage.Visible = false;
         _composePage.Visible = false;
 
@@ -81,6 +84,11 @@ public sealed partial class STMessengerUi : UIFragment
         _mainPage.OnToggleMute += channelId =>
         {
             userInterface.SendPredictedMessage(new CartridgeUiMessage(new STMessengerToggleMuteEvent(channelId)));
+        };
+
+        _mainPage.OnToggleRandomName += randomName =>
+        {
+            userInterface.SendMessage(new CartridgeUiMessage(new STMessengerToggleRandomNameEvent(randomName)));
         };
 
         _channelPage.OnBack += () => NavigateToMain();
@@ -171,6 +179,7 @@ public sealed partial class STMessengerUi : UIFragment
         }
 
         _mainPage?.UpdateState(messengerState);
+
 
         if (_currentChatId is not null && _channelPage is { Visible: true })
         {
