@@ -2505,5 +2505,32 @@
   id: 269
   time: '2026-04-16T22:00:15.810071+00:00'
   url: https://github.com/stalker-14-EN/stalker-14-EN/pull/822
+- author: crocodilecarousel
+  changes:
+  - message: Tooth Necklace can now be stashed, and will be under the Clothing category
+    type: Fix
+  id: 270
+  time: '2026-04-17T00:27:36.101840+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/828
+- author: Aliwenko
+  changes:
+  - message: Event inserts to be opened up in future and connect to event maps.
+    type: Add
+  - message: More detail in some areas that were empty or underworked.
+    type: Add
+  - message: Prettied up some caves and tunnels, including one entrance from cordon.
+    type: Tweak
+  - message: Put down some bayun spawns and couple caches.
+    type: Tweak
+  id: 271
+  time: '2026-04-17T00:35:05.045537+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/821
+- author: dallaszzz
+  changes:
+  - message: Overhauled anomaly sounds
+    type: Add
+  id: 272
+  time: '2026-04-17T00:48:17.349668+00:00'
+  url: https://github.com/stalker-14-EN/stalker-14-EN/pull/830
 Name: Stalker
 Order: -1
