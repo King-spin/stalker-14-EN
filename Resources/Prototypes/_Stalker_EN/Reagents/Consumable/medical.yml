@@ -51,12 +51,12 @@
   meltingPoint: 170.0
   metabolisms:
     Poison:
-      metabolismRate: 0.025
+      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.15
+            Poison: 01
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -71,7 +71,7 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
         type: Add
-        time: 1
+        time: 2
       - !type:GenericStatusEffect
         key: StaminaModifier
         component: StaminaModifier
@@ -120,7 +120,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 0.3
+            Poison: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentCondition
@@ -131,7 +131,7 @@
             Poison: 1 # this is added to the base damage of the meth.
             Asphyxiation: 1
     Narcotic:
-      metabolismRate: 0.025
+      metabolismRate: 0.1
       effects:
       - !type:ModifyStatusEffect
         effectProto: StatusEffectSeeingRainbow
